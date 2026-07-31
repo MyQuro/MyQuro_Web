@@ -166,7 +166,7 @@ export default function KOTPage() {
     socketRef.current = io(socketUrl, {
       auth: { sessionToken },
       withCredentials: true,
-      transports: ['websocket', 'polling'],
+      transports: ['polling', 'websocket'],
       timeout: 5000,
       reconnection: true,
       reconnectionAttempts: 5,

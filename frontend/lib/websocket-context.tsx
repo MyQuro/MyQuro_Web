@@ -55,7 +55,7 @@ export function WebSocketProvider({ children }: { children: ReactNode }) {
           sessionToken: sessionToken
         },
         withCredentials: true,
-        transports: ['websocket', 'polling'],
+        transports: ['polling', 'websocket'],
         timeout: 5000,
         reconnection: true,
         reconnectionAttempts: 5,

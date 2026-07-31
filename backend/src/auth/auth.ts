@@ -25,6 +25,7 @@ export const auth = betterAuth({
   baseURL: baseURL,
   trustHost: true,
   trustedOrigins: [
+    ...(process.env.CLIENT_URL ? [process.env.CLIENT_URL] : []),
     "https://api.myquro.com",
     "https://myquro.com",
     "http://myquro.com",
