@@ -27,7 +27,7 @@ export function WebSocketProvider({ children }: { children: ReactNode }) {
 
       const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || 
         (typeof window !== 'undefined' && window.location.hostname.includes('onrender.com') 
-          ? 'https://api.myquro.com' 
+          ? 'https://myquro-web.onrender.com' 
           : 'http://localhost:4000');
       // Convert HTTP/HTTPS to WS/WSS
       const socketUrl = backendUrl.replace(/^http/, 'ws');

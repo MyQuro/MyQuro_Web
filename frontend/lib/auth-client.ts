@@ -35,12 +35,12 @@ const getBackendUrl = () => {
 
     // If running on Render, use the backend service URL
     if (hostname.includes('onrender.com')) {
-      return 'https://api.myquro.com';
+      return 'https://myquro-web.onrender.com';
     }
   }
 
   // Default fallback
-  return 'https://api.myquro.com';
+  return 'https://myquro-web.onrender.com';
 };
 
 const BACKEND_URL = getBackendUrl();
