@@ -1,4 +1,10 @@
 import "dotenv/config";
+
+// Normalize NODE_ENV to lowercase globally
+if (process.env.NODE_ENV) {
+  process.env.NODE_ENV = process.env.NODE_ENV.toLowerCase();
+}
+
 import { app } from "./app.js";
 import { Server as SocketServer } from "socket.io";
 import { initializeSocket } from "./lib/socket.js";

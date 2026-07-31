@@ -1,5 +1,10 @@
 import "dotenv/config";
 
+// Normalize NODE_ENV to lowercase globally
+if (process.env.NODE_ENV) {
+  process.env.NODE_ENV = process.env.NODE_ENV.toLowerCase();
+}
+
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { eq } from "drizzle-orm";
