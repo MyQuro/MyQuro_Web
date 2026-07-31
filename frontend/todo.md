@@ -1,0 +1,4 @@
+1. [] ADD DISCOUNTS FIELD IN THE /dashbaord/billing to allow the restaurant owner, mamager to add an DISCOUNT EITHER PERCENTAGE OR NUMBER and then that discount should be added in the final price and that will be the final price see the backend and schema of the db.
+2. [] show table number of each ordered item from the customer in the table service page , now only it shwos the tabekl nunebr if done by manual order and show direct order if customer does 
+3. [] also can i get the restaurant role like the user role will be 'restuarant' but in that sub-role can we get that and based on role show the PAGES NAVIAGTION BUTTON IN LAYOUT OF DAHSABORD ... see restaurant_manager table to see the sub-roles and users in this 
+4. [] *IMPORTANT* PLEASE FIX THE ANALUYTICS AND SHOW THE DATA PROEPRLY PARSED AND FILTERED AND PROPERLY COMPUTED AND PROPERLY FOR THAT RESTAURANT from all the tabels and also read all the schema and db aand api

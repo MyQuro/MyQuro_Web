@@ -1,0 +1,4 @@
+app/restro/[id]/menu/page.tsx(1077,9): error TS1005: ')' expected.
+app/restro/[id]/menu/page.tsx(1127,5): error TS1128: Declaration or statement expected.
+app/restro/[id]/menu/page.tsx(1128,3): error TS1109: Expression expected.
+app/restro/[id]/menu/page.tsx(1129,1): error TS1128: Declaration or statement expected.
