@@ -39,7 +39,7 @@ export function WebSocketProvider({ children }: { children: ReactNode }) {
       let sessionToken = null;
       for (const cookie of cookies) {
         const [name, value] = cookie.trim().split('=');
-        if (name === 'better-auth.session_token') {
+        if (name === 'better-auth.session_token' || name.endsWith('better-auth.session_token')) {
           sessionToken = value;
           break;
         }
@@ -54,6 +54,7 @@ export function WebSocketProvider({ children }: { children: ReactNode }) {
         auth: {
           sessionToken: sessionToken
         },
+        withCredentials: true,
         transports: ['websocket', 'polling'],
         timeout: 5000,
         reconnection: true,
