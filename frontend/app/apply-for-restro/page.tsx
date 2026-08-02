@@ -717,11 +717,14 @@ function ApplyForRestaurantPage() {
 
   if (isPending || checkingExisting) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center bg-[#050506]">
         <div className="flex flex-col items-center gap-4">
-          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-red-600"></div>
-          <p className="text-gray-600 font-medium">
-            {isPending ? 'Loading...' : 'Checking application status...'}
+          <div className="relative w-16 h-16 flex items-center justify-center">
+            <div className="absolute inset-0 bg-[#d5b263]/10 rounded-full animate-ping"></div>
+            <Loader2 className="w-8 h-8 text-[#d5b263] animate-spin relative z-10" />
+          </div>
+          <p className="text-zinc-400 font-bold text-xs uppercase tracking-widest mt-2 animate-pulse">
+            {isPending ? 'Loading Profile...' : 'Checking Application Status...'}
           </p>
         </div>
       </div>
@@ -733,37 +736,41 @@ function ApplyForRestaurantPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-red-50 via-white to-red-50 pt-16 sm:pt-20 pb-8 sm:pb-12">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-12">
+    <div className="min-h-screen bg-[#050506] text-white pt-24 pb-12 relative overflow-hidden">
+      {/* Background ambient glows */}
+      <div className="absolute top-1/4 left-1/4 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-[#d5b263]/5 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-1/4 right-1/4 translate-x-1/2 translate-y-1/2 w-96 h-96 bg-[#d5b263]/5 rounded-full blur-3xl pointer-events-none" />
+
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-12 relative z-10">
         {/* Header */}
         <div className="text-center mb-8 sm:mb-12 fade-in-up">
-          <div className="inline-flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 bg-red-100 rounded-full mb-4 sm:mb-6">
-            <Building2 className="w-7 h-7 sm:w-8 sm:h-8 text-red-600" />
+          <div className="inline-flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 bg-[#d5b263]/10 border border-[#d5b263]/20 rounded-2xl mb-4 sm:mb-6 shadow-inner">
+            <Building2 className="w-7 h-7 sm:w-8 sm:h-8 text-[#d5b263] drop-shadow-[0_0_8px_rgba(213,178,99,0.4)]" />
           </div>
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-3 sm:mb-4 px-4">
-            Apply for <span className="text-red-600">Restaurant</span>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-black text-white mb-3 sm:mb-4 px-4 uppercase tracking-tight">
+            Apply for <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#d5b263] to-amber-500 drop-shadow-[0_2px_10px_rgba(213,178,99,0.15)]">Restaurant</span>
           </h1>
-          <p className="text-base sm:text-lg md:text-xl text-gray-600 max-w-2xl mx-auto px-4">
-            Join MyQuro and start your restaurant journey
+          <p className="text-xs sm:text-sm text-zinc-400 max-w-2xl mx-auto px-4 font-bold tracking-widest uppercase">
+            Join MyQuro and start your culinary journey
           </p>
         </div>
 
         {/* Step Progress Indicator */}
-        <div className="bg-white rounded-xl shadow-md border border-gray-100 p-6 mb-6 fade-in-up">
+        <div className="bg-[#0c0c0e]/80 backdrop-blur-xl rounded-[24px] border border-white/5 p-6 mb-6 shadow-2xl fade-in-up">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-semibold text-gray-900">Application Progress</h3>
-            <span className="text-sm text-gray-600">Step {currentStep} of 4</span>
+            <h3 className="text-xs font-black text-zinc-400 uppercase tracking-widest">Application Progress</h3>
+            <span className="text-xs font-black text-zinc-500">Step {currentStep} of 4</span>
           </div>
           <div className="flex items-center gap-2">
             {[1, 2, 3, 4].map((step) => (
               <div key={step} className="flex-1">
-                <div className={`h-2 rounded-full transition-all ${
-                  step <= currentStep ? 'bg-red-600' : 'bg-gray-200'
+                <div className={`h-1.5 rounded-full transition-all ${
+                  step <= currentStep ? 'bg-[#d5b263]' : 'bg-zinc-850'
                 }`} />
               </div>
             ))}
           </div>
-          <div className="grid grid-cols-4 gap-2 mt-3">
+          <div className="grid grid-cols-4 gap-2 mt-4">
             {[
               { number: 1, title: 'Restaurant', icon: Building2 },
               { number: 2, title: 'Address', icon: MapPin },
@@ -771,12 +778,12 @@ function ApplyForRestaurantPage() {
               { number: 4, title: 'Legal', icon: FileText }
             ].map(({ number, title, icon: Icon }) => (
               <div key={number} className={`text-center ${
-                number === currentStep ? 'text-red-600 font-semibold' : 'text-gray-500'
+                number === currentStep ? 'text-[#d5b263] font-black' : 'text-zinc-500'
               }`}>
-                <Icon className={`w-5 h-5 mx-auto mb-1 ${
-                  number <= currentStep ? 'text-red-600' : 'text-gray-400'
+                <Icon className={`w-4 h-4 mx-auto mb-1.5 ${
+                  number <= currentStep ? 'text-[#d5b263] drop-shadow-[0_0_6px_rgba(213,178,99,0.2)]' : 'text-zinc-600'
                 }`} />
-                <p className="text-xs">{title}</p>
+                <p className="text-[10px] font-black uppercase tracking-wider">{title}</p>
               </div>
             ))}
           </div>
@@ -784,40 +791,40 @@ function ApplyForRestaurantPage() {
 
         {/* Draft Notification */}
         {(formData.restaurantName || formData.phoneNumber || formData.email) && (
-          <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 mb-6 fade-in-up flex items-center justify-between">
+          <div className="bg-[#d5b263]/5 border border-[#d5b263]/15 rounded-2xl p-4 mb-6 fade-in-up flex items-center justify-between shadow-xl">
             <div className="flex items-center gap-3">
-              <Info className="w-5 h-5 text-blue-600 flex-shrink-0" />
-              <p className="text-sm text-blue-800">
-                Your progress is automatically saved. You can continue later.
+              <Info className="w-5 h-5 text-[#d5b263] flex-shrink-0" />
+              <p className="text-xs sm:text-sm text-zinc-300 font-medium">
+                Your progress is automatically saved as a draft. You can continue later.
               </p>
             </div>
             <button
               type="button"
               onClick={clearDraft}
-              className="flex items-center gap-2 px-4 py-2 text-sm bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg transition-colors"
+              className="flex items-center gap-2 px-4 py-2 text-xs bg-zinc-900 border border-zinc-800 hover:bg-zinc-850 text-zinc-400 hover:text-white rounded-xl transition-all font-black uppercase tracking-wider"
             >
-              <Trash2 className="w-4 h-4" />
+              <Trash2 className="w-3.5 h-3.5" />
               <span>Clear Draft</span>
             </button>
           </div>
         )}
 
         {/* Application Form */}
-        <div className="bg-white rounded-xl sm:rounded-2xl shadow-xl border border-gray-100 p-4 sm:p-8 md:p-12 fade-in-up">
+        <div className="bg-[#0c0c0e]/80 backdrop-blur-xl rounded-[28px] shadow-2xl border border-white/5 p-5 sm:p-8 md:p-12 fade-in-up relative overflow-hidden">
           <form onSubmit={handleSubmit} className="space-y-6 sm:space-y-8">
             {/* Step 1: Restaurant Details */}
             {currentStep === 1 && (
             <div className="space-y-4 sm:space-y-6">
               <div className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
-                <Building2 className="w-5 h-5 sm:w-6 sm:h-6 text-red-600 flex-shrink-0" />
-                <h2 className="text-xl sm:text-2xl font-semibold text-gray-900">
+                <Building2 className="w-5 h-5 sm:w-6 sm:h-6 text-[#d5b263] flex-shrink-0" />
+                <h2 className="text-xl sm:text-2xl font-black text-white uppercase tracking-wider">
                   Restaurant Details
                 </h2>
                 <div className="relative group">
                   <button
                     type="button"
                     onClick={() => setShowRestaurantInfo(!showRestaurantInfo)}
-                    className="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-blue-100 hover:bg-blue-200 text-blue-600 flex items-center justify-center transition-colors focus:ring-2 focus:ring-blue-400"
+                    className="w-6 h-6 sm:w-7 sm:h-7 rounded-xl bg-[#d5b263]/10 hover:bg-[#d5b263]/25 text-[#d5b263] flex items-center justify-center transition-all focus:ring-1 focus:ring-[#d5b263]/40 border border-[#d5b263]/20"
                     aria-label="Restaurant details information"
                   >
                     <Info className="w-4 h-4" />
@@ -826,38 +833,38 @@ function ApplyForRestaurantPage() {
                     <>
                       {/* Mobile overlay backdrop */}
                       <div 
-                        className="fixed inset-0 bg-black/20 z-40 sm:hidden"
+                        className="fixed inset-0 bg-black/40 z-40 sm:hidden"
                         onClick={() => setShowRestaurantInfo(false)}
                       />
-                      <div className="fixed left-4 right-4 top-1/2 -translate-y-1/2 sm:absolute sm:left-0 sm:right-auto sm:top-full sm:translate-y-0 sm:mt-2 w-auto sm:w-80 bg-white border-2 border-blue-200 rounded-xl shadow-xl p-4 z-50 animate-in fade-in slide-in-from-top-2 duration-200">
+                      <div className="fixed left-4 right-4 top-1/2 -translate-y-1/2 sm:absolute sm:left-0 sm:right-auto sm:top-full sm:translate-y-0 sm:mt-2 w-auto sm:w-80 bg-[#0c0c0e] border border-[#d5b263]/20 rounded-2xl shadow-2xl p-5 z-50 animate-in fade-in slide-in-from-top-2 duration-200">
                         <div className="flex items-start gap-3">
-                          <div className="flex-shrink-0 w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
-                            <Building2 className="w-5 h-5 text-blue-600" />
+                          <div className="flex-shrink-0 w-8 h-8 bg-[#d5b263]/10 rounded-xl flex items-center justify-center border border-[#d5b263]/20">
+                            <Building2 className="w-5 h-5 text-[#d5b263]" />
                           </div>
                           <div className="flex-1">
-                            <h3 className="font-semibold text-gray-900 mb-2 text-sm">
+                            <h3 className="font-black text-white mb-2.5 text-xs uppercase tracking-wider">
                               Restaurant Information
                             </h3>
-                            <ul className="space-y-2 text-xs text-gray-600">
+                            <ul className="space-y-2 text-[11px] text-zinc-400">
                               <li className="flex items-start gap-2">
-                                <CheckCircle className="w-3.5 h-3.5 text-green-500 flex-shrink-0 mt-0.5" />
+                                <CheckCircle className="w-3.5 h-3.5 text-emerald-500 flex-shrink-0 mt-0.5" />
                                 <span>Choose a clear and memorable name for your restaurant</span>
                               </li>
                               <li className="flex items-start gap-2">
-                                <CheckCircle className="w-3.5 h-3.5 text-green-500 flex-shrink-0 mt-0.5" />
+                                <CheckCircle className="w-3.5 h-3.5 text-emerald-500 flex-shrink-0 mt-0.5" />
                                 <span>Select the type that best describes your dining experience</span>
                               </li>
                               <li className="flex items-start gap-2">
-                                <CheckCircle className="w-3.5 h-3.5 text-green-500 flex-shrink-0 mt-0.5" />
+                                <CheckCircle className="w-3.5 h-3.5 text-emerald-500 flex-shrink-0 mt-0.5" />
                                 <span>Write a compelling description highlighting your cuisine, ambiance, and unique features</span>
                               </li>
                             </ul>
-                            <p className="mt-3 text-xs text-gray-500 italic">
+                            <p className="mt-3 text-[10px] text-zinc-500 italic">
                               This information will be displayed to customers on your restaurant profile.
                             </p>
                             <button
                               onClick={() => setShowRestaurantInfo(false)}
-                              className="mt-3 w-full sm:w-auto px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium rounded-lg transition-colors"
+                              className="mt-3.5 w-full sm:w-auto px-4 py-2 bg-[#d5b263] text-black text-[11px] font-black rounded-xl transition-all hover:bg-[#c4a152] uppercase tracking-wider"
                             >
                               Got it
                             </button>
@@ -871,8 +878,8 @@ function ApplyForRestaurantPage() {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
                 <div>
-                  <label htmlFor="restaurantName" className="block text-sm font-medium text-gray-700 mb-2">
-                    Restaurant Name <span className="text-red-500">*</span>
+                  <label htmlFor="restaurantName" className="block text-xs font-black text-zinc-400 uppercase tracking-wider mb-2">
+                    Restaurant Name <span className="text-[#d5b263]">*</span>
                   </label>
                   <div className="relative">
                     <input
@@ -883,26 +890,26 @@ function ApplyForRestaurantPage() {
                       value={formData.restaurantName}
                       onChange={handleInputChange}
                       onBlur={() => handleBlur('restaurantName')}
-                      className={`w-full pl-4 pr-10 py-2.5 sm:py-3 border rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-all text-base ${
-                        touched.restaurantName && errors.restaurantName ? 'border-red-500 bg-red-50' : 'border-gray-300'
+                      className={`w-full pl-4 pr-10 py-2.5 sm:py-3 bg-black/40 border rounded-xl focus:outline-none focus:ring-1 focus:ring-[#d5b263]/40 focus:border-[#d5b263]/40 transition-all text-base text-white ${
+                        touched.restaurantName && errors.restaurantName ? 'border-rose-500/50 bg-rose-950/10 text-rose-300 focus:ring-rose-500/40 focus:border-rose-500/40' : 'border-zinc-850 hover:border-zinc-800'
                       }`}
                       placeholder="Enter restaurant name"
                     />
                     {formData.restaurantName && !errors.restaurantName && touched.restaurantName && (
-                      <CheckCircle className="absolute right-3 top-2.5 sm:top-3 w-5 h-5 text-green-500" />
+                      <CheckCircle className="absolute right-3 top-3 w-5 h-5 text-emerald-500" />
                     )}
                   </div>
                   {touched.restaurantName && errors.restaurantName && (
-                    <p className="mt-1.5 text-sm text-red-600 flex items-start gap-1">
-                      <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
+                    <p className="mt-1.5 text-xs text-rose-450 flex items-start gap-1 font-semibold">
+                      <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5 text-rose-500" />
                       <span>{errors.restaurantName}</span>
                     </p>
                   )}
                 </div>
 
                 <div className="md:col-span-2">
-                  <label className="block text-sm font-medium text-gray-700 mb-3">
-                    Restaurant Type <span className="text-red-500">*</span>
+                  <label className="block text-xs font-black text-zinc-400 uppercase tracking-wider mb-3">
+                    Restaurant Type <span className="text-[#d5b263]">*</span>
                   </label>
                   <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
                     {[
@@ -927,22 +934,22 @@ function ApplyForRestaurantPage() {
                             setErrors(prev => ({ ...prev, restaurantType: error || undefined }));
                           }}
                           onBlur={() => handleBlur('restaurantType')}
-                          className={`relative p-4 rounded-xl border-2 transition-all duration-200 flex flex-col items-center gap-2 min-h-[100px] ${
+                          className={`relative p-4 rounded-xl border-2 transition-all duration-200 flex flex-col items-center justify-center gap-2 min-h-[100px] ${
                             isSelected
-                              ? 'border-red-500 bg-red-50 shadow-md transform scale-[1.02]'
-                              : 'border-gray-200 hover:border-red-300 hover:bg-red-50/30'
+                              ? 'border-[#d5b263]/40 bg-[#d5b263]/5 shadow-lg shadow-[#d5b263]/5 transform scale-[1.02]'
+                              : 'border-zinc-900 bg-[#050506]/40 hover:border-zinc-800 hover:bg-zinc-900/30'
                           }`}
                           aria-pressed={isSelected}
                           aria-label={`Select ${type.label}`}
                         >
                           {isSelected && (
-                            <CheckCircle className="absolute top-2 right-2 w-5 h-5 text-red-600" />
+                            <CheckCircle className="absolute top-2.5 right-2.5 w-4 h-4 text-[#d5b263]" />
                           )}
                           <Icon className={`w-8 h-8 ${
-                            isSelected ? 'text-red-600' : 'text-gray-400'
+                            isSelected ? 'text-[#d5b263] drop-shadow-[0_0_8px_rgba(213,178,99,0.3)]' : 'text-zinc-650'
                           }`} />
-                          <span className={`text-sm font-medium text-center ${
-                            isSelected ? 'text-red-700' : 'text-gray-700'
+                          <span className={`text-xs font-black uppercase tracking-wider text-center ${
+                            isSelected ? 'text-[#d5b263]' : 'text-zinc-400'
                           }`}>
                             {type.label}
                           </span>
@@ -951,8 +958,8 @@ function ApplyForRestaurantPage() {
                     })}
                   </div>
                   {touched.restaurantType && errors.restaurantType && (
-                    <p className="mt-2 text-sm text-red-600 flex items-start gap-1">
-                      <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
+                    <p className="mt-2 text-xs text-rose-450 flex items-start gap-1 font-semibold">
+                      <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5 text-rose-500" />
                       <span>{errors.restaurantType}</span>
                     </p>
                   )}
@@ -960,9 +967,9 @@ function ApplyForRestaurantPage() {
               </div>
 
               <div>
-                <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-2">
-                  Description / About your restaurant <span className="text-red-500">*</span>
-                  <span className="text-xs text-gray-500 ml-2">
+                <label htmlFor="description" className="block text-xs font-black text-zinc-400 uppercase tracking-wider mb-2">
+                  Description / About your restaurant <span className="text-[#d5b263]">*</span>
+                  <span className="text-[10px] text-zinc-500 ml-2 font-bold normal-case">
                     ({formData.description.length}/500 characters)
                   </span>
                 </label>
@@ -974,15 +981,15 @@ function ApplyForRestaurantPage() {
                   value={formData.description}
                   onChange={handleInputChange}
                   onBlur={() => handleBlur('description')}
-                  className={`w-full px-4 py-2.5 sm:py-3 border rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-all text-base resize-none ${
-                    touched.description && errors.description ? 'border-red-500 bg-red-50' : 'border-gray-300'
+                  className={`w-full px-4 py-2.5 sm:py-3 bg-black/40 border rounded-xl focus:outline-none focus:ring-1 focus:ring-[#d5b263]/40 focus:border-[#d5b263]/40 transition-all text-base text-white resize-none ${
+                    touched.description && errors.description ? 'border-rose-500/50 bg-rose-950/10 text-rose-300 focus:ring-rose-500/40 focus:border-rose-500/40' : 'border-zinc-850 hover:border-zinc-800'
                   }`}
                   placeholder="Describe your restaurant, cuisine type, specialties, etc."
                   maxLength={500}
                 />
                 {touched.description && errors.description && (
-                  <p className="mt-1.5 text-sm text-red-600 flex items-start gap-1">
-                    <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
+                  <p className="mt-1.5 text-xs text-rose-450 flex items-start gap-1 font-semibold">
+                    <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5 text-rose-500" />
                     <span>{errors.description}</span>
                   </p>
                 )}
@@ -994,15 +1001,15 @@ function ApplyForRestaurantPage() {
             {currentStep === 2 && (
             <div className="space-y-4 sm:space-y-6">
               <div className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
-                <MapPin className="w-5 h-5 sm:w-6 sm:h-6 text-red-600 flex-shrink-0" />
-                <h2 className="text-xl sm:text-2xl font-semibold text-gray-900">
+                <MapPin className="w-5 h-5 sm:w-6 sm:h-6 text-[#d5b263] flex-shrink-0" />
+                <h2 className="text-xl sm:text-2xl font-black text-white uppercase tracking-wider">
                   Address Details
                 </h2>
                 <div className="relative group">
                   <button
                     type="button"
                     onClick={() => setShowAddressInfo(!showAddressInfo)}
-                    className="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-blue-100 hover:bg-blue-200 text-blue-600 flex items-center justify-center transition-colors focus:ring-2 focus:ring-blue-400"
+                    className="w-6 h-6 sm:w-7 sm:h-7 rounded-xl bg-[#d5b263]/10 hover:bg-[#d5b263]/25 text-[#d5b263] flex items-center justify-center transition-all focus:ring-1 focus:ring-[#d5b263]/40 border border-[#d5b263]/20"
                     aria-label="Address details information"
                   >
                     <Info className="w-4 h-4" />
@@ -1011,38 +1018,38 @@ function ApplyForRestaurantPage() {
                     <>
                       {/* Mobile overlay backdrop */}
                       <div 
-                        className="fixed inset-0 bg-black/20 z-40 sm:hidden"
+                        className="fixed inset-0 bg-black/40 z-40 sm:hidden"
                         onClick={() => setShowAddressInfo(false)}
                       />
-                      <div className="fixed left-4 right-4 top-1/2 -translate-y-1/2 sm:absolute sm:left-0 sm:right-auto sm:top-full sm:translate-y-0 sm:mt-2 w-auto sm:w-80 bg-white border-2 border-blue-200 rounded-xl shadow-xl p-4 z-50 animate-in fade-in slide-in-from-top-2 duration-200">
+                      <div className="fixed left-4 right-4 top-1/2 -translate-y-1/2 sm:absolute sm:left-0 sm:right-auto sm:top-full sm:translate-y-0 sm:mt-2 w-auto sm:w-80 bg-[#0c0c0e] border border-[#d5b263]/20 rounded-2xl shadow-2xl p-5 z-50 animate-in fade-in slide-in-from-top-2 duration-200">
                         <div className="flex items-start gap-3">
-                          <div className="flex-shrink-0 w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
-                            <MapPin className="w-5 h-5 text-blue-600" />
+                          <div className="flex-shrink-0 w-8 h-8 bg-[#d5b263]/10 rounded-xl flex items-center justify-center border border-[#d5b263]/20">
+                            <MapPin className="w-5 h-5 text-[#d5b263]" />
                           </div>
                           <div className="flex-1">
-                            <h3 className="font-semibold text-gray-900 mb-2 text-sm">
+                            <h3 className="font-black text-white mb-2.5 text-xs uppercase tracking-wider">
                               Why we need your address
                             </h3>
-                            <ul className="space-y-2 text-xs text-gray-600">
+                            <ul className="space-y-2 text-[11px] text-zinc-400">
                               <li className="flex items-start gap-2">
-                                <CheckCircle className="w-3.5 h-3.5 text-green-500 flex-shrink-0 mt-0.5" />
+                                <CheckCircle className="w-3.5 h-3.5 text-emerald-500 flex-shrink-0 mt-0.5" />
                                 <span>Helps customers find your restaurant location</span>
                               </li>
                               <li className="flex items-start gap-2">
-                                <CheckCircle className="w-3.5 h-3.5 text-green-500 flex-shrink-0 mt-0.5" />
+                                <CheckCircle className="w-3.5 h-3.5 text-emerald-500 flex-shrink-0 mt-0.5" />
                                 <span>Required for delivery zone setup and logistics</span>
                               </li>
                               <li className="flex items-start gap-2">
-                                <CheckCircle className="w-3.5 h-3.5 text-green-500 flex-shrink-0 mt-0.5" />
+                                <CheckCircle className="w-3.5 h-3.5 text-emerald-500 flex-shrink-0 mt-0.5" />
                                 <span>Used for local search and map integration</span>
                               </li>
                             </ul>
-                            <p className="mt-3 text-xs text-gray-500 italic">
+                            <p className="mt-3 text-[10px] text-zinc-500 italic">
                               Provide the complete address where customers can visit your restaurant.
                             </p>
                             <button
                               onClick={() => setShowAddressInfo(false)}
-                              className="mt-3 w-full sm:w-auto px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium rounded-lg transition-colors"
+                              className="mt-3.5 w-full sm:w-auto px-4 py-2 bg-[#d5b263] text-black text-[11px] font-black rounded-xl transition-all hover:bg-[#c4a152] uppercase tracking-wider"
                             >
                               Got it
                             </button>
@@ -1055,8 +1062,8 @@ function ApplyForRestaurantPage() {
               </div>
 
               <div>
-                <label htmlFor="restaurantAddress" className="block text-sm font-medium text-gray-700 mb-2">
-                  Restaurant Address <span className="text-red-500">*</span>
+                <label htmlFor="restaurantAddress" className="block text-xs font-black text-zinc-400 uppercase tracking-wider mb-2">
+                  Restaurant Address <span className="text-[#d5b263]">*</span>
                 </label>
                 <input
                   type="text"
@@ -1066,14 +1073,14 @@ function ApplyForRestaurantPage() {
                   value={formData.restaurantAddress}
                   onChange={handleInputChange}
                   onBlur={() => handleBlur('restaurantAddress')}
-                  className={`w-full px-4 py-2.5 sm:py-3 border rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-all text-base ${
-                    touched.restaurantAddress && errors.restaurantAddress ? 'border-red-500 bg-red-50' : 'border-gray-300'
+                  className={`w-full px-4 py-2.5 sm:py-3 bg-black/40 border rounded-xl focus:outline-none focus:ring-1 focus:ring-[#d5b263]/40 focus:border-[#d5b263]/40 transition-all text-base text-white ${
+                    touched.restaurantAddress && errors.restaurantAddress ? 'border-rose-500/50 bg-rose-950/10 text-rose-300 focus:ring-rose-500/40 focus:border-rose-500/40' : 'border-zinc-850 hover:border-zinc-800'
                   }`}
                   placeholder="Street address, building name, etc."
                 />
                 {touched.restaurantAddress && errors.restaurantAddress && (
-                  <p className="mt-1.5 text-sm text-red-600 flex items-start gap-1">
-                    <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
+                  <p className="mt-1.5 text-xs text-rose-450 flex items-start gap-1 font-semibold">
+                    <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5 text-rose-500" />
                     <span>{errors.restaurantAddress}</span>
                   </p>
                 )}
@@ -1081,8 +1088,8 @@ function ApplyForRestaurantPage() {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                 <div>
-                  <label htmlFor="city" className="block text-sm font-medium text-gray-700 mb-2">
-                    City <span className="text-red-500">*</span>
+                  <label htmlFor="city" className="block text-xs font-black text-zinc-400 uppercase tracking-wider mb-2">
+                    City <span className="text-[#d5b263]">*</span>
                   </label>
                   <select
                     id="city"
@@ -1091,8 +1098,8 @@ function ApplyForRestaurantPage() {
                     value={formData.city}
                     onChange={handleInputChange}
                     onBlur={() => handleBlur('city')}
-                    className={`w-full px-4 py-2.5 sm:py-3 border-2 rounded-xl focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-all text-base bg-white ${
-                      touched.city && errors.city ? 'border-red-500 bg-red-50' : 'border-gray-200 hover:border-gray-300'
+                    className={`w-full px-4 py-2.5 sm:py-3 border rounded-xl focus:outline-none focus:ring-1 focus:ring-[#d5b263]/40 focus:border-[#d5b263]/40 transition-all text-base text-white bg-[#050506] ${
+                      touched.city && errors.city ? 'border-rose-500/50 bg-rose-950/10 text-rose-300' : 'border-zinc-850 hover:border-zinc-800'
                     }`}
                   >
                     <option value="">Select city</option>
@@ -1100,19 +1107,18 @@ function ApplyForRestaurantPage() {
                     <option value="Ranchi">Ranchi</option>
                     <option value="Dhanbad">Dhanbad</option>
                     <option value="Jamshedpur">Jamshedpur</option>
-                    {/* Add more cities as needed */}
                   </select>
                   {touched.city && errors.city && (
-                    <p className="mt-1.5 text-sm text-red-600 flex items-start gap-1">
-                      <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
+                    <p className="mt-1.5 text-xs text-rose-450 flex items-start gap-1 font-semibold">
+                      <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5 text-rose-500" />
                       <span>{errors.city}</span>
                     </p>
                   )}
                 </div>
 
                 <div>
-                  <label htmlFor="state" className="block text-sm font-medium text-gray-700 mb-2">
-                    State <span className="text-red-500">*</span>
+                  <label htmlFor="state" className="block text-xs font-black text-zinc-400 uppercase tracking-wider mb-2">
+                    State <span className="text-[#d5b263]">*</span>
                   </label>
                   <select
                     id="state"
@@ -1121,16 +1127,16 @@ function ApplyForRestaurantPage() {
                     value={formData.state}
                     onChange={handleInputChange}
                     onBlur={() => handleBlur('state')}
-                    className={`w-full px-4 py-2.5 sm:py-3 border-2 rounded-xl focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-all text-base bg-white ${
-                      touched.state && errors.state ? 'border-red-500 bg-red-50' : 'border-gray-200 hover:border-gray-300'
+                    className={`w-full px-4 py-2.5 sm:py-3 border rounded-xl focus:outline-none focus:ring-1 focus:ring-[#d5b263]/40 focus:border-[#d5b263]/40 transition-all text-base text-white bg-[#050506] ${
+                      touched.state && errors.state ? 'border-rose-500/50 bg-rose-950/10 text-rose-300' : 'border-zinc-850 hover:border-zinc-800'
                     }`}
                   >
                     <option value="">Select state</option>
                     <option value="Jharkhand">Jharkhand</option>
                   </select>
                   {touched.state && errors.state && (
-                    <p className="mt-1.5 text-sm text-red-600 flex items-start gap-1">
-                      <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
+                    <p className="mt-1.5 text-xs text-rose-450 flex items-start gap-1 font-semibold">
+                      <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5 text-rose-500" />
                       <span>{errors.state}</span>
                     </p>
                   )}
@@ -1138,8 +1144,8 @@ function ApplyForRestaurantPage() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Postal Code <span className="text-red-500">*</span>
+                <label className="block text-xs font-black text-zinc-400 uppercase tracking-wider mb-2">
+                  Postal Code <span className="text-[#d5b263]">*</span>
                 </label>
                 <div className="flex gap-2 sm:gap-3 justify-center sm:justify-start max-w-md">
                   {[0, 1, 2, 3, 4, 5].map((index) => (
@@ -1154,21 +1160,21 @@ function ApplyForRestaurantPage() {
                       onKeyDown={(e) => handlePostalCodeKeyDown(index, e)}
                       onPaste={index === 0 ? handlePostalCodePaste : undefined}
                       onBlur={() => handleBlur('postalCode')}
-                      className={`w-12 h-12 sm:w-14 sm:h-14 text-center text-lg sm:text-xl font-semibold border-2 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-all ${
-                        touched.postalCode && errors.postalCode ? 'border-red-500 bg-red-50' : 'border-gray-300'
+                      className={`w-12 h-12 sm:w-14 sm:h-14 text-center text-lg sm:text-xl font-black bg-black/45 border-2 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#d5b263]/40 focus:border-[#d5b263]/40 transition-all text-white ${
+                        touched.postalCode && errors.postalCode ? 'border-rose-500/50 bg-rose-950/10' : 'border-zinc-850 hover:border-zinc-800'
                       }`}
                       aria-label={`Postal code digit ${index + 1}`}
                     />
                   ))}
                 </div>
                 {touched.postalCode && errors.postalCode && (
-                  <p className="mt-1.5 text-sm text-red-600 flex items-start gap-1">
-                    <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
+                  <p className="mt-1.5 text-xs text-rose-450 flex items-start gap-1 font-semibold">
+                    <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5 text-rose-500" />
                     <span>{errors.postalCode}</span>
                   </p>
                 )}
-                <p className="mt-2 text-xs text-gray-500 flex items-start gap-1">
-                  <Info className="w-3 h-3 flex-shrink-0 mt-0.5" />
+                <p className="mt-2.5 text-[10px] text-zinc-500 flex items-start gap-1.5 font-medium">
+                  <Info className="w-3.5 h-3.5 flex-shrink-0 text-zinc-600" />
                   <span>Enter 6-digit postal code. You can paste the full code in the first box.</span>
                 </p>
               </div>
@@ -1179,8 +1185,8 @@ function ApplyForRestaurantPage() {
             {currentStep === 3 && (
             <div className="space-y-4 sm:space-y-6">
               <div className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
-                <Phone className="w-5 h-5 sm:w-6 sm:h-6 text-red-600 flex-shrink-0" />
-                <h2 className="text-xl sm:text-2xl font-semibold text-gray-900">
+                <Phone className="w-5 h-5 sm:w-6 sm:h-6 text-[#d5b263] flex-shrink-0" />
+                <h2 className="text-xl sm:text-2xl font-black text-white uppercase tracking-wider">
                   Contact Details
                 </h2>
                 <div className="relative group">
@@ -1188,36 +1194,36 @@ function ApplyForRestaurantPage() {
                     type="button"
                     onClick={() => setShowContactInfo(!showContactInfo)}
                     onBlur={() => setTimeout(() => setShowContactInfo(false), 200)}
-                    className="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-blue-100 hover:bg-blue-200 text-blue-600 flex items-center justify-center transition-colors focus:ring-2 focus:ring-blue-400"
+                    className="w-6 h-6 sm:w-7 sm:h-7 rounded-xl bg-[#d5b263]/10 hover:bg-[#d5b263]/25 text-[#d5b263] flex items-center justify-center transition-all focus:ring-1 focus:ring-[#d5b263]/40 border border-[#d5b263]/20"
                     aria-label="Contact information help"
                   >
                     <Info className="w-4 h-4" />
                   </button>
                   {showContactInfo && (
-                    <div className="absolute left-0 sm:left-auto sm:right-0 top-full mt-2 w-72 sm:w-80 bg-white border-2 border-blue-200 rounded-xl shadow-xl p-4 z-50 animate-in fade-in slide-in-from-top-2 duration-200">
+                    <div className="absolute left-0 sm:left-auto sm:right-0 top-full mt-2 w-72 sm:w-80 bg-[#0c0c0e] border border-[#d5b263]/20 rounded-2xl shadow-2xl p-5 z-50 animate-in fade-in slide-in-from-top-2 duration-200">
                       <div className="flex items-start gap-3">
-                        <div className="flex-shrink-0 w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
-                          <Info className="w-5 h-5 text-blue-600" />
+                        <div className="flex-shrink-0 w-8 h-8 bg-[#d5b263]/10 rounded-xl flex items-center justify-center border border-[#d5b263]/20">
+                          <Info className="w-5 h-5 text-[#d5b263]" />
                         </div>
                         <div className="flex-1">
-                          <h3 className="font-semibold text-gray-900 mb-2 text-sm">
-                            Why we need your contact details
+                          <h3 className="font-black text-white mb-2.5 text-xs uppercase tracking-wider">
+                            Why we need contact details
                           </h3>
-                          <ul className="space-y-2 text-xs text-gray-600">
+                          <ul className="space-y-2 text-[11px] text-zinc-400">
                             <li className="flex items-start gap-2">
-                              <CheckCircle className="w-3.5 h-3.5 text-green-500 flex-shrink-0 mt-0.5" />
+                              <CheckCircle className="w-3.5 h-3.5 text-emerald-500 flex-shrink-0 mt-0.5" />
                               <span>To communicate important updates about your application</span>
                             </li>
                             <li className="flex items-start gap-2">
-                              <CheckCircle className="w-3.5 h-3.5 text-green-500 flex-shrink-0 mt-0.5" />
+                              <CheckCircle className="w-3.5 h-3.5 text-emerald-500 flex-shrink-0 mt-0.5" />
                               <span>For customer inquiries and support</span>
                             </li>
                             <li className="flex items-start gap-2">
-                              <Phone className="w-3.5 h-3.5 text-blue-500 flex-shrink-0 mt-0.5" />
-                              <span className="font-medium text-gray-700">A verification call will be made to confirm your phone number and verify restaurant details</span>
+                              <Phone className="w-3.5 h-3.5 text-[#d5b263] flex-shrink-0 mt-0.5" />
+                              <span className="font-bold text-zinc-350">A verification call will be made to confirm your phone number and verify restaurant details</span>
                             </li>
                           </ul>
-                          <p className="mt-3 text-xs text-gray-500 italic">
+                          <p className="mt-3 text-[10px] text-zinc-500 italic">
                             Your contact information is kept secure and never shared with third parties.
                           </p>
                         </div>
@@ -1228,22 +1234,20 @@ function ApplyForRestaurantPage() {
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
                 <div>
-                  <label htmlFor="phoneNumber" className="block text-sm font-medium text-gray-700 mb-2">
-                    Phone Number <span className="text-red-500">*</span>
+                  <label htmlFor="phoneNumber" className="block text-xs font-black text-zinc-400 uppercase tracking-wider mb-2">
+                    Phone Number <span className="text-[#d5b263]">*</span>
                   </label>
                   <div className="relative">
                     <div className="absolute left-3 top-1/2 -translate-y-1/2 flex items-center gap-2 pointer-events-none">
-                   <Image
-  src="/india.svg"
-  alt="India"
-  width={24}
-  height={16}
-  className="object-cover rounded-[2px]"
-/>
-
-
-                      <span className="text-gray-600 font-medium">+91</span>
-                      <span className="text-gray-300">|</span>
+                      <Image
+                        src="/india.svg"
+                        alt="India"
+                        width={20}
+                        height={14}
+                        className="object-cover rounded-[2px] opacity-90"
+                      />
+                      <span className="text-zinc-400 font-bold text-sm">+91</span>
+                      <span className="text-zinc-800">|</span>
                     </div>
                     <input
                       type="tel"
@@ -1255,29 +1259,29 @@ function ApplyForRestaurantPage() {
                       value={formData.phoneNumber}
                       onChange={handleInputChange}
                       onBlur={() => handleBlur('phoneNumber')}
-                      className={`w-full pl-28 pr-10 py-2.5 sm:py-3 border-2 rounded-xl focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-all text-base font-medium ${
-                        touched.phoneNumber && errors.phoneNumber ? 'border-red-500 bg-red-50' : 'border-gray-200 hover:border-gray-300'
+                      className={`w-full pl-24 pr-10 py-2.5 sm:py-3 bg-black/40 border-2 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#d5b263]/40 focus:border-[#d5b263]/40 transition-all text-base text-white font-black ${
+                        touched.phoneNumber && errors.phoneNumber ? 'border-rose-500/50 bg-rose-950/10 text-rose-300 focus:ring-rose-500/40 focus:border-rose-500/40' : 'border-zinc-850 hover:border-zinc-800'
                       }`}
                       placeholder="9876543210"
                     />
                   </div>
                   {touched.phoneNumber && errors.phoneNumber && (
-                    <p className="mt-1.5 text-sm text-red-600 flex items-start gap-1">
-                      <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
+                    <p className="mt-1.5 text-xs text-rose-450 flex items-start gap-1 font-semibold">
+                      <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5 text-rose-500" />
                       <span>{errors.phoneNumber}</span>
                     </p>
                   )}
                   {formData.phoneNumber && !errors.phoneNumber && touched.phoneNumber && (
-                    <p className="mt-1.5 text-sm text-green-600 flex items-center gap-1">
-                      <CheckCircle className="w-4 h-4" />
+                    <p className="mt-1.5 text-xs text-emerald-400 flex items-center gap-1 font-bold">
+                      <CheckCircle className="w-4 h-4 text-emerald-500" />
                       <span>Valid phone number</span>
                     </p>
                   )}
                 </div>
 
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                    Email Address <span className="text-red-500">*</span>
+                  <label htmlFor="email" className="block text-xs font-black text-zinc-400 uppercase tracking-wider mb-2">
+                    Email Address <span className="text-[#d5b263]">*</span>
                   </label>
                   <input
                     type="email"
@@ -1287,20 +1291,20 @@ function ApplyForRestaurantPage() {
                     value={formData.email}
                     onChange={handleInputChange}
                     onBlur={() => handleBlur('email')}
-                    className={`w-full px-4 py-2.5 sm:py-3 border rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-all text-base ${
-                      touched.email && errors.email ? 'border-red-500 bg-red-50' : 'border-gray-300'
+                    className={`w-full px-4 py-2.5 sm:py-3 bg-black/40 border rounded-xl focus:outline-none focus:ring-1 focus:ring-[#d5b263]/40 focus:border-[#d5b263]/40 transition-all text-base text-white ${
+                      touched.email && errors.email ? 'border-rose-500/50 bg-rose-950/10 text-rose-300 focus:ring-rose-500/40 focus:border-rose-500/40' : 'border-zinc-850 hover:border-zinc-800'
                     }`}
                     placeholder="contact@restaurant.com"
                   />
                   {touched.email && errors.email && (
-                    <p className="mt-1.5 text-sm text-red-600 flex items-start gap-1">
-                      <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
+                    <p className="mt-1.5 text-xs text-rose-450 flex items-start gap-1 font-semibold">
+                      <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5 text-rose-500" />
                       <span>{errors.email}</span>
                     </p>
                   )}
                   {formData.email && !errors.email && touched.email && (
-                    <p className="mt-1.5 text-sm text-green-600 flex items-center gap-1">
-                      <CheckCircle className="w-4 h-4" />
+                    <p className="mt-1.5 text-xs text-emerald-400 flex items-center gap-1 font-bold">
+                      <CheckCircle className="w-4 h-4 text-emerald-500" />
                       <span>Valid email address</span>
                     </p>
                   )}
@@ -1313,8 +1317,8 @@ function ApplyForRestaurantPage() {
             {currentStep === 4 && (
             <div className="space-y-4 sm:space-y-6">
               <div className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
-                <FileText className="w-5 h-5 sm:w-6 sm:h-6 text-red-600 flex-shrink-0" />
-                <h2 className="text-xl sm:text-2xl font-semibold text-gray-900">
+                <FileText className="w-5 h-5 sm:w-6 sm:h-6 text-[#d5b263] flex-shrink-0" />
+                <h2 className="text-xl sm:text-2xl font-black text-white uppercase tracking-wider">
                   Legal & Compliance
                 </h2>
                 <div className="relative group">
@@ -1322,36 +1326,36 @@ function ApplyForRestaurantPage() {
                     type="button"
                     onClick={() => setShowLegalInfo(!showLegalInfo)}
                     onBlur={() => setTimeout(() => setShowLegalInfo(false), 200)}
-                    className="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-blue-100 hover:bg-blue-200 text-blue-600 flex items-center justify-center transition-colors focus:ring-2 focus:ring-blue-400"
+                    className="w-6 h-6 sm:w-7 sm:h-7 rounded-xl bg-[#d5b263]/10 hover:bg-[#d5b263]/25 text-[#d5b263] flex items-center justify-center transition-all focus:ring-1 focus:ring-[#d5b263]/40 border border-[#d5b263]/20"
                     aria-label="Legal compliance information"
                   >
                     <Info className="w-4 h-4" />
                   </button>
                   {showLegalInfo && (
-                    <div className="absolute left-0 sm:left-auto sm:right-0 top-full mt-2 w-72 sm:w-80 bg-white border-2 border-blue-200 rounded-xl shadow-xl p-4 z-50 animate-in fade-in slide-in-from-top-2 duration-200">
+                    <div className="absolute left-0 sm:left-auto sm:right-0 top-full mt-2 w-72 sm:w-80 bg-[#0c0c0e] border border-[#d5b263]/20 rounded-2xl shadow-2xl p-5 z-50 animate-in fade-in slide-in-from-top-2 duration-200">
                       <div className="flex items-start gap-3">
-                        <div className="flex-shrink-0 w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
-                          <FileText className="w-5 h-5 text-blue-600" />
+                        <div className="flex-shrink-0 w-8 h-8 bg-[#d5b263]/10 rounded-xl flex items-center justify-center border border-[#d5b263]/20">
+                          <FileText className="w-5 h-5 text-[#d5b263]" />
                         </div>
                         <div className="flex-1">
-                          <h3 className="font-semibold text-gray-900 mb-2 text-sm">
+                          <h3 className="font-black text-white mb-2.5 text-xs uppercase tracking-wider">
                             Legal Requirements
                           </h3>
-                          <ul className="space-y-2 text-xs text-gray-600">
+                          <ul className="space-y-2 text-[11px] text-zinc-400">
                             <li className="flex items-start gap-2">
-                              <CheckCircle className="w-3.5 h-3.5 text-green-500 flex-shrink-0 mt-0.5" />
+                              <CheckCircle className="w-3.5 h-3.5 text-emerald-500 flex-shrink-0 mt-0.5" />
                               <span><strong>GST Number:</strong> Required for tax compliance and invoice generation</span>
                             </li>
                             <li className="flex items-start gap-2">
-                              <CheckCircle className="w-3.5 h-3.5 text-green-500 flex-shrink-0 mt-0.5" />
+                              <CheckCircle className="w-3.5 h-3.5 text-emerald-500 flex-shrink-0 mt-0.5" />
                               <span><strong>FSSAI License:</strong> Mandatory food safety certification for all food businesses in India</span>
                             </li>
                             <li className="flex items-start gap-2">
-                              <CheckCircle className="w-3.5 h-3.5 text-green-500 flex-shrink-0 mt-0.5" />
+                              <CheckCircle className="w-3.5 h-3.5 text-emerald-500 flex-shrink-0 mt-0.5" />
                               <span><strong>GST Rate:</strong> Default tax percentage applied to menu items</span>
                             </li>
                           </ul>
-                          <p className="mt-3 text-xs text-gray-500 italic">
+                          <p className="mt-3 text-[10px] text-zinc-500 italic">
                             These documents will be verified during the approval process.
                           </p>
                         </div>
@@ -1363,8 +1367,8 @@ function ApplyForRestaurantPage() {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
                 <div>
-                  <label htmlFor="gstNumber" className="block text-sm font-medium text-gray-700 mb-2">
-                    GST Number <span className="text-red-500">*</span>
+                  <label htmlFor="gstNumber" className="block text-xs font-black text-zinc-400 uppercase tracking-wider mb-2">
+                    GST Number <span className="text-[#d5b263]">*</span>
                   </label>
                   <input
                     type="text"
@@ -1375,29 +1379,29 @@ function ApplyForRestaurantPage() {
                     value={formData.gstNumber}
                     onChange={handleInputChange}
                     onBlur={() => handleBlur('gstNumber')}
-                    className={`w-full px-4 py-2.5 sm:py-3 border rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-all text-base uppercase ${
-                      touched.gstNumber && errors.gstNumber ? 'border-red-500 bg-red-50' : 'border-gray-300'
+                    className={`w-full px-4 py-2.5 sm:py-3 bg-black/40 border rounded-xl focus:outline-none focus:ring-1 focus:ring-[#d5b263]/40 focus:border-[#d5b263]/40 transition-all text-base text-white uppercase ${
+                      touched.gstNumber && errors.gstNumber ? 'border-rose-500/50 bg-rose-950/10 text-rose-300 focus:ring-rose-500/40 focus:border-rose-500/40' : 'border-zinc-850 hover:border-zinc-800'
                     }`}
                     placeholder="22AAAAA0000A1Z5"
                   />
                   {touched.gstNumber && errors.gstNumber && (
-                    <p className="mt-1.5 text-sm text-red-600 flex items-start gap-1">
-                      <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
+                    <p className="mt-1.5 text-xs text-rose-450 flex items-start gap-1 font-semibold">
+                      <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5 text-rose-500" />
                       <span>{errors.gstNumber}</span>
                     </p>
                   )}
                   {formData.gstNumber && !errors.gstNumber && touched.gstNumber && (
-                    <p className="mt-1.5 text-sm text-green-600 flex items-center gap-1">
-                      <CheckCircle className="w-4 h-4" />
+                    <p className="mt-1.5 text-xs text-emerald-400 flex items-center gap-1 font-bold">
+                      <CheckCircle className="w-4 h-4 text-emerald-500" />
                       <span>Valid GST number</span>
                     </p>
                   )}
-                  <p className="mt-1.5 text-xs text-gray-500">Format: 22AAAAA0000A1Z5</p>
+                  <p className="mt-1.5 text-[10px] text-zinc-500 font-bold uppercase tracking-wider">Format: 22AAAAA0000A1Z5</p>
                 </div>
 
                 <div>
-                  <label htmlFor="fssaiLicenseNumber" className="block text-sm font-medium text-gray-700 mb-2">
-                    FSSAI License <span className="text-red-500">*</span>
+                  <label htmlFor="fssaiLicenseNumber" className="block text-xs font-black text-zinc-400 uppercase tracking-wider mb-2">
+                    FSSAI License <span className="text-[#d5b263]">*</span>
                   </label>
                   <input
                     type="text"
@@ -1409,30 +1413,30 @@ function ApplyForRestaurantPage() {
                     value={formData.fssaiLicenseNumber}
                     onChange={handleInputChange}
                     onBlur={() => handleBlur('fssaiLicenseNumber')}
-                    className={`w-full px-4 py-2.5 sm:py-3 border rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-all text-base ${
-                      touched.fssaiLicenseNumber && errors.fssaiLicenseNumber ? 'border-red-500 bg-red-50' : 'border-gray-300'
+                    className={`w-full px-4 py-2.5 sm:py-3 bg-black/40 border rounded-xl focus:outline-none focus:ring-1 focus:ring-[#d5b263]/40 focus:border-[#d5b263]/40 transition-all text-base text-white ${
+                      touched.fssaiLicenseNumber && errors.fssaiLicenseNumber ? 'border-rose-500/50 bg-rose-950/10 text-rose-300 focus:ring-rose-500/40 focus:border-rose-500/40' : 'border-zinc-850 hover:border-zinc-800'
                     }`}
                     placeholder="12345678901234"
                   />
                   {touched.fssaiLicenseNumber && errors.fssaiLicenseNumber && (
-                    <p className="mt-1.5 text-sm text-red-600 flex items-start gap-1">
-                      <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
+                    <p className="mt-1.5 text-xs text-rose-450 flex items-start gap-1 font-semibold">
+                      <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5 text-rose-500" />
                       <span>{errors.fssaiLicenseNumber}</span>
                     </p>
                   )}
                   {formData.fssaiLicenseNumber && !errors.fssaiLicenseNumber && touched.fssaiLicenseNumber && (
-                    <p className="mt-1.5 text-sm text-green-600 flex items-center gap-1">
-                      <CheckCircle className="w-4 h-4" />
+                    <p className="mt-1.5 text-xs text-emerald-400 flex items-center gap-1 font-bold">
+                      <CheckCircle className="w-4 h-4 text-emerald-500" />
                       <span>Valid FSSAI license</span>
                     </p>
                   )}
-                  <p className="mt-1.5 text-xs text-gray-500">14-digit license number</p>
+                  <p className="mt-1.5 text-[10px] text-zinc-500 font-bold uppercase tracking-wider">14-digit license number</p>
                 </div>
               </div>
 
               <div>
-                <label htmlFor="defaultGstPercentage" className="block text-sm font-medium text-gray-700 mb-2">
-                  Default GST Percentage <span className="text-red-500">*</span>
+                <label htmlFor="defaultGstPercentage" className="block text-xs font-black text-zinc-400 uppercase tracking-wider mb-2">
+                  Default GST Percentage <span className="text-[#d5b263]">*</span>
                 </label>
                 <div className="relative max-w-xs">
                   <input
@@ -1446,33 +1450,33 @@ function ApplyForRestaurantPage() {
                     value={formData.defaultGstPercentage}
                     onChange={handleInputChange}
                     onBlur={() => handleBlur('defaultGstPercentage')}
-                    className={`w-full pl-4 pr-12 py-2.5 sm:py-3 border rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-all text-base ${
-                      touched.defaultGstPercentage && errors.defaultGstPercentage ? 'border-red-500 bg-red-50' : 'border-gray-300'
+                    className={`w-full pl-4 pr-12 py-2.5 sm:py-3 bg-black/40 border rounded-xl focus:outline-none focus:ring-1 focus:ring-[#d5b263]/40 focus:border-[#d5b263]/40 transition-all text-base text-white ${
+                      touched.defaultGstPercentage && errors.defaultGstPercentage ? 'border-rose-500/50 bg-rose-950/10 text-rose-300 focus:ring-rose-500/40 focus:border-rose-500/40' : 'border-zinc-850 hover:border-zinc-800'
                     }`}
                     placeholder="18.00"
                   />
-                  <Percent className="absolute right-3 top-2.5 sm:top-3 w-5 h-5 text-gray-400" />
+                  <Percent className="absolute right-3 top-3 w-5 h-5 text-zinc-400" />
                 </div>
                 {touched.defaultGstPercentage && errors.defaultGstPercentage && (
-                  <p className="mt-1.5 text-sm text-red-600 flex items-start gap-1">
-                    <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
+                  <p className="mt-1.5 text-xs text-rose-450 flex items-start gap-1 font-semibold">
+                    <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5 text-rose-500" />
                     <span>{errors.defaultGstPercentage}</span>
                   </p>
                 )}
-                <p className="mt-1.5 text-xs text-gray-500">Standard GST rates: 5%, 12%, 18%, or 28%</p>
+                <p className="mt-1.5 text-[10px] text-zinc-500 font-bold uppercase tracking-wider">Standard GST rates: 5%, 12%, 18%, or 28%</p>
               </div>
             </div>
             )}
 
             {/* Navigation Buttons */}
-            <div className="pt-6 border-t border-gray-200 flex items-center justify-between gap-4">
+            <div className="pt-6 border-t border-white/5 flex items-center justify-between gap-4">
               {currentStep > 1 && (
                 <button
                   type="button"
                   onClick={handlePrevious}
-                  className="flex items-center gap-2 px-6 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl font-semibold transition-all"
+                  className="flex items-center gap-2 px-6 py-3.5 bg-zinc-900 border border-zinc-800 hover:bg-zinc-850 text-zinc-400 hover:text-white rounded-xl font-black text-xs uppercase tracking-wider transition-all"
                 >
-                  <ArrowLeft className="w-5 h-5" />
+                  <ArrowLeft className="w-4 h-4" />
                   <span>Previous</span>
                 </button>
               )}
@@ -1481,25 +1485,25 @@ function ApplyForRestaurantPage() {
                 <button
                   type="button"
                   onClick={handleNext}
-                  className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-red-600 to-red-500 text-white rounded-xl font-bold hover:from-red-700 hover:to-red-600 shadow-lg hover:shadow-xl transition-all ml-auto"
+                  className="flex items-center gap-2 px-6 py-3.5 bg-[#d5b263] text-black hover:bg-[#c4a152] rounded-xl font-black text-xs uppercase tracking-wider shadow-lg shadow-[#d5b263]/10 active:scale-95 transition-all ml-auto"
                 >
                   <span>Next Step</span>
-                  <ArrowRight className="w-5 h-5" />
+                  <ArrowRight className="w-4 h-4" />
                 </button>
               ) : (
                 <button
                   type="submit"
                   disabled={loading}
-                  className="flex items-center justify-center gap-2 min-w-[200px] px-8 py-3.5 bg-gradient-to-r from-red-600 to-red-500 text-white rounded-xl font-bold hover:from-red-700 hover:to-red-600 shadow-lg hover:shadow-xl transition-all disabled:opacity-50 ml-auto"
+                  className="flex items-center justify-center gap-2 min-w-[200px] px-8 py-3.5 bg-[#d5b263] text-black hover:bg-[#c4a152] rounded-xl font-black text-xs uppercase tracking-wider shadow-lg shadow-[#d5b263]/10 active:scale-95 transition-all disabled:opacity-50 ml-auto"
                 >
                   {loading ? (
                     <>
-                      <Loader2 className="w-5 h-5 animate-spin" />
+                      <Loader2 className="w-4 h-4 animate-spin text-black" />
                       <span>Submitting...</span>
                     </>
                   ) : (
                     <>
-                      <CheckCircle className="w-5 h-5" />
+                      <CheckCircle className="w-4 h-4" />
                       <span>Submit Application</span>
                     </>
                   )}
@@ -1508,11 +1512,9 @@ function ApplyForRestaurantPage() {
             </div>
             
             {currentStep === 4 && (
-            
-              <p className="text-sm text-gray-500 mt-3">
-                By submitting, you agree to our <a href="/terms" target="_blank" rel="noopener noreferrer" className="text-sm text-red-600 underline hover:text-red-800">Terms and Conditions</a> and <a href="/privacy" target="_blank" rel="noopener noreferrer" className="text-sm text-red-600 underline hover:text-red-800">Privacy Policy</a> of Myquro Pvt Ltd.
+              <p className="text-xs text-zinc-500 mt-4 leading-relaxed">
+                By submitting, you agree to our <a href="/terms" target="_blank" rel="noopener noreferrer" className="text-xs text-[#d5b263] underline hover:text-[#c4a152] font-semibold">Terms and Conditions</a> and <a href="/privacy" target="_blank" rel="noopener noreferrer" className="text-xs text-[#d5b263] underline hover:text-[#c4a152] font-semibold">Privacy Policy</a> of Myquro Pvt Ltd.
               </p>
-            
             )}
           </form>
         </div>
@@ -1520,28 +1522,28 @@ function ApplyForRestaurantPage() {
 
       {/* Existing Application Modal */}
       {showExistingModal && existingApplication && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
-          <div className="relative bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-            <div className="sticky top-0 bg-white border-b border-gray-100 px-6 py-4 flex items-center justify-between rounded-t-2xl">
-              <h3 className="text-xl font-bold text-gray-900">Existing Restaurant Application</h3>
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
+          <div className="relative bg-[#0c0c0e]/95 backdrop-blur-2xl border border-white/10 rounded-3xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <div className="sticky top-0 bg-[#0c0c0e]/80 backdrop-blur-md border-b border-white/5 px-6 py-4 flex items-center justify-between rounded-t-2xl z-10">
+              <h3 className="text-sm font-black text-white uppercase tracking-wider">Existing Restaurant Application</h3>
               <button
                 onClick={() => router.push('/home')}
-                className="text-gray-400 hover:text-gray-600 transition-colors"
+                className="p-1.5 bg-white/5 border border-white/10 rounded-full text-zinc-400 hover:text-white transition-all active:scale-95 shadow-sm"
               >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
                 </svg>
               </button>
             </div>
 
             <div className="p-6 space-y-6">
               {/* Alert Banner */}
-              <div className="bg-amber-50 border-l-4 border-amber-400 p-4 rounded-r-lg">
+              <div className="bg-[#d5b263]/5 border border-[#d5b263]/15 p-4 rounded-xl">
                 <div className="flex items-start gap-3">
-                  <AlertCircle className="w-6 h-6 text-amber-600 flex-shrink-0 mt-0.5" />
+                  <AlertCircle className="w-5 h-5 text-[#d5b263] flex-shrink-0 mt-0.5" />
                   <div>
-                    <h4 className="text-amber-900 font-semibold mb-1">Application Already Submitted</h4>
-                    <p className="text-amber-800 text-sm">
+                    <h4 className="text-white font-black uppercase tracking-wider text-xs mb-1">Application Already Submitted</h4>
+                    <p className="text-zinc-400 text-xs leading-relaxed font-medium">
                       You have already submitted a restaurant application. You cannot submit another application while your current request is being processed.
                     </p>
                   </div>
@@ -1550,78 +1552,78 @@ function ApplyForRestaurantPage() {
 
               {/* Status Badge */}
               <div className="flex items-center gap-3">
-                <span className="text-sm font-medium text-gray-700">Current Status:</span>
+                <span className="text-xs font-black text-zinc-400 uppercase tracking-widest">Current Status:</span>
                 <span
-                  className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold ${
+                  className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] font-bold uppercase tracking-widest ${
                     existingApplication.status === 'approved'
-                      ? 'bg-green-100 text-green-800'
+                      ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'
                       : existingApplication.status === 'rejected'
-                      ? 'bg-red-100 text-red-800'
-                      : 'bg-yellow-100 text-yellow-800'
+                      ? 'bg-red-500/10 text-red-400 border border-red-500/20'
+                      : 'bg-[#d5b263]/10 text-[#d5b263] border border-[#d5b263]/20'
                   }`}
                 >
-                  {existingApplication.status === 'approved' && <CheckCircle2 className="w-4 h-4" />}
-                  {existingApplication.status === 'rejected' && <XCircle className="w-4 h-4" />}
-                  {existingApplication.status === 'pending' && <Clock className="w-4 h-4" />}
+                  {existingApplication.status === 'approved' && <CheckCircle2 className="w-3.5 h-3.5" />}
+                  {existingApplication.status === 'rejected' && <XCircle className="w-3.5 h-3.5" />}
+                  {existingApplication.status === 'pending' && <Clock className="w-3.5 h-3.5" />}
                   {existingApplication.status?.toUpperCase()}
                 </span>
               </div>
 
               {/* Restaurant Details */}
-              <div className="grid md:grid-cols-2 gap-6">
+              <div className="grid md:grid-cols-2 gap-6 bg-[#050506]/65 border border-white/5 rounded-2xl p-5">
                 <div className="space-y-4">
                   <div>
-                    <label className="text-sm font-medium text-gray-500">Restaurant Name</label>
-                    <p className="text-gray-900 font-semibold mt-1">{existingApplication.restaurantName}</p>
+                    <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest">Restaurant Name</label>
+                    <p className="text-white font-bold mt-1 text-sm">{existingApplication.restaurantName}</p>
                   </div>
                   <div>
-                    <label className="text-sm font-medium text-gray-500">Restaurant Type</label>
-                    <p className="text-gray-900 mt-1 capitalize">{existingApplication.restaurantType}</p>
+                    <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest">Restaurant Type</label>
+                    <p className="text-white font-bold mt-1 text-sm capitalize">{existingApplication.restaurantType}</p>
                   </div>
                   <div>
-                    <label className="text-sm font-medium text-gray-500">Phone Number</label>
-                    <p className="text-gray-900 mt-1">{existingApplication.phoneNumber}</p>
+                    <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest">Phone Number</label>
+                    <p className="text-white font-bold mt-1 text-sm">{existingApplication.phoneNumber}</p>
                   </div>
                   <div>
-                    <label className="text-sm font-medium text-gray-500">Email</label>
-                    <p className="text-gray-900 mt-1">{existingApplication.email}</p>
+                    <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest">Email</label>
+                    <p className="text-white font-bold mt-1 text-sm">{existingApplication.email}</p>
                   </div>
                 </div>
 
                 <div className="space-y-4">
                   <div>
-                    <label className="text-sm font-medium text-gray-500">Address</label>
-                    <p className="text-gray-900 mt-1">{existingApplication.restaurantAddress}</p>
+                    <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest">Address</label>
+                    <p className="text-white font-bold mt-1 text-sm">{existingApplication.restaurantAddress}</p>
                   </div>
                   <div>
-                    <label className="text-sm font-medium text-gray-500">City</label>
-                    <p className="text-gray-900 mt-1">{existingApplication.city}</p>
+                    <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest">City</label>
+                    <p className="text-white font-bold mt-1 text-sm">{existingApplication.city}</p>
                   </div>
                   <div>
-                    <label className="text-sm font-medium text-gray-500">State</label>
-                    <p className="text-gray-900 mt-1">{existingApplication.state}</p>
+                    <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest">State</label>
+                    <p className="text-white font-bold mt-1 text-sm">{existingApplication.state}</p>
                   </div>
                   <div>
-                    <label className="text-sm font-medium text-gray-500">Postal Code</label>
-                    <p className="text-gray-900 mt-1">{existingApplication.postalCode}</p>
+                    <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest">Postal Code</label>
+                    <p className="text-white font-bold mt-1 text-sm">{existingApplication.postalCode}</p>
                   </div>
                 </div>
               </div>
 
               {/* Admin Remark */}
               {existingApplication.adminRemark && (
-                <div className="bg-gray-50 rounded-lg p-4 border border-gray-200">
-                  <label className="text-sm font-medium text-gray-700 flex items-center gap-2 mb-2">
-                    <MessageSquare className="w-4 h-4" />
+                <div className="bg-[#121215]/60 rounded-xl p-4 border border-white/5">
+                  <label className="text-[10px] font-black text-zinc-400 uppercase tracking-widest flex items-center gap-1.5 mb-2">
+                    <MessageSquare className="w-3.5 h-3.5 text-[#d5b263]" />
                     Admin Remark
                   </label>
-                  <p className="text-gray-900 text-sm whitespace-pre-wrap">{existingApplication.adminRemark}</p>
+                  <p className="text-zinc-300 text-xs font-medium whitespace-pre-wrap">{existingApplication.adminRemark}</p>
                 </div>
               )}
 
               {/* Applied Date */}
               {existingApplication.createdAt && (
-                <div className="text-sm text-gray-500">
+                <div className="text-[10px] font-bold text-zinc-500 uppercase tracking-wider">
                   Applied on: {new Date(existingApplication.createdAt).toLocaleDateString('en-US', {
                     year: 'numeric',
                     month: 'long',
@@ -1633,29 +1635,29 @@ function ApplyForRestaurantPage() {
               )}
 
               {/* Action Buttons */}
-              <div className="flex gap-3 pt-4 border-t border-gray-200">
+              <div className="flex gap-3 pt-4 border-t border-white/5">
                 {existingApplication.status === 'approved' && (
                   <button
                     onClick={() => router.push('/dashboard')}
-                    className="flex-1 bg-green-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-700 transition-colors flex items-center justify-center gap-2"
+                    className="flex-1 bg-[#d5b263] text-black px-6 py-3.5 rounded-xl font-black text-xs uppercase tracking-wider hover:bg-[#c4a152] transition-colors flex items-center justify-center gap-2 shadow-lg shadow-[#d5b263]/10"
                   >
-                    <Building2 className="w-5 h-5" />
+                    <Building2 className="w-4 h-4" />
                     Go to Dashboard
                   </button>
                 )}
                 {existingApplication.status === 'pending' && (
-                  <div className="flex-1 bg-blue-50 text-blue-900 px-6 py-3 rounded-lg font-medium text-center border border-blue-200">
+                  <div className="flex-1 bg-[#d5b263]/10 text-[#d5b263] border border-[#d5b263]/20 px-6 py-3.5 rounded-xl font-bold text-xs uppercase tracking-wider text-center flex items-center justify-center">
                     Your application is under review
                   </div>
                 )}
                 {existingApplication.status === 'rejected' && (
-                  <div className="flex-1 bg-red-50 text-red-900 px-6 py-3 rounded-lg font-medium text-center border border-red-200">
+                  <div className="flex-1 bg-red-500/10 text-red-400 border border-red-500/20 px-6 py-3.5 rounded-xl font-bold text-xs uppercase tracking-wider text-center flex items-center justify-center">
                     Application was rejected. Please contact support.
                   </div>
                 )}
                 <button
                   onClick={() => router.push('/home')}
-                  className="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg font-semibold hover:bg-gray-50 transition-colors"
+                  className="px-6 py-3.5 bg-zinc-900 border border-zinc-800 text-zinc-400 hover:text-white rounded-xl font-black text-xs uppercase tracking-wider transition-colors"
                 >
                   Back to Home
                 </button>

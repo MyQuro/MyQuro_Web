@@ -30,7 +30,7 @@ const AdminModal = ({
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         onClick={onClose}
-                        className="absolute inset-0 bg-[#F8F9FC]/90 backdrop-blur-xl"
+                        className="absolute inset-0 bg-black/80 backdrop-blur-xl"
                     />
 
                     {/* Modal Container */}
@@ -40,23 +40,23 @@ const AdminModal = ({
                         exit={{ opacity: 0, scale: 0.95, y: 20 }}
                         transition={{ type: "spring", damping: 30, stiffness: 300 }}
                         className={`
-              relative w-full ${maxWidth} bg-white rounded-[48px] shadow-[0_40px_100px_rgba(0,0,0,0.1)] 
-              max-h-full overflow-y-auto border border-white flex flex-col
+              relative w-full ${maxWidth} bg-[#0c0c0e]/95 rounded-[48px] shadow-2xl 
+              max-h-full overflow-y-auto border border-white/5 flex flex-col backdrop-blur-xl
             `}
                     >
                         {/* Header */}
-                        <div className="p-8 lg:p-10 pb-6 flex justify-between items-center bg-white sticky top-0 z-10 border-b border-white/10">
+                        <div className="p-8 lg:p-10 pb-6 flex justify-between items-center bg-[#0c0c0e]/90 sticky top-0 z-10 border-b border-white/5">
                             <div className="space-y-1.5">
-                                <h3 className="text-2xl font-black text-slate-900 tracking-tight">{title}</h3>
+                                <h3 className="text-2xl font-black text-white tracking-tight">{title}</h3>
                                 {subtitle && (
-                                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">{subtitle}</p>
+                                    <p className="text-[10px] font-black text-[#d5b263] uppercase tracking-[0.2em]">{subtitle}</p>
                                 )}
                             </div>
                             <button
                                 onClick={onClose}
-                                className="w-12 h-12 bg-slate-50 hover:bg-slate-100 rounded-full flex items-center justify-center transition-all hover:rotate-90 duration-500 shadow-sm border border-slate-100 group"
+                                className="w-12 h-12 bg-zinc-950 hover:bg-zinc-900 rounded-full flex items-center justify-center transition-all hover:rotate-90 duration-500 shadow-md border border-white/5 group"
                             >
-                                <XCircle className="w-6 h-6 text-slate-300 group-hover:text-slate-900" />
+                                <XCircle className="w-6 h-6 text-zinc-500 group-hover:text-white" />
                             </button>
                         </div>
 

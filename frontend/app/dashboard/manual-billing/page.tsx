@@ -408,26 +408,26 @@ export default function ManualBillingPage() {
     }
 
     return (
-        <div className="flex flex-col h-[calc(100vh-80px)] overflow-hidden bg-white font-sans">
+        <div className="flex flex-col h-[calc(100vh-80px)] overflow-hidden bg-[#050506] font-sans">
             <div className="flex flex-1 overflow-hidden">
 
                 {/* LEFT SIDEBAR: Category Navigation - Compact Rail (Desktop Only) */}
                 <div
                     ref={sidebarRef}
-                    className="hidden lg:flex lg:w-20 shrink-0 border-r border-gray-100 flex-col overflow-y-auto scrollbar-hide bg-gray-50/60 transition-all duration-300"
+                    className="hidden lg:flex lg:w-20 shrink-0 border-r border-white/5 flex-col overflow-y-auto scrollbar-hide bg-[#0c0c0e]/40 backdrop-blur-md transition-all duration-300"
                 >
                     <div className="flex flex-col py-2">
                         <button
                             onClick={() => setActiveCategoryId('all')}
-                            className={`relative flex flex-col items-center gap-1 py-3 px-1 transition-all text-center group ${activeCategoryId === 'all' ? 'bg-white shadow-[0_1px_3px_rgba(0,0,0,0.05)]' : 'hover:bg-gray-100/80'
+                            className={`relative flex flex-col items-center gap-1 py-3 px-1 transition-all text-center group ${activeCategoryId === 'all' ? 'bg-zinc-950/60 border-l-2 border-[#d5b263]' : 'hover:bg-white/5'
                                 }`}
                         >
-                            {activeCategoryId === 'all' && <div className="absolute left-0 top-1 bottom-1 w-[3px] rounded-r-full bg-[#0c831f]" />}
-                            <div className={`w-10 h-10 rounded-xl overflow-hidden flex items-center justify-center shrink-0 transition-all duration-300 ${activeCategoryId === 'all' ? 'ring-2 ring-[#0c831f]/20 bg-white scale-105' : 'bg-white border border-gray-100 group-hover:scale-105'
+                            {activeCategoryId === 'all' && <div className="absolute left-0 top-1 bottom-1 w-[3px] rounded-r-full bg-[#d5b263]" />}
+                            <div className={`w-10 h-10 rounded-xl overflow-hidden flex items-center justify-center shrink-0 transition-all duration-300 ${activeCategoryId === 'all' ? 'bg-[#d5b263]/10 border border-[#d5b263]/25 scale-105' : 'bg-black/35 border border-zinc-800 group-hover:scale-105'
                                 }`}>
-                                <Utensils className={`${activeCategoryId === 'all' ? 'text-[#0c831f]' : 'text-gray-300'} w-5 h-5 transition-colors`} />
+                                <Utensils className={`${activeCategoryId === 'all' ? 'text-[#d5b263]' : 'text-gray-300'} w-5 h-5 transition-colors`} />
                             </div>
-                            <span className={`text-[9px] md:text-[10px] leading-tight font-black transition-colors px-1 uppercase tracking-tight ${activeCategoryId === 'all' ? 'text-[#0c831f]' : 'text-gray-500 group-hover:text-gray-800'
+                            <span className={`text-[9px] md:text-[10px] leading-tight font-black transition-colors px-1 uppercase tracking-tight ${activeCategoryId === 'all' ? 'text-[#d5b263]' : 'text-zinc-500 group-hover:text-white'
                                 }`}>All</span>
                         </button>
                         {filteredCategories.map((cat) => {
@@ -437,19 +437,19 @@ export default function ManualBillingPage() {
                                 <button
                                     key={cat.id}
                                     onClick={() => setActiveCategoryId(cat.id)}
-                                    className={`relative flex flex-col items-center gap-1 py-3 px-1 transition-all text-center group ${isActive ? 'bg-white shadow-[0_1px_3px_rgba(0,0,0,0.05)]' : 'hover:bg-gray-100/80'
+                                    className={`relative flex flex-col items-center gap-1 py-3 px-1 transition-all text-center group ${isActive ? 'bg-zinc-950/60 border-l-2 border-[#d5b263]' : 'hover:bg-white/5'
                                         }`}
                                 >
-                                    {isActive && <div className="absolute left-0 top-1 bottom-1 w-[3px] rounded-r-full bg-[#0c831f]" />}
-                                    <div className={`w-10 h-10 rounded-xl overflow-hidden flex items-center justify-center shrink-0 transition-all duration-300 ${isActive ? 'ring-2 ring-[#0c831f]/20 bg-white scale-105' : 'bg-white border border-gray-100 group-hover:scale-105'
+                                    {isActive && <div className="absolute left-0 top-1 bottom-1 w-[3px] rounded-r-full bg-[#d5b263]" />}
+                                    <div className={`w-10 h-10 rounded-xl overflow-hidden flex items-center justify-center shrink-0 transition-all duration-300 ${isActive ? 'bg-[#d5b263]/10 border border-[#d5b263]/25 scale-105' : 'bg-black/35 border border-zinc-800 group-hover:scale-105'
                                         }`}>
                                         {thumbUrl ? (
                                             <img src={thumbUrl} alt={cat.category} className="w-full h-full object-cover" />
                                         ) : (
-                                            <Utensils className={`${isActive ? 'text-[#0c831f]' : 'text-gray-300'} w-5 h-5 transition-colors`} />
+                                            <Utensils className={`${isActive ? 'text-[#d5b263]' : 'text-gray-300'} w-5 h-5 transition-colors`} />
                                         )}
                                     </div>
-                                    <span className={`text-[9px] md:text-[10px] leading-tight font-black transition-colors px-1 line-clamp-2 uppercase tracking-tight ${isActive ? 'text-[#0c831f]' : 'text-gray-500 group-hover:text-gray-800'
+                                    <span className={`text-[9px] md:text-[10px] leading-tight font-black transition-colors px-1 line-clamp-2 uppercase tracking-tight ${isActive ? 'text-[#d5b263]' : 'text-zinc-500 group-hover:text-white'
                                         }`}>
                                         {cat.category}
                                     </span>
@@ -460,12 +460,12 @@ export default function ManualBillingPage() {
                 </div>
 
                 {/* CENTER PANEL: Items Grid */}
-                <div className="flex-1 flex flex-col h-full bg-white min-w-0 relative">
+                <div className="flex-1 flex flex-col h-full bg-[#050506] min-w-0 relative">
                     {/* Category Navigation - Horizontal (Mobile/Tablet Only) */}
                     <div className="lg:hidden flex items-center bg-white border-b border-gray-100 sticky top-0 z-30 overflow-x-auto scrollbar-hide py-2 px-4 gap-2">
                         <button
                             onClick={() => setActiveCategoryId('all')}
-                            className={`px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest border transition-all whitespace-nowrap ${activeCategoryId === 'all' ? 'bg-[#0c831f] text-white border-[#0c831f] shadow-md shadow-green-100' : 'bg-gray-50 text-gray-500 border-gray-100 hover:bg-white'
+                            className={`px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest border transition-all whitespace-nowrap ${activeCategoryId === 'all' ? 'bg-[#d5b263] text-white border-[#d5b263] shadow-md shadow-[#d5b263]/5' : 'bg-gray-50 text-gray-500 border-gray-100 hover:bg-white'
                                 }`}
                         >
                             All
@@ -474,22 +474,22 @@ export default function ManualBillingPage() {
                             <button
                                 key={cat.id}
                                 onClick={() => setActiveCategoryId(cat.id)}
-                                className={`px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest border transition-all whitespace-nowrap ${activeCategoryId === cat.id ? 'bg-[#0c831f] text-white border-[#0c831f] shadow-md shadow-green-100' : 'bg-gray-50 text-gray-500 border-gray-100 hover:bg-white'
+                                className={`px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest border transition-all whitespace-nowrap ${activeCategoryId === cat.id ? 'bg-[#d5b263] text-white border-[#d5b263] shadow-md shadow-[#d5b263]/5' : 'bg-gray-50 text-gray-500 border-gray-100 hover:bg-white'
                                     }`}
                             >
                                 {cat.category}
                             </button>
                         ))}
                     </div>
-                    <div className="px-6 py-3 border-b border-gray-100 flex items-center gap-4 bg-white sticky top-[52px] lg:top-0 z-20">
+                    <div className="px-6 py-3 border-b border-white/5 flex items-center gap-4 bg-[#0c0c0e]/80 backdrop-blur-md sticky top-[52px] lg:top-0 z-20">
                         <div className="relative flex-1 group">
-                            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4 group-focus-within:text-[#0c831f] transition-colors" />
+                            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4 group-focus-within:text-[#d5b263] transition-colors" />
                             <input
                                 type="text"
                                 placeholder="Search items..."
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
-                                className="w-full pl-11 pr-4 py-2 bg-gray-50 border border-transparent focus:border-[#0c831f]/20 focus:bg-white rounded-xl text-sm font-bold focus:outline-none transition-all"
+                                className="w-full pl-11 pr-4 py-2 bg-gray-50 border border-transparent focus:border-[#d5b263]/20 focus:bg-white rounded-xl text-sm font-bold focus:outline-none transition-all"
                             />
                         </div>
                         <div className="hidden sm:flex items-center bg-gray-100 p-0.5 rounded-xl shrink-0">
@@ -497,7 +497,7 @@ export default function ManualBillingPage() {
                                 <button
                                     key={f}
                                     onClick={() => setDietaryFilter(f)}
-                                    className={`px-3 py-1.5 rounded-lg text-[10px] font-black transition-all ${dietaryFilter === f ? 'bg-white text-[#0c831f] shadow-sm' : 'text-gray-500 hover:text-gray-700'
+                                    className={`px-3 py-1.5 rounded-lg text-[10px] font-black transition-all ${dietaryFilter === f ? 'bg-white text-[#d5b263] shadow-sm' : 'text-gray-500 hover:text-gray-700'
                                         }`}
                                 >
                                     {f.toUpperCase()}
@@ -507,12 +507,12 @@ export default function ManualBillingPage() {
                     </div>
 
                     {/* Items Grid */}
-                    <div ref={contentPanelRef} className="flex-1 overflow-y-auto p-4 space-y-6 scrollbar-hide bg-gray-50/30">
+                    <div ref={contentPanelRef} className="flex-1 overflow-y-auto p-4 space-y-6 scrollbar-hide bg-black/10">
                         {filteredCategories.filter(cat => activeCategoryId === 'all' || cat.id === activeCategoryId).map(cat => (
                             <div key={cat.id} className="animate-in fade-in duration-300">
-                                <h3 className="text-xs font-black text-gray-400 uppercase tracking-widest mb-4 px-2 flex items-center gap-2">
+                                <h3 className="text-xs font-black text-white/90 uppercase tracking-widest mb-4 px-2 flex items-center gap-2">
                                     {cat.category}
-                                    <span className="text-[10px] font-bold text-gray-400 bg-gray-100 px-1.5 py-0.5 rounded-lg">{cat.items.length}</span>
+                                    <span className="text-[10px] font-bold text-[#d5b263] bg-[#d5b263]/10 border border-[#d5b263]/20 px-1.5 py-0.5 rounded-lg">{cat.items.length}</span>
                                 </h3>
                                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3">
                                     {cat.items.map(item => {
@@ -522,7 +522,7 @@ export default function ManualBillingPage() {
                                         return (
                                             <div
                                                 key={item.id}
-                                                className={`group relative bg-white rounded-2xl border ${inCartCount > 0 ? 'border-[#0c831f]/30 shadow-md ring-1 ring-[#0c831f]/5' : 'border-gray-100 shadow-sm'} p-3 flex flex-col h-full hover:shadow-xl hover:border-[#0c831f]/20 transition-all duration-300 overflow-hidden`}
+                                                className={`group relative bg-white rounded-2xl border ${inCartCount > 0 ? 'border-[#d5b263]/30 shadow-md ring-1 ring-[#d5b263]/5' : 'border-gray-100 shadow-sm'} p-3 flex flex-col h-full hover:shadow-xl hover:border-[#d5b263]/20 transition-all duration-300 overflow-hidden`}
                                             >
                                                 {/* Category Badge if 'All' is selected */}
                                                 {activeCategoryId === 'all' && (
@@ -539,7 +539,7 @@ export default function ManualBillingPage() {
                                                 </div>
 
                                                 <div className="flex-1 mb-3">
-                                                    <h4 className="font-black text-gray-800 text-[12px] leading-tight line-clamp-2 mb-0.5 group-hover:text-[#0c831f] transition-colors">
+                                                    <h4 className="font-black text-gray-800 text-[12px] leading-tight line-clamp-2 mb-0.5 group-hover:text-[#d5b263] transition-colors">
                                                         {item.name}
                                                     </h4>
                                                     {item.description && (
@@ -560,12 +560,12 @@ export default function ManualBillingPage() {
                                                     {inCartCount === 0 ? (
                                                         <button
                                                             onClick={() => handleItemClick(item, cat.id)}
-                                                            className="w-full h-8 bg-white text-[#0c831f] font-black text-[10px] rounded-xl border border-[#0c831f]/30 shadow-sm hover:bg-[#0c831f] hover:text-white transition-all flex items-center justify-center tracking-widest"
+                                                            className="w-full h-8 bg-white text-[#d5b263] font-black text-[10px] rounded-xl border border-[#d5b263]/30 shadow-sm hover:bg-[#d5b263] hover:text-white transition-all flex items-center justify-center tracking-widest"
                                                         >
                                                             ADD
                                                         </button>
                                                     ) : (
-                                                        <div className="flex items-center justify-between w-full h-8 bg-[#0c831f] rounded-xl overflow-hidden text-white font-black text-[10px] shadow-sm border border-[#0c831f]">
+                                                        <div className="flex items-center justify-between w-full h-8 bg-[#d5b263] rounded-xl overflow-hidden text-black font-black text-[10px] shadow-sm border border-[#d5b263]">
                                                             <button onClick={(e) => {
                                                                 e.stopPropagation();
                                                                 const entry = cartItems.find(ci => ci.menuItemId === item.id);
@@ -596,12 +596,12 @@ export default function ManualBillingPage() {
                         <div className="lg:hidden sticky bottom-4 left-6 right-6 z-40 animate-in slide-in-from-bottom-4 duration-500">
                             <button
                                 onClick={() => setIsCartOpen(true)}
-                                className="w-full bg-[#0c831f] text-white p-4 rounded-3xl shadow-[0_10px_30px_rgba(12,131,31,0.3)] flex items-center justify-between group active:scale-95 transition-all overflow-hidden"
+                                className="w-full bg-[#d5b263] text-black p-4 rounded-3xl shadow-[0_10px_30px_rgba(213,178,99,0.3)] flex items-center justify-between group active:scale-95 transition-all overflow-hidden"
                             >
                                 <div className="flex items-center gap-4">
                                     <div className="w-10 h-10 bg-white/20 rounded-2xl flex items-center justify-center relative">
                                         <ShoppingCart className="w-5 h-5 text-white" />
-                                        <span className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-white text-[#0c831f] rounded-full text-[10px] font-black flex items-center justify-center shadow-sm">
+                                        <span className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-white text-[#d5b263] rounded-full text-[10px] font-black flex items-center justify-center shadow-sm">
                                             {cartItems.reduce((s, i) => s + i.quantity, 0)}
                                         </span>
                                     </div>
@@ -628,27 +628,27 @@ export default function ManualBillingPage() {
                 `} onClick={() => setIsCartOpen(false)}>
                     <div
                         className={`
-                            ml-auto w-full max-w-[400px] h-full bg-gray-50 flex flex-col shadow-[0_0_40px_rgba(0,0,0,0.1)] 
+                            ml-auto w-full max-w-[400px] h-full bg-[#0c0c0e]/95 border-l border-white/5 flex flex-col shadow-[0_0_40px_rgba(0,0,0,0.1)] 
                             transition-transform duration-300 transform
                             ${isCartOpen ? 'translate-x-0' : 'translate-x-full lg:translate-x-0'}
                         `}
                         onClick={e => e.stopPropagation()}
                     >
-                        <div className="p-4 bg-white border-b border-gray-100 flex items-center justify-between shadow-sm">
+                        <div className="p-4 bg-[#0c0c0e]/90 border-b border-white/5 flex items-center justify-between shadow-sm">
                             <div className="flex items-center gap-3">
-                                <div className="w-10 h-10 bg-red-500 rounded-xl flex items-center justify-center shadow-lg shadow-red-100/50">
-                                    <ShoppingCart className="text-white w-5 h-5" />
+                                <div className="w-10 h-10 bg-[#d5b263]/10 border border-[#d5b263]/25 rounded-xl flex items-center justify-center">
+                                    <ShoppingCart className="text-[#d5b263] w-5 h-5" />
                                 </div>
                                 <div>
-                                    <h2 className="text-base font-black text-gray-900 leading-tight">Your Cart</h2>
-                                    <p className="text-[9px] font-bold text-gray-400 uppercase tracking-wider">{cartItems.length} Items</p>
+                                    <h2 className="text-base font-black text-white leading-tight">Your Cart</h2>
+                                    <p className="text-[9px] font-bold text-zinc-550 uppercase tracking-wider">{cartItems.length} Items</p>
                                 </div>
                             </div>
                             <div className="flex items-center gap-2">
                                 {cartItems.length > 0 && (
                                     <button
                                         onClick={() => { setCartItems([]); setPlacedOrderDetails(null); }}
-                                        className="group flex items-center gap-1.5 px-2.5 py-1.5 bg-red-50 hover:bg-red-100 text-red-600 rounded-lg transition-all"
+                                        className="group flex items-center gap-1.5 px-2.5 py-1.5 bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/20 rounded-lg transition-all"
                                     >
                                         <X size={14} strokeWidth={3} />
                                         <span className="text-[9px] font-black uppercase tracking-widest hidden md:block">Clear</span>
@@ -675,13 +675,13 @@ export default function ManualBillingPage() {
                             ) : (
                                 <div className="space-y-2 animate-in fade-in duration-300">
                                     {cartItems.map(ci => (
-                                        <div key={ci.cartItemId} className="bg-white p-2.5 rounded-xl border border-gray-100 shadow-sm group hover:shadow-md hover:border-[#0c831f]/20 transition-all duration-300">
+                                        <div key={ci.cartItemId} className="bg-white p-2.5 rounded-xl border border-gray-100 shadow-sm group hover:shadow-md hover:border-[#d5b263]/20 transition-all duration-300">
                                             <div className="flex justify-between items-center gap-2">
                                                 <div className="flex-1 min-w-0">
                                                     <div className="flex items-center gap-1.5">
                                                         <VegIndicator isVeg={ci.isVeg} />
                                                         <div className="min-w-0">
-                                                            <span className="text-xs font-black text-gray-900 truncate block leading-tight group-hover:text-[#0c831f] transition-colors">{ci.name}</span>
+                                                            <span className="text-xs font-black text-gray-900 truncate block leading-tight group-hover:text-[#d5b263] transition-colors">{ci.name}</span>
                                                             {ci.variantName && <p className="text-[8px] font-bold text-gray-400 mt-0.5">Size: {ci.variantName}</p>}
                                                         </div>
                                                     </div>
@@ -707,12 +707,12 @@ export default function ManualBillingPage() {
                                                         <span className="w-5 text-center text-[11px] font-black text-gray-900 leading-none">{ci.quantity}</span>
                                                         <button
                                                             onClick={() => updateCartItemQuantity(ci.cartItemId, 1)}
-                                                            className="w-5.5 h-5.5 flex items-center justify-center hover:bg-green-50 text-gray-400 hover:text-green-600 rounded-md transition-all active:scale-75"
+                                                            className="w-5.5 h-5.5 flex items-center justify-center hover:bg-zinc-800 text-zinc-500 hover:text-white rounded-md transition-all active:scale-75"
                                                         >
                                                             <Plus size={10} strokeWidth={3} />
                                                         </button>
                                                     </div>
-                                                    <span className="w-14 text-right text-xs font-black text-gray-800 tracking-tight leading-none">
+                                                    <span className="w-14 text-right text-xs font-black text-white tracking-tight leading-none">
                                                         ₹{((ci.unitPrice * ci.quantity + ci.extras.reduce((s, e) => s + e.price * e.quantity, 0) * ci.quantity) / 100).toFixed(0)}
                                                     </span>
                                                 </div>
@@ -724,25 +724,25 @@ export default function ManualBillingPage() {
                         </div>
 
                         {/* Bill Summary: Receipt Style */}
-                        <div className="p-4 bg-white border-t border-gray-100 space-y-3 shadow-[0_-10px_40px_rgba(0,0,0,0.02)]">
-                            <div className="bg-gray-50/50 rounded-2xl p-4 space-y-3 border border-gray-100 relative overflow-hidden">
+                        <div className="p-4 bg-[#0c0c0e]/95 border-t border-white/5 space-y-3">
+                            <div className="bg-[#050506] rounded-2xl p-4 space-y-3 border border-white/5 relative overflow-hidden">
                                 <div className="absolute top-0 left-0 right-0 h-1 flex justify-between px-2">
-                                    {[...Array(20)].map((_, i) => <div key={i} className="w-1.5 h-1.5 rounded-full bg-white -mt-1" />)}
+                                    {[...Array(20)].map((_, i) => <div key={i} className="w-1.5 h-1.5 rounded-full bg-[#0c0c0e] -mt-1" />)}
                                 </div>
                                 <div className="flex justify-between items-center cursor-pointer select-none" onClick={() => setShowBillDetails(!showBillDetails)}>
-                                    <h3 className="text-[10px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-1.5 hover:text-gray-600 transition-colors">
+                                    <h3 className="text-[10px] font-black text-zinc-500 uppercase tracking-widest flex items-center gap-1.5 hover:text-zinc-300 transition-colors">
                                         Bill Details
                                         <ChevronDown size={12} className={`transition-transform duration-200 ${showBillDetails ? 'rotate-180' : ''}`} />
                                     </h3>
-                                    <div className="h-px flex-1 mx-3 bg-gray-200/50" />
+                                    <div className="h-px flex-1 mx-3 bg-white/5" />
                                     {!showBillDetails && (
-                                        <span className="text-[10px] font-black text-gray-500">{formatPrice(subtotal)}</span>
+                                        <span className="text-[10px] font-black text-zinc-450">{formatPrice(subtotal)}</span>
                                     )}
                                 </div>
 
                                 {showBillDetails && (
                                     <div className="space-y-2 pt-1 animate-in slide-in-from-top-2 duration-200">
-                                        <div className="flex justify-between text-xs font-bold text-gray-600">
+                                        <div className="flex justify-between text-xs font-bold text-zinc-400">
                                             <span>Subtotal</span>
                                             <span>{formatPrice(subtotal)}</span>
                                         </div>
@@ -751,15 +751,15 @@ export default function ManualBillingPage() {
                                         <div className="space-y-1.5 pt-1">
                                             <div className="flex justify-between items-center">
                                                 <div className="flex items-center gap-2">
-                                                    <div className="w-5 h-5 bg-red-50 rounded-md flex items-center justify-center">
-                                                        <Tag size={10} className="text-red-500" />
+                                                    <div className="w-5 h-5 bg-[#d5b263]/10 border border-[#d5b263]/25 rounded-md flex items-center justify-center">
+                                                        <Tag size={10} className="text-[#d5b263]" />
                                                     </div>
-                                                    <span className="text-[11px] font-black text-gray-700">Discounts</span>
+                                                    <span className="text-[11px] font-black text-zinc-300">Discounts</span>
                                                 </div>
                                                 <select
                                                     value={discountType}
                                                     onChange={e => setDiscountType(e.target.value as any)}
-                                                    className="bg-white border border-gray-200 rounded-md px-2 py-0.5 text-[9px] font-black outline-none focus:ring-1 focus:ring-[#0c831f]/20 cursor-pointer"
+                                                    className="bg-white border border-gray-200 rounded-md px-2 py-0.5 text-[9px] font-black outline-none focus:ring-1 focus:ring-[#d5b263]/20 cursor-pointer"
                                                 >
                                                     <option value="none">Apply</option>
                                                     <option value="percentage">%</option>
@@ -767,13 +767,13 @@ export default function ManualBillingPage() {
                                                 </select>
                                             </div>
                                             {discountType !== 'none' && (
-                                                <div className="flex items-center justify-between bg-white p-1.5 rounded-lg border border-[#0c831f]/20 animate-in slide-in-from-right-2 duration-300">
-                                                    <span className="text-[9px] font-black text-[#0c831f] uppercase tracking-widest pl-1">Value</span>
+                                                <div className="flex items-center justify-between bg-white p-1.5 rounded-lg border border-[#d5b263]/20 animate-in slide-in-from-right-2 duration-300">
+                                                    <span className="text-[9px] font-black text-[#d5b263] uppercase tracking-widest pl-1">Value</span>
                                                     <input
                                                         type="number"
                                                         value={discountValue || ''}
                                                         onChange={e => setDiscountValue(Number(e.target.value))}
-                                                        className="w-16 bg-gray-50 border-none rounded-md px-2 py-1 text-xs font-black text-right focus:ring-0"
+                                                        className="w-16 bg-[#050506] border border-zinc-800 rounded-md px-2 py-1 text-xs font-black text-right text-white focus:ring-0"
                                                         placeholder="0"
                                                         autoFocus
                                                     />
@@ -789,7 +789,7 @@ export default function ManualBillingPage() {
                                                     placeholder="PROMO CODE"
                                                     value={promoCode}
                                                     onChange={e => setPromoCode(e.target.value.toUpperCase())}
-                                                    className="flex-1 bg-white border border-gray-200 rounded-lg px-3 py-2 text-[10px] font-black outline-none focus:ring-2 focus:ring-[#0c831f]/20 transition-all placeholder:text-gray-300"
+                                                    className="flex-1 bg-white border border-gray-200 rounded-lg px-3 py-2 text-[10px] font-black outline-none focus:ring-2 focus:ring-[#d5b263]/20 transition-all placeholder:text-gray-300"
                                                 />
                                                 <button
                                                     onClick={handleApplyPromo}
@@ -801,14 +801,14 @@ export default function ManualBillingPage() {
                                             </div>
 
                                             {appliedOffer && (
-                                                <div className="flex items-center justify-between bg-[#0c831f]/10 p-2 rounded-xl border border-[#0c831f]/20 animate-in zoom-in-95 duration-300">
+                                                <div className="flex items-center justify-between bg-[#d5b263]/10 p-2 rounded-xl border border-[#d5b263]/20 animate-in zoom-in-95 duration-300">
                                                     <div className="flex items-center gap-2">
-                                                        <div className="w-6 h-6 bg-[#0c831f] rounded-lg flex items-center justify-center shadow-lg shadow-[#0c831f]/10">
+                                                        <div className="w-6 h-6 bg-[#d5b263] rounded-lg flex items-center justify-center text-black shadow-lg shadow-[#d5b263]/10">
                                                             <Tag size={12} className="text-white" />
                                                         </div>
                                                         <div>
                                                             <p className="text-[10px] font-black text-gray-900 leading-none">{appliedOffer.name}</p>
-                                                            <p className="text-[8px] font-bold text-[#0c831f] uppercase tracking-tighter mt-0.5">Applied Successfully</p>
+                                                            <p className="text-[8px] font-bold text-[#d5b263] uppercase tracking-tighter mt-0.5">Applied Successfully</p>
                                                         </div>
                                                     </div>
                                                     <button
@@ -824,13 +824,13 @@ export default function ManualBillingPage() {
                                         {totalDiscount > 0 && (
                                             <div className="space-y-1.5 pt-1">
                                                 {offerDiscount > 0 && appliedOffer && (
-                                                    <div className="flex justify-between text-[#0c831f] font-black text-[10px] bg-[#0c831f]/5 px-2 py-1 rounded-lg">
+                                                    <div className="flex justify-between text-[#d5b263] font-black text-[10px] bg-[#d5b263]/5 px-2 py-1 rounded-lg">
                                                         <span className="uppercase tracking-widest">{appliedOffer.offerType === 'buy_1_get_1' ? 'BOGO FREE' : 'OFFER'}</span>
                                                         <span>-{formatPrice(offerDiscount)}</span>
                                                     </div>
                                                 )}
                                                 {manualDiscount > 0 && (
-                                                    <div className="flex justify-between text-orange-600 font-black text-[10px] bg-orange-50 px-2 py-1 rounded-lg">
+                                                    <div className="flex justify-between text-amber-400 font-black text-[10px] bg-amber-500/10 border border-amber-500/20 px-2 py-1 rounded-lg">
                                                         <span className="uppercase tracking-widest">Manual Discount</span>
                                                         <span>-{formatPrice(manualDiscount)}</span>
                                                     </div>
@@ -838,16 +838,16 @@ export default function ManualBillingPage() {
                                             </div>
                                         )}
 
-                                        <div className="flex justify-between text-[11px] font-bold text-gray-500">
+                                        <div className="flex justify-between text-[11px] font-bold text-zinc-450">
                                             <span>GST ({gstRateRaw}%)</span>
                                             <span>{formatPrice(gst)}</span>
                                         </div>
                                     </div>
                                 )}
 
-                                <div className="pt-3 border-t border-dashed border-gray-200 flex justify-between items-center group">
-                                    <span className="text-sm font-black text-gray-800">To Pay</span>
-                                    <span className="text-2xl font-black text-[#0c831f] tabular-nums group-hover:scale-105 transition-transform duration-300">
+                                <div className="pt-3 border-t border-dashed border-white/5 flex justify-between items-center group">
+                                    <span className="text-sm font-black text-white">To Pay</span>
+                                    <span className="text-2xl font-black text-[#d5b263] tabular-nums group-hover:scale-105 transition-transform duration-300">
                                         {formatPrice(grandTotal)}
                                     </span>
                                 </div>
@@ -857,7 +857,7 @@ export default function ManualBillingPage() {
                                 <button
                                     onClick={() => handleKOT('kot')}
                                     disabled={processingMode !== 'none' || cartItems.length === 0 || !!placedOrderDetails}
-                                    className="flex-[0.8] h-11 bg-white border-2 border-orange-500 text-orange-600 hover:bg-orange-50 rounded-lg font-black text-[11px] active:scale-95 transition-all disabled:opacity-50 disabled:active:scale-100 flex flex-col items-center justify-center gap-0.5 shadow-sm overflow-hidden"
+                                    className="flex-[0.8] h-11 bg-amber-500/10 border border-amber-500/20 text-amber-400 hover:bg-amber-500/20 rounded-xl font-black text-[11px] active:scale-95 transition-all disabled:opacity-50 disabled:active:scale-100 flex flex-col items-center justify-center gap-0.5 shadow-sm overflow-hidden"
                                 >
                                     {processingMode === 'kot' ? (
                                         <Loader2 className="w-4 h-4 animate-spin" />
@@ -871,7 +871,7 @@ export default function ManualBillingPage() {
                                 <button
                                     onClick={() => handleKOT('complete')}
                                     disabled={processingMode !== 'none' || cartItems.length === 0}
-                                    className="flex-[1.2] h-11 bg-[#1c1c1e] hover:bg-[#2c2c2e] border border-[#3c3c3e] text-white rounded-lg font-black text-[10px] shadow-sm active:scale-[0.98] transition-all disabled:opacity-50 flex flex-col items-center justify-center gap-0.5"
+                                    className="flex-[1.2] h-11 bg-zinc-900 border border-zinc-800 text-zinc-300 hover:bg-zinc-800 hover:text-white rounded-xl font-black text-[10px] shadow-sm active:scale-[0.98] transition-all disabled:opacity-50 flex flex-col items-center justify-center gap-0.5"
                                 >
                                     {processingMode === 'complete' ? (
                                         <Loader2 className="w-4 h-4 animate-spin" />
@@ -885,7 +885,7 @@ export default function ManualBillingPage() {
                                 <button
                                     onClick={() => handleKOT('bill')}
                                     disabled={processingMode !== 'none' || cartItems.length === 0}
-                                    className="flex-[1.7] h-11 bg-red-600 hover:bg-red-700 text-white rounded-lg font-black text-[11px] shadow-md shadow-red-100 active:scale-[0.98] transition-all disabled:opacity-50 disabled:active:scale-100 flex items-center justify-center gap-2 relative overflow-hidden"
+                                    className="flex-[1.7] h-11 bg-[#d5b263] hover:bg-[#c4a152] text-black rounded-xl font-black text-[11px] shadow-md shadow-[#d5b263]/10 active:scale-[0.98] transition-all disabled:opacity-50 disabled:active:scale-100 flex items-center justify-center gap-2 relative overflow-hidden"
                                 >
                                     {processingMode === 'bill' ? (
                                         <Loader2 className="w-4 h-4 animate-spin" />

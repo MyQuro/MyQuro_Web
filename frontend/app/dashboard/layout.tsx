@@ -38,6 +38,7 @@ import { authClient } from '@/lib/auth-client';
 import { DashboardProvider, useDashboard } from '@/lib/dashboard-context';
 import { getPlan, BASIC_PLAN_ROUTES, type Plan } from '@/lib/plan-store';
 import toast from 'react-hot-toast';
+import { useWebSocket } from '@/lib/websocket-context';
 
 
 // --- Loading Screen ---
@@ -115,6 +116,7 @@ function DashboardContent({ children }: { children: React.ReactNode }) {
   const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
   const [isIOS, setIsIOS] = useState(false);
   const [isAlreadyInstalled, setIsAlreadyInstalled] = useState(false);
+  const { socket } = useWebSocket();
   const router = useRouter();
   const pathname = usePathname();
   const { user, restaurant, isLoading } = useDashboard();
@@ -126,7 +128,29 @@ function DashboardContent({ children }: { children: React.ReactNode }) {
     }
   }, [restaurant?.id, restaurant?.plan]);
 
-  // Listen for plan changes (from admin panel on same browser)
+  // Listen for plan changes via WebSocket
+  useEffect(() => {
+    if (!socket || !restaurant?.id) return;
+
+    const handlePlanUpdated = (data: { restaurantId: string; plan: Plan }) => {
+      if (data.restaurantId === restaurant.id) {
+        setPlanState(data.plan);
+        toast.success(`Plan updated in real-time to ${data.plan.toUpperCase()}!`, { icon: '👑' });
+        
+        // Dispatch local event for components listening locally
+        window.dispatchEvent(new CustomEvent('myquro_plan_changed', { 
+          detail: { restaurantId: data.restaurantId, plan: data.plan } 
+        }));
+      }
+    };
+
+    socket.on('plan-updated', handlePlanUpdated);
+    return () => {
+      socket.off('plan-updated', handlePlanUpdated);
+    };
+  }, [socket, restaurant?.id]);
+
+  // Listen for plan changes (from admin panel on same browser tab fallback)
   useEffect(() => {
     const handler = (e: Event) => {
       const ev = e as CustomEvent;

@@ -29,12 +29,12 @@ interface RestaurantsTabProps {
 // Plan badge component
 const PlanBadge = ({ plan }: { plan: Plan }) => (
     plan === 'premium' ? (
-        <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-[#d5b263]/10 border border-[#d5b263]/30 text-[#d5b263] rounded-full text-[9px] font-black uppercase tracking-widest">
+        <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-[#d5b263]/10 border border-[#d5b263]/20 text-[#d5b263] rounded-full text-[9px] font-black uppercase tracking-widest">
             <Crown size={9} />
             Premium
         </span>
     ) : (
-        <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-slate-100 border border-slate-200 text-slate-500 rounded-full text-[9px] font-black uppercase tracking-widest">
+        <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-zinc-950 border border-zinc-800 text-zinc-400 rounded-full text-[9px] font-black uppercase tracking-widest">
             <Zap size={9} />
             Basic
         </span>
@@ -64,40 +64,40 @@ const PlanSwitcher = ({ restaurantId, initialPlan }: { restaurantId: string; ini
     };
 
     return (
-        <div className="relative inline-block">
+        <div className="relative inline-block text-left">
             <button
                 onClick={() => setOpen(p => !p)}
-                className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl border border-slate-200 hover:border-slate-300 hover:bg-slate-50 transition-all text-[10px] font-black text-slate-600"
+                className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl border border-white/5 bg-black/45 hover:bg-black/60 hover:border-[#d5b263]/20 transition-all text-[10px] font-black text-[#d5b263]"
             >
                 <PlanBadge plan={plan} />
-                <span className="text-slate-300 text-[9px]">▾</span>
+                <span className="text-zinc-500 text-[9px] font-normal">▾</span>
             </button>
             {open && (
                 <>
                     <div className="fixed inset-0 z-10" onClick={() => setOpen(false)} />
-                    <div className="absolute right-0 top-full mt-1 z-20 bg-white rounded-2xl border border-slate-100 shadow-xl shadow-slate-100 overflow-hidden min-w-[140px]">
-                        <div className="px-3 py-2 border-b border-slate-50">
-                            <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest">Set Plan</p>
+                    <div className="absolute right-0 top-full mt-1.5 z-20 bg-[#0c0c0e]/95 backdrop-blur-2xl rounded-2xl border border-white/5 shadow-2xl shadow-black overflow-hidden min-w-[160px] animate-in fade-in duration-150">
+                        <div className="px-3 py-2 border-b border-white/5 bg-zinc-950/60">
+                            <p className="text-[9px] font-black text-zinc-500 uppercase tracking-widest">Set Plan</p>
                         </div>
                         {(['basic', 'premium'] as Plan[]).map(p => (
                             <button
                                 key={p}
                                 onClick={() => handleSet(p)}
-                                className={`w-full flex items-center gap-2.5 px-3 py-2.5 text-left transition-colors hover:bg-slate-50 ${plan === p ? 'bg-slate-50/80' : ''}`}
+                                className={`w-full flex items-center gap-2.5 px-3 py-2.5 text-left transition-colors ${plan === p ? 'bg-[#d5b263]/10 text-white' : 'text-zinc-400 hover:bg-white/5 hover:text-white'}`}
                             >
                                 {p === 'premium' ? (
                                     <Crown size={13} className="text-[#d5b263]" />
                                 ) : (
-                                    <Zap size={13} className="text-slate-400" />
+                                    <Zap size={13} className="text-zinc-500" />
                                 )}
                                 <div>
-                                    <p className="text-[11px] font-black text-slate-800 capitalize">{p}</p>
-                                    <p className="text-[9px] text-slate-400 font-medium leading-tight">
+                                    <p className="text-[11px] font-black capitalize leading-none mb-0.5">{p}</p>
+                                    <p className="text-[9px] text-zinc-500 font-medium leading-tight">
                                         {p === 'basic' ? 'Core features only' : 'All features unlocked'}
                                     </p>
                                 </div>
                                 {plan === p && (
-                                    <CheckCircle size={12} className="text-emerald-500 ml-auto" />
+                                    <CheckCircle size={12} className="text-[#d5b263] ml-auto" />
                                 )}
                             </button>
                         ))}
@@ -146,7 +146,7 @@ const RestaurantsTab = ({
                 </div>
             </div>
 
-            <div className="overflow-x-auto">
+            <div className="overflow-x-auto min-h-[280px]">
                 <table className="w-full text-left">
                     <thead className="bg-slate-50 text-slate-400 text-[10px] uppercase font-black tracking-widest border-b border-slate-100">
                         <tr>

@@ -74,20 +74,20 @@ function CategoryCard({ cat, index, sectionScroll, itemRotation }: { cat: any; i
     >
       {/* Image Container with subtle background to mimic the mask */}
       <div className="w-36 h-36 sm:w-40 sm:h-40 mb-6 relative flex items-center justify-center transition-transform duration-500 group-hover:-translate-y-2">
-        <div className="absolute inset-4 bg-black/5 rounded-full blur-xl transition-opacity duration-300 group-hover:bg-black/10"></div>
-        <motion.div style={{ rotate: itemRotation }} className="w-full h-full relative z-10">
+        <div className="absolute inset-2 bg-white/[0.02] border border-white/5 rounded-full blur-xl transition-opacity duration-300 group-hover:bg-[#d5b263]/5"></div>
+        <motion.div style={{ rotate: itemRotation }} className="w-full h-full relative z-10 flex items-center justify-center p-4 bg-zinc-900/40 rounded-full border border-white/5 shadow-inner">
           <img
             src={cat.img}
             alt={cat.name}
-            className="w-full h-full object-contain mix-blend-multiply transition-transform duration-500 group-hover:scale-105"
+            className="w-[85%] h-[85%] object-contain transition-transform duration-500 group-hover:scale-105 filter drop-shadow-[0_4px_12px_rgba(213,178,99,0.15)]"
             draggable="false"
           />
         </motion.div>
       </div>
-      <h3 className="text-lg font-bold text-[#111827] group-hover:text-[#D32F2F] transition-colors tracking-tight text-center mb-3">
+      <h3 className="text-lg font-bold text-zinc-100 group-hover:text-[#d5b263] transition-colors tracking-tight text-center mb-3">
         {cat.name}
       </h3>
-      <p className="text-[13px] leading-relaxed font-medium text-[#6B7280] text-center px-1">
+      <p className="text-[13px] leading-relaxed font-medium text-zinc-400 text-center px-1">
         {cat.desc}
       </p>
     </motion.div>
@@ -119,7 +119,7 @@ function CategoriesSection({ decorRotation }: { decorRotation: any }) {
   const itemRotation = useTransform(sectionScroll, [0, 1], [0, 360]);
 
   return (
-    <section ref={categoriesRef} className="w-full relative z-20 bg-pure-white pt-16 sm:pt-24">
+    <section ref={categoriesRef} className="w-full relative z-20 bg-[#050506] border-t border-zinc-900 pt-16 sm:pt-24">
       <div className="flex flex-col items-center justify-center text-center mb-16 px-4 relative z-10 w-full max-w-[1280px] mx-auto">
 
         {/* Foreground Sliding Burger (Left inline with header) */}
@@ -127,7 +127,7 @@ function CategoriesSection({ decorRotation }: { decorRotation: any }) {
           style={{ x: leftDecorX, left: "calc(-50vw + 50%)" }}
           className="absolute top-1/2 -translate-y-1/2 w-[60px] sm:w-[80px] md:w-[100px] z-30"
         >
-          <img src="/categories/decor_burger_bg.png" alt="Burger" className="w-full h-full object-contain" />
+          <img src="/categories/decor_burger_bg.png" alt="Burger" className="w-full h-full object-contain filter brightness-90" />
         </motion.div>
 
         {/* Foreground Sliding Pizza (Right inline with header) */}
@@ -135,15 +135,15 @@ function CategoriesSection({ decorRotation }: { decorRotation: any }) {
           style={{ x: rightDecorX, right: "calc(-50vw + 50%)" }}
           className="absolute top-1/2 -translate-y-1/2 w-[60px] sm:w-[80px] md:w-[100px]  z-30"
         >
-          <img src="/categories/decor_pizza_bg.png" alt="Pizza" className="w-full h-full object-contain" />
+          <img src="/categories/decor_pizza_bg.png" alt="Pizza" className="w-full h-full object-contain filter brightness-90" />
         </motion.div>
 
-        <span className="text-[#FBBF24] font-bold tracking-[0.2em] text-[10px] sm:text-xs mb-3 uppercase">
+        <span className="text-[#d5b263] font-bold tracking-[0.2em] text-[10px] sm:text-xs mb-3 uppercase">
           Top Foods
         </span>
-        <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#111827] max-w-2xl leading-tight uppercase">
+        <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white max-w-2xl leading-tight uppercase">
           SATISFY YOUR CRAVINGS WITH <br className="hidden sm:block" />
-          <span className="text-[#D32F2F]">OUR CATEGORIES</span>
+          <span className="text-[#d5b263]">OUR CATEGORIES</span>
         </h2>
       </div>
 
@@ -170,9 +170,9 @@ function CategoriesSection({ decorRotation }: { decorRotation: any }) {
         </div>
 
         {/* Bottom Link */}
-        <div className="flex justify-center mt-20 font-medium text-sm text-[#4B5563]">
+        <div className="flex justify-center mt-20 font-medium text-sm text-zinc-400">
           <span>Hungry for Something Delicious? </span>
-          <span className="ml-1 text-[#D32F2F] hover:text-[#B71C1C] hover:underline cursor-pointer font-semibold transition-all">View All Categories!</span>
+          <span className="ml-1 text-[#d5b263] hover:text-[#c4a152] hover:underline cursor-pointer font-semibold transition-all">View All Categories!</span>
         </div>
       </div>
     </section>
@@ -328,8 +328,7 @@ export default function Explore() {
 
           {/* Header Text */}
           <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-8">
-            <div className="flex flex-col items-start gap-4">
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-zinc-100 rounded-full text-[#d5b263] text-xs font-semibold tracking-wide border border-zinc-850 shadow-sm">
+            <div className="flex flex-col items-start gap-4">              <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-zinc-900 rounded-full text-[#d5b263] text-xs font-semibold tracking-wide border border-zinc-850 shadow-sm">
                 <span className="relative flex h-2 w-2">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#d5b263]/70 opacity-75"></span>
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-[#d5b263]"></span>
@@ -341,7 +340,7 @@ export default function Explore() {
                 <span className="text-[#d5b263]">Restaurants</span>
               </h2>
             </div>
-            <p className="text-zinc-600 font-medium max-w-md text-sm md:text-base leading-relaxed lg:text-right">
+            <p className="text-zinc-400 font-medium max-w-md text-sm md:text-base leading-relaxed lg:text-right">
               Our comprehensive platform equips restaurants with powerful digital tools that streamline operations, enhance customer engagement, and help them thrive confidently in today's fast-evolving industry.
             </p>
           </div>
@@ -352,7 +351,7 @@ export default function Explore() {
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab as any)}
-                className={`px-5 py-2.5 rounded-full text-sm font-semibold tracking-wide whitespace-nowrap transition-all ${activeTab === tab ? "bg-[#d5b263] text-black shadow-md shadow-[#d5b263]/20" : "bg-zinc-200 text-zinc-700 border border-zinc-850 hover:border-zinc-700 hover:bg-zinc-150"}`}
+                className={`px-5 py-2.5 rounded-full text-sm font-semibold tracking-wide whitespace-nowrap transition-all ${activeTab === tab ? "bg-[#d5b263] text-black shadow-md shadow-[#d5b263]/20" : "bg-zinc-950 text-zinc-400 border border-zinc-900 hover:border-zinc-800 hover:bg-zinc-900 hover:text-white"}`}
               >
                 {tab}
               </button>
@@ -363,8 +362,8 @@ export default function Explore() {
           <div className="flex flex-col sm:flex-row gap-4 w-full">
 
             {/* Search Input Box */}
-            <div className="flex-1 bg-zinc-100 rounded-xl h-[60px] flex items-center px-4 md:px-6 shadow-sm border border-zinc-800 focus-within:ring-2 focus-within:ring-[#d5b263]/20 focus-within:border-[#d5b263] transition-all">
-              <Search className="w-5 h-5 text-zinc-600 shrink-0" />
+            <div className="flex-1 bg-[#0c0c0e]/80 rounded-xl h-[60px] flex items-center px-4 md:px-6 shadow-sm border border-white/5 focus-within:border-[#d5b263]/40 focus-within:ring-1 focus-within:ring-[#d5b263]/45 transition-all backdrop-blur-md">
+              <Search className="w-5 h-5 text-zinc-500 shrink-0" />
               <input
                 type="text"
                 placeholder="Search restaurants, cuisines, or cities..."
@@ -372,21 +371,21 @@ export default function Explore() {
                 onChange={(e) => setQuery(e.target.value)}
                 className="w-full h-full bg-transparent border-none focus:outline-none px-4 text-white font-medium placeholder-zinc-500"
               />
-              <Filter className="w-5 h-5 text-zinc-600 shrink-0 cursor-pointer hover:text-[#d5b263]" />
+              <Filter className="w-5 h-5 text-zinc-500 shrink-0 cursor-pointer hover:text-[#d5b263]" />
             </div>
 
             {/* Sort Dropdown */}
-            <div className="w-full sm:w-[220px] bg-zinc-100 rounded-xl h-[60px] flex items-center shadow-sm border border-zinc-800 relative cursor-pointer hover:border-zinc-750 focus-within:ring-2 focus-within:ring-[#d5b263]/20">
+            <div className="w-full sm:w-[220px] bg-[#0c0c0e]/80 rounded-xl h-[60px] flex items-center shadow-sm border border-white/5 relative cursor-pointer hover:border-zinc-800 focus-within:border-[#d5b263]/40 focus-within:ring-1 focus-within:ring-[#d5b263]/45 transition-all backdrop-blur-md">
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value as any)}
-                className="w-full h-full appearance-none bg-transparent border-none focus:outline-none pl-6 pr-12 text-white bg-zinc-100 font-semibold cursor-pointer"
+                className="w-full h-full appearance-none bg-transparent border-none focus:outline-none pl-6 pr-12 text-white font-semibold cursor-pointer"
               >
-                <option value="top" className="bg-zinc-100 text-white">Top Rated</option>
-                <option value="new" className="bg-zinc-100 text-white">Newest</option>
-                <option value="near" className="bg-zinc-100 text-white">Nearest</option>
+                <option value="top" className="bg-[#0c0c0e] text-zinc-300">Top Rated</option>
+                <option value="new" className="bg-[#0c0c0e] text-zinc-300">Newest</option>
+                <option value="near" className="bg-[#0c0c0e] text-zinc-300">Nearest</option>
               </select>
-              <ChevronDown className="w-5 h-5 text-zinc-600 absolute right-6 pointer-events-none" />
+              <ChevronDown className="w-5 h-5 text-zinc-500 absolute right-6 pointer-events-none" />
             </div>
           </div>
 
@@ -404,11 +403,11 @@ export default function Explore() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.1, duration: 0.4 }}
               >
-                <Link href={`/restro/${r.id}`} className="block group bg-zinc-100/60 rounded-[24px] overflow-hidden shadow-sm hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.5)] transition-all duration-300 border border-zinc-850 h-full flex flex-col">
+                <Link href={`/restro/${r.id}`} className="block group bg-[#0c0c0e]/60 rounded-[24px] overflow-hidden shadow-sm hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.5)] hover:border-[#d5b263]/25 transition-all duration-300 border border-white/5 h-full flex flex-col backdrop-blur-md">
 
                   {/* Top Image */}
                   <div className="w-full p-3 pb-0 relative">
-                    <div className="w-full h-[200px] md:h-[220px] rounded-[16px] overflow-hidden bg-zinc-200">
+                    <div className="w-full h-[200px] md:h-[220px] rounded-[16px] overflow-hidden bg-zinc-950">
                       <img
                         src={r.banner || "/heroBG.png"}
                         alt={r.name}
@@ -423,13 +422,13 @@ export default function Explore() {
 
                     <div className="flex justify-between items-start mb-3">
                       <h3 className="text-xl font-bold text-white group-hover:text-[#d5b263] transition-colors line-clamp-1">{r.name}</h3>
-                      <div className="flex items-center gap-1.5 text-zinc-600 shrink-0 mt-1">
+                      <div className="flex items-center gap-1.5 text-zinc-400 shrink-0 mt-1">
                         <MapPin className="w-4 h-4 text-[#d5b263]" />
                         <span className="text-sm font-medium">{r.location}</span>
                       </div>
                     </div>
 
-                    <p className="text-zinc-600 text-sm leading-relaxed mb-6 line-clamp-3">
+                    <p className="text-zinc-400 text-sm leading-relaxed mb-6 line-clamp-3 font-medium">
                       {r.description}
                     </p>
 
@@ -449,10 +448,10 @@ export default function Explore() {
 
           {/* Empty State */}
           {filtered.length === 0 && (
-            <div className="w-full py-20 flex flex-col items-center justify-center text-center bg-zinc-100 rounded-2xl shadow-sm border border-zinc-800">
+            <div className="w-full py-20 flex flex-col items-center justify-center text-center bg-[#0c0c0e]/80 border border-white/5 rounded-2xl shadow-sm">
               <span className="text-5xl mb-4">🍽️</span>
               <h3 className="text-xl font-bold text-white mb-2">No restaurants found</h3>
-              <p className="text-zinc-600 mb-6">We couldn't find anything matching "{query}".</p>
+              <p className="text-zinc-400 mb-6">We couldn't find anything matching "{query}".</p>
               <button
                 onClick={() => setQuery("")}
                 className="bg-[#d5b263] text-black px-6 py-2 rounded-full font-bold shadow-md hover:bg-[#bfa052]"

@@ -343,18 +343,18 @@ export default function TablesPage() {
       {/* 1. Header & Stats */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Floor Plan</h1>
-          <p className="text-sm text-gray-500 mt-1">Manage physical tables and visibility</p>
+          <h1 className="text-2xl font-black text-white uppercase tracking-wider">Floor Plan</h1>
+          <p className="text-sm text-zinc-400 mt-1">Manage physical tables and visibility</p>
         </div>
 
         <div className="flex items-center gap-3">
           <button
             onClick={() => { setRefreshing(true); loadTables(true); }}
-            className={`p-2.5 rounded-lg border border-gray-200 text-gray-600 hover:bg-gray-50 transition-all ${refreshing ? 'animate-spin' : ''}`}
+            className="p-2.5 bg-[#0c0c0e]/80 border border-white/5 text-zinc-400 hover:text-white rounded-xl transition-all shadow-sm active:scale-95"
             aria-label="Refresh tables"
             title="Refresh tables"
           >
-            <RefreshCw size={20} />
+            <RefreshCw size={20} className={refreshing ? 'animate-spin' : ''} />
           </button>
           <button
             onClick={() => {
@@ -362,9 +362,9 @@ export default function TablesPage() {
               setForm({ tableNumber: (tables.length + 1).toString(), capacity: '4' });
               setShowModal(true);
             }}
-            className="flex items-center gap-2 px-5 py-2.5 bg-red-600 text-white rounded-xl font-bold shadow-lg shadow-red-100 hover:bg-red-700 transition-transform active:scale-95"
+            className="flex items-center gap-2 px-5 py-2.5 bg-[#d5b263] text-black rounded-xl font-black text-xs uppercase tracking-wider hover:bg-[#c4a152] transition-all active:scale-95 shadow-md shadow-[#d5b263]/10"
           >
-            <Plus size={20} />
+            <Plus size={16} />
             <span className="hidden sm:inline">Add Table</span>
             <span className="sm:hidden">Add</span>
           </button>
@@ -382,10 +382,10 @@ export default function TablesPage() {
 
       {/* 3. Tables Grid */}
       {filteredTables.length === 0 ? (
-        <div className="bg-white rounded-2xl border-2 border-dashed border-gray-200 p-12 text-center">
-          <Armchair className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-          <h3 className="text-lg font-semibold text-gray-900">No tables found</h3>
-          <p className="text-gray-500 mt-1">Try adjusting your filters or add a new table.</p>
+        <div className="bg-[#0c0c0e]/80 border border-white/5 rounded-3xl p-12 text-center">
+          <Armchair className="w-16 h-16 text-zinc-650 mx-auto mb-4" />
+          <h3 className="text-lg font-black text-white uppercase tracking-wider">No tables found</h3>
+          <p className="text-zinc-400 mt-1 text-sm font-medium">Try adjusting your filters or add a new table.</p>
         </div>
       ) : (
         <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6">
@@ -393,49 +393,47 @@ export default function TablesPage() {
             <div
               key={table.id}
               className={`
-                group relative rounded-2xl p-5 border-2 transition-all duration-300 hover:shadow-lg hover:scale-105
+                group relative rounded-[24px] p-5 border transition-all duration-300 hover:shadow-2xl hover:scale-[1.03]
                 ${!table.isActive
-                  ? 'bg-gray-100 border-gray-300 text-gray-500'
+                  ? 'bg-zinc-950/40 border-white/5 text-zinc-550'
                   : table.liveStatus === 'available'
-                    ? 'bg-green-500 border-green-600 text-white shadow-lg shadow-green-200'
+                    ? 'bg-emerald-950/20 border-emerald-900/30 text-emerald-400 hover:border-emerald-500/30'
                     : table.liveStatus === 'occupied'
-                      ? 'bg-red-500 border-red-600 text-white shadow-lg shadow-red-200'
-                      : 'bg-orange-500 border-orange-600 text-white shadow-lg shadow-orange-200'
+                      ? 'bg-rose-950/20 border-rose-900/30 text-rose-450 hover:border-rose-500/30'
+                      : 'bg-amber-950/20 border-amber-900/30 text-amber-400 hover:border-amber-500/30'
                 }
               `}
             >
               {/* Header */}
               <div className="flex justify-between items-start mb-4">
                 <div className="flex flex-col">
-                  <span className={`text-xs font-bold uppercase tracking-wider ${!table.isActive ? 'text-gray-400' : 'text-white/80'
-                    }`}>Table</span>
-                  <span className={`text-3xl font-black ${!table.isActive ? 'text-gray-500' : 'text-white'
-                    }`}>{table.tableNumber}</span>
+                  <span className={`text-[10px] font-black uppercase tracking-wider ${!table.isActive ? 'text-zinc-600' : 'text-zinc-400'}`}>Table</span>
+                  <span className={`text-3xl font-black ${!table.isActive ? 'text-zinc-650' : 'text-white'}`}>{table.tableNumber}</span>
                 </div>
 
                 {table.isActive ? (
                   <div className={`
-                    w-3 h-3 rounded-full border border-white/50
-                    ${table.liveStatus === 'occupied' ? 'bg-red-300 animate-pulse' :
-                      table.liveStatus === 'reserved' ? 'bg-orange-300' : 'bg-green-300'}
+                    w-2.5 h-2.5 rounded-full border border-white/10
+                    ${table.liveStatus === 'occupied' ? 'bg-rose-500 animate-pulse' :
+                      table.liveStatus === 'reserved' ? 'bg-amber-500' : 'bg-emerald-500 animate-pulse'}
                   `} title={table.liveStatus} />
                 ) : (
-                  <span className="text-[10px] font-black uppercase bg-gray-200 text-gray-500 px-2 py-1 rounded">Disabled</span>
+                  <span className="text-[9px] font-black uppercase bg-zinc-900 text-zinc-500 px-1.5 py-0.5 rounded border border-white/5">Disabled</span>
                 )}
               </div>
 
               {/* Details */}
               <div className="flex items-center gap-2 mb-6">
                 <div className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-semibold ${!table.isActive
-                  ? 'bg-gray-200 text-gray-600'
-                  : 'bg-white/20 text-white border border-white/30'
+                  ? 'bg-zinc-900/50 text-zinc-500 border border-white/5'
+                  : 'bg-white/5 text-zinc-300 border border-white/5'
                   }`}>
-                  <Users size={12} />
+                  <Users size={12} className="text-[#d5b263]" />
                   <span>{table.capacity} Seats</span>
                 </div>
                 {table.isActive && (
-                  <span className={`text-xs font-bold uppercase ${table.liveStatus === 'occupied' ? 'text-white' :
-                    table.liveStatus === 'reserved' ? 'text-white' : 'text-white'
+                  <span className={`text-[10px] font-black uppercase tracking-wider ${table.liveStatus === 'occupied' ? 'text-rose-450' :
+                    table.liveStatus === 'reserved' ? 'text-amber-450' : 'text-emerald-450'
                     }`}>
                     {table.liveStatus}
                   </span>
@@ -443,14 +441,14 @@ export default function TablesPage() {
               </div>
 
               {/* Actions */}
-              <div className="flex items-center gap-2 pt-4 border-t border-white/20">
+              <div className="flex items-center gap-2 pt-4 border-t border-white/5">
                 {/* QR Button */}
                 <button
                   onClick={() => handleDownloadQR(table)}
                   disabled={!table.isActive}
                   className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-lg text-xs font-bold transition-colors ${!table.isActive
-                    ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
-                    : 'bg-white/20 text-white hover:bg-white/30 border border-white/30'
+                    ? 'bg-zinc-900 text-zinc-600 border border-white/5 cursor-not-allowed'
+                    : 'bg-white/5 text-zinc-300 hover:bg-white/10 border border-white/5'
                     }`}
                   title="Download QR"
                 >
@@ -461,8 +459,8 @@ export default function TablesPage() {
                 <button
                   onClick={() => { setEditingTable(table); setForm({ tableNumber: table.tableNumber.toString(), capacity: table.capacity.toString() }); setShowModal(true); }}
                   className={`p-2 rounded-lg transition-colors ${!table.isActive
-                    ? 'text-gray-400 hover:text-gray-600 hover:bg-gray-200'
-                    : 'text-white hover:bg-white/20 border border-white/30'
+                    ? 'text-zinc-600 hover:text-zinc-400 hover:bg-zinc-800'
+                    : 'text-zinc-300 hover:bg-white/5 border border-white/5'
                     }`}
                   aria-label={`Edit table ${table.tableNumber}`}
                   title={`Edit table ${table.tableNumber}`}
@@ -474,8 +472,8 @@ export default function TablesPage() {
                 <button
                   onClick={() => handleToggleActive(table)}
                   className={`p-2 rounded-lg transition-colors ${table.isActive
-                    ? 'text-white bg-white/20 hover:bg-white/30 border border-white/30'
-                    : 'text-gray-400 hover:text-gray-600 hover:bg-gray-200'
+                    ? 'text-zinc-300 bg-white/5 hover:bg-white/10 border border-white/5'
+                    : 'text-zinc-600 hover:text-zinc-400 hover:bg-zinc-850'
                     }`}
                   title={table.isActive ? "Deactivate Table" : "Activate Table"}
                 >
@@ -486,8 +484,8 @@ export default function TablesPage() {
                 <button
                   onClick={() => handleDelete(table.id)}
                   className={`p-2 rounded-lg transition-colors ${!table.isActive
-                    ? 'text-gray-300 hover:text-red-600 hover:bg-red-50'
-                    : 'text-white/70 hover:text-white hover:bg-white/20 border border-white/30'
+                    ? 'text-zinc-500 hover:text-red-400 hover:bg-red-500/10'
+                    : 'text-zinc-400 hover:text-red-450 hover:bg-red-500/10 border border-white/5'
                     }`}
                   title="Delete Permanently"
                 >
@@ -501,44 +499,44 @@ export default function TablesPage() {
 
       {/* 4. Add/Edit Modal */}
       {showModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-gray-900/60 backdrop-blur-sm animate-in fade-in">
-          <div className="bg-white rounded-2xl w-full max-w-sm shadow-2xl p-6 transform transition-all scale-100">
-            <h3 className="text-xl font-bold text-gray-900 mb-6">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-in fade-in">
+          <div className="bg-[#0c0c0e]/95 backdrop-blur-2xl border border-white/10 rounded-3xl w-full max-w-sm shadow-2xl p-6 transform transition-all scale-100">
+            <h3 className="text-sm font-black text-white uppercase tracking-widest mb-6">
               {editingTable ? 'Edit Table Details' : 'Add New Table'}
             </h3>
 
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="space-y-2">
-                <label htmlFor="table-number" className="text-xs font-bold text-gray-500 uppercase">Table Number</label>
+                <label htmlFor="table-number" className="text-[10px] font-black text-zinc-500 uppercase tracking-widest">Table Number</label>
                 <input
                   id="table-number"
                   type="number"
                   autoFocus
                   required
                   min="1"
-                  className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-red-500 focus:border-transparent outline-none font-medium text-lg"
+                  className="w-full px-4 py-3 rounded-xl bg-black/45 border border-zinc-800 focus:ring-1 focus:ring-[#d5b263]/40 focus:border-[#d5b263]/40 outline-none font-bold text-white text-lg"
                   value={form.tableNumber}
                   onChange={e => setForm({ ...form, tableNumber: e.target.value })}
                 />
               </div>
 
               <div className="space-y-2">
-                <label htmlFor="table-capacity" className="text-xs font-bold text-gray-500 uppercase">Seating Capacity</label>
+                <label htmlFor="table-capacity" className="text-[10px] font-black text-zinc-500 uppercase tracking-widest">Seating Capacity</label>
                 <div className="flex items-center justify-center gap-4">
                   <button
                     type="button"
                     onClick={() => setForm({ ...form, capacity: Math.max(1, parseInt(form.capacity || '2') - 1).toString() })}
-                    className="w-12 h-12 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold text-xl flex items-center justify-center transition-colors"
+                    className="w-12 h-12 rounded-full bg-zinc-900 border border-zinc-800 hover:bg-zinc-800 text-zinc-300 font-bold text-xl flex items-center justify-center transition-colors"
                   >
                     −
                   </button>
-                  <div className="w-20 h-12 bg-red-50 border-2 border-red-200 rounded-xl flex items-center justify-center">
-                    <span className="text-xl font-bold text-red-700">{form.capacity || '2'}</span>
+                  <div className="w-20 h-12 bg-[#d5b263]/10 border border-[#d5b263]/25 rounded-xl flex items-center justify-center">
+                    <span className="text-xl font-black text-[#d5b263]">{form.capacity || '2'}</span>
                   </div>
                   <button
                     type="button"
                     onClick={() => setForm({ ...form, capacity: (parseInt(form.capacity || '2') + 1).toString() })}
-                    className="w-12 h-12 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold text-xl flex items-center justify-center transition-colors"
+                    className="w-12 h-12 rounded-full bg-zinc-900 border border-zinc-800 hover:bg-zinc-800 text-zinc-300 font-bold text-xl flex items-center justify-center transition-colors"
                   >
                     +
                   </button>
@@ -549,13 +547,13 @@ export default function TablesPage() {
                 <button
                   type="button"
                   onClick={() => setShowModal(false)}
-                  className="flex-1 py-3 text-gray-700 font-bold hover:bg-gray-50 rounded-xl transition-colors"
+                  className="flex-1 py-3 text-zinc-450 hover:text-white font-black uppercase tracking-wider text-xs transition-colors"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="flex-1 py-3 bg-red-600 text-white font-bold rounded-xl hover:bg-red-700 transition-colors shadow-lg shadow-red-200"
+                  className="flex-1 py-3 bg-[#d5b263] text-black font-black uppercase tracking-wider text-xs rounded-xl hover:bg-[#c4a152] transition-colors shadow-lg shadow-[#d5b263]/10"
                 >
                   Save Table
                 </button>
@@ -582,11 +580,11 @@ interface FilterCardProps {
 
 const FilterCard = ({ label, count, active, onClick, color, icon: Icon }: FilterCardProps) => {
   const colors: Record<string, string> = {
-    blue: active ? 'bg-blue-600 text-white shadow-blue-200' : 'hover:bg-blue-50 text-blue-600',
-    green: active ? 'bg-green-600 text-white shadow-green-200' : 'hover:bg-green-50 text-green-600',
-    red: active ? 'bg-red-600 text-white shadow-red-200' : 'hover:bg-red-50 text-red-600',
-    orange: active ? 'bg-orange-500 text-white shadow-orange-200' : 'hover:bg-orange-50 text-orange-600',
-    gray: active ? 'bg-gray-700 text-white shadow-gray-400' : 'hover:bg-gray-100 text-gray-500',
+    blue: active ? 'bg-[#d5b263] text-black border-[#d5b263] shadow-lg shadow-[#d5b263]/10' : 'bg-[#0c0c0e]/80 border-white/5 hover:border-zinc-800 text-zinc-400',
+    green: active ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : 'bg-[#0c0c0e]/80 border-white/5 hover:border-zinc-800 text-zinc-400',
+    red: active ? 'bg-rose-500/10 text-rose-450 border border-rose-500/20' : 'bg-[#0c0c0e]/80 border-white/5 hover:border-zinc-800 text-zinc-400',
+    orange: active ? 'bg-amber-500/10 text-amber-400 border border-amber-500/20' : 'bg-[#0c0c0e]/80 border-white/5 hover:border-zinc-800 text-zinc-400',
+    gray: active ? 'bg-zinc-900 text-zinc-400 border border-zinc-800' : 'bg-[#0c0c0e]/80 border-white/5 hover:border-zinc-800 text-zinc-400',
   };
 
   return (
@@ -594,17 +592,17 @@ const FilterCard = ({ label, count, active, onClick, color, icon: Icon }: Filter
       onClick={onClick}
       className={`
         flex flex-col p-4 rounded-xl border transition-all duration-200 text-left relative overflow-hidden group
-        ${active ? 'border-transparent shadow-lg scale-[1.02]' : 'bg-white border-gray-100 hover:border-gray-200'}
+        ${active ? 'border-transparent shadow-lg scale-[1.02]' : 'bg-[#0c0c0e]/80 border-white/5 hover:border-zinc-800'}
         ${colors[color]}
       `}
     >
       <div className="flex justify-between items-start mb-2">
-        <span className={`text-3xl font-black ${active ? 'text-white' : 'text-gray-900'}`}>
+        <span className={`text-3xl font-black ${active && color === 'blue' ? 'text-black' : 'text-white'}`}>
           {count}
         </span>
-        <Icon size={20} className={`opacity-80 ${active ? 'text-white' : ''}`} />
+        <Icon size={20} className={`opacity-80 ${active && color === 'blue' ? 'text-black' : ''}`} />
       </div>
-      <span className={`text-xs font-bold uppercase tracking-wider ${active ? 'text-white/90' : 'text-gray-500'}`}>
+      <span className={`text-[10px] font-black uppercase tracking-wider ${active && color === 'blue' ? 'text-black/85' : 'text-zinc-500'}`}>
         {label}
       </span>
     </button>
@@ -614,12 +612,12 @@ const FilterCard = ({ label, count, active, onClick, color, icon: Icon }: Filter
 function TablesSkeleton() {
   return (
     <div className="space-y-8 p-4 animate-pulse">
-      <div className="h-12 bg-gray-200 rounded-xl w-1/3"></div>
+      <div className="h-12 bg-zinc-900 rounded-xl w-1/3"></div>
       <div className="grid grid-cols-4 gap-4">
-        {[1, 2, 3, 4].map(i => <div key={i} className="h-24 bg-gray-200 rounded-xl"></div>)}
+        {[1, 2, 3, 4].map(i => <div key={i} className="h-24 bg-zinc-900 rounded-xl"></div>)}
       </div>
       <div className="grid grid-cols-4 gap-6">
-        {[1, 2, 3, 4, 5, 6, 7, 8].map(i => <div key={i} className="h-40 bg-gray-200 rounded-2xl"></div>)}
+        {[1, 2, 3, 4, 5, 6, 7, 8].map(i => <div key={i} className="h-40 bg-zinc-900 rounded-2xl"></div>)}
       </div>
     </div>
   )
@@ -628,9 +626,9 @@ function TablesSkeleton() {
 function AccessDenied() {
   return (
     <div className="h-[60vh] flex flex-col items-center justify-center text-center">
-      <div className="bg-red-50 p-6 rounded-full mb-4"><Users className="w-10 h-10 text-red-500" /></div>
-      <h2 className="text-xl font-bold text-gray-900">Tables Restricted</h2>
-      <p className="text-gray-500 mt-2">Contact your manager to access floor plan settings.</p>
+      <div className="bg-red-500/10 border border-red-500/20 p-6 rounded-full mb-4"><Users className="w-10 h-10 text-red-450" /></div>
+      <h2 className="text-xl font-black text-white uppercase tracking-wider">Tables Restricted</h2>
+      <p className="text-zinc-400 text-sm font-medium mt-2">Contact your manager to access floor plan settings.</p>
     </div>
   )
 }
@@ -639,10 +637,10 @@ function SkeletonLoader() {
   return (
     <div className="h-[calc(100vh-5rem)] flex flex-col items-center justify-center">
       <div className="relative w-12 h-12">
-        <div className="absolute inset-0 border-4 border-gray-200 rounded-full"></div>
-        <div className="absolute inset-0 border-4 border-red-600 border-t-transparent rounded-full animate-spin"></div>
+        <div className="absolute inset-0 border-4 border-zinc-900 rounded-full"></div>
+        <div className="absolute inset-0 border-4 border-[#d5b263] border-t-transparent rounded-full animate-spin"></div>
       </div>
-      <p className="mt-3 text-sm text-gray-500 font-medium animate-pulse">Loading Tables...</p>
+      <p className="mt-3 text-sm text-zinc-400 font-bold uppercase tracking-widest animate-pulse">Loading Tables...</p>
     </div>
   )
 }

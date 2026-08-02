@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { X, Home, Compass, Calendar, QrCode, LogOut, Settings, User, Receipt, Heart } from 'lucide-react';
+import { X, Home, Compass, Calendar, QrCode, LogOut, Settings, User, Receipt, Heart, Building2, Clock } from 'lucide-react';
 import { useAuth } from "../../lib/auth-context";
 import Logo from "../Logo";
 
@@ -81,10 +81,19 @@ export default function MobileDrawer({
                         </Link>
                     ) : (
                         <>
-                            <Link href="/apply-for-restro" onClick={onClose} className="block w-full py-2.5 px-4 bg-gray-50 text-gray-700 font-medium rounded-lg text-sm hover:bg-gray-100">
+                            <Link 
+                                href="/apply-for-restro" 
+                                onClick={onClose} 
+                                className="flex items-center gap-2.5 w-full py-3 px-4 bg-zinc-900/50 border border-zinc-800 text-zinc-300 font-bold rounded-xl text-xs uppercase tracking-wider hover:bg-zinc-800 hover:text-white transition-all mb-2"
+                            >
+                                <Building2 size={15} className="text-[#d5b263]" />
                                 Apply for Restaurant
                             </Link>
-                            <button onClick={() => { onOpenRequestStatus(); onClose(); }} className="block w-full text-left py-2.5 px-4 bg-gray-50 text-gray-700 font-medium rounded-lg text-sm hover:bg-gray-100">
+                            <button 
+                                onClick={() => { onOpenRequestStatus(); onClose(); }} 
+                                className="flex items-center gap-2.5 w-full text-left py-3 px-4 bg-zinc-900/50 border border-zinc-800 text-zinc-300 font-bold rounded-xl text-xs uppercase tracking-wider hover:bg-zinc-800 hover:text-white transition-all"
+                            >
+                                <Clock size={15} className="text-[#d5b263]" />
                                 Application Status
                             </button>
                         </>

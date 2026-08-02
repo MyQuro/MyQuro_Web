@@ -32,10 +32,10 @@ export default function UserMenu({ user }: UserMenuProps) {
   if (!user) {
     return (
       <div className="flex items-center gap-3">
-        <Link href="/signin" className="px-5 py-2 text-gray-700 font-medium text-sm hover:text-red-600 transition">
+        <Link href="/signin" className="px-5 py-2 text-zinc-400 font-bold text-sm hover:text-[#d5b263] transition uppercase tracking-wider">
           Log in
         </Link>
-        <Link href="/signup" className="px-5 py-2 bg-red-600 text-white rounded-full text-sm font-semibold hover:bg-red-700 transition shadow-md hover:shadow-lg">
+        <Link href="/signup" className="px-5 py-2 bg-[#d5b263] text-black rounded-full text-xs font-black hover:bg-[#c4a152] transition shadow-md hover:scale-[1.02] active:scale-[0.98] uppercase tracking-wider">
           Sign up
         </Link>
       </div>

@@ -93,6 +93,7 @@ export default function ReservationPage() {
         <div className="container">
             <div className="search-bar-wrapper">
                 <div className="search-input-group">
+                    <Search className="search-icon" />
                     <input
                         type="text"
                         placeholder="Search for restaurants..."
@@ -224,9 +225,10 @@ export default function ReservationPage() {
         /* --- RESET & VARIABLES --- */
         .reservation-page {
             min-height: 100vh;
-            background-color: #FAFAFA;
+            background-color: #050506;
+            background-image: radial-gradient(circle at top, rgba(213, 178, 99, 0.03) 0%, transparent 70%);
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            color: #111827;
+            color: #f4f4f5;
             padding-bottom: 80px;
         }
         
@@ -239,9 +241,9 @@ export default function ReservationPage() {
         /* --- STICKY SEARCH HEADER --- */
         .sticky-search-header {
             position: sticky;
-            top: 0;
-            z-index: 100;
-            background: rgba(250, 250, 250, 0.8);
+            top: 64px;
+            z-index: 40;
+            background: rgba(5, 5, 6, 0.8);
             backdrop-filter: blur(12px);
             padding: 20px 0;
             transition: all 0.3s ease;
@@ -249,9 +251,9 @@ export default function ReservationPage() {
         }
 
         .sticky-search-header.scrolled {
-            background: rgba(255, 255, 255, 0.9);
-            box-shadow: 0 4px 20px rgba(0,0,0,0.03);
-            border-bottom: 1px solid #E5E7EB;
+            background: rgba(5, 5, 6, 0.95);
+            box-shadow: 0 4px 30px rgba(0,0,0,0.5);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
             padding: 12px 0;
         }
 
@@ -264,16 +266,16 @@ export default function ReservationPage() {
         .search-input-group {
             flex: 1;
             position: relative;
-            background: white;
+            background: rgba(12, 12, 14, 0.8);
             border-radius: 100px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
-            border: 1px solid #E5E7EB;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             transition: all 0.2s;
         }
 
         .search-input-group:focus-within {
-            border-color: #000;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            border-color: #d5b263;
+            box-shadow: 0 0 15px rgba(213, 178, 99, 0.15);
         }
 
         .search-icon {
@@ -281,7 +283,7 @@ export default function ReservationPage() {
             left: 16px;
             top: 50%;
             transform: translateY(-50%);
-            color: #9CA3AF;
+            color: #71717a;
             width: 18px;
             height: 18px;
         }
@@ -292,8 +294,12 @@ export default function ReservationPage() {
             border: none;
             background: transparent;
             font-size: 15px;
+            color: white;
             border-radius: 100px;
             outline: none;
+        }
+        .search-input::placeholder {
+            color: #52525b;
         }
 
         .filter-btn {
@@ -303,8 +309,9 @@ export default function ReservationPage() {
             padding: 0 20px;
             height: 48px;
             border-radius: 100px;
-            background: white;
-            border: 1px solid #E5E7EB;
+            background: rgba(12, 12, 14, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: #a1a1aa;
             font-weight: 600;
             font-size: 14px;
             cursor: pointer;
@@ -312,17 +319,17 @@ export default function ReservationPage() {
             white-space: nowrap;
         }
 
-        .filter-btn:hover { background: #F3F4F6; }
-        .filter-btn.active { background: #111827; color: white; border-color: #111827; }
+        .filter-btn:hover { background: rgba(255, 255, 255, 0.05); color: white; }
+        .filter-btn.active { background: #d5b263; color: black; border-color: #d5b263; }
 
         /* --- FILTERS DROPDOWN --- */
         .filters-dropdown {
             margin-top: 12px;
-            background: white;
+            background: #0c0c0e;
             border-radius: 16px;
             padding: 16px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-            border: 1px solid #E5E7EB;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             animation: slideDown 0.2s ease-out;
         }
 
@@ -335,15 +342,16 @@ export default function ReservationPage() {
         .filters-dropdown select {
             padding: 10px 14px;
             border-radius: 8px;
-            border: 1px solid #E5E7EB;
-            background: #F9FAFB;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: #050506;
+            color: #d1d5db;
             font-size: 13px;
             font-weight: 500;
             cursor: pointer;
             outline: none;
         }
 
-        .filters-dropdown select:hover { border-color: #D1D5DB; }
+        .filters-dropdown select:hover { border-color: rgba(213, 178, 99, 0.3); }
 
         .clear-btn {
             margin-top: 12px;
@@ -351,7 +359,7 @@ export default function ReservationPage() {
             align-items: center;
             gap: 6px;
             font-size: 12px;
-            color: #EF4444;
+            color: #f43f5e;
             background: none;
             border: none;
             cursor: pointer;
@@ -362,8 +370,8 @@ export default function ReservationPage() {
         .content-area { padding-top: 20px; }
 
         .intro-section { margin-bottom: 32px; }
-        .title { font-size: 28px; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 6px; }
-        .subtitle { color: #6B7280; font-size: 15px; }
+        .title { font-size: 28px; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 6px; color: white; }
+        .subtitle { color: #a1a1aa; font-size: 15px; }
 
         /* --- GRID --- */
         .grid-layout {
@@ -375,11 +383,11 @@ export default function ReservationPage() {
         .card-link { text-decoration: none; color: inherit; display: block; }
 
         .card {
-            background: white;
+            background: #0c0c0e;
             border-radius: 20px;
             overflow: hidden;
-            border: 1px solid rgba(0,0,0,0.04);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
             transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
             height: 100%;
             display: flex;
@@ -388,14 +396,15 @@ export default function ReservationPage() {
 
         .card:hover {
             transform: translateY(-4px);
-            box-shadow: 0 12px 24px rgba(0,0,0,0.06);
+            border-color: rgba(213, 178, 99, 0.25);
+            box-shadow: 0 12px 30px rgba(213, 178, 99, 0.05);
         }
 
         .card-image-container {
             position: relative;
             height: 180px;
             width: 100%;
-            background: #F3F4F6;
+            background: #18181b;
         }
 
         .card-img {
@@ -423,9 +432,9 @@ export default function ReservationPage() {
             backdrop-filter: blur(8px);
         }
 
-        .badge.open { background: rgba(16, 185, 129, 0.9); color: white; }
-        .badge.closed { background: rgba(239, 68, 68, 0.9); color: white; }
-        .badge.distance { background: rgba(255, 255, 255, 0.9); color: #111827; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .badge.open { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }
+        .badge.closed { background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); }
+        .badge.distance { background: rgba(12, 12, 14, 0.8); color: #d5b263; border: 1px solid rgba(213, 178, 99, 0.25); }
 
         .card-details {
             padding: 16px;
@@ -445,6 +454,7 @@ export default function ReservationPage() {
             font-size: 17px;
             font-weight: 700;
             line-height: 1.3;
+            color: white;
             margin-right: 10px;
             display: -webkit-box;
             -webkit-line-clamp: 1;
@@ -456,8 +466,8 @@ export default function ReservationPage() {
             display: flex;
             align-items: center;
             gap: 3px;
-            background: #111827;
-            color: white;
+            background: #d5b263;
+            color: black;
             font-size: 11px;
             font-weight: 700;
             padding: 2px 6px;
@@ -469,13 +479,13 @@ export default function ReservationPage() {
             align-items: center;
             flex-wrap: wrap;
             gap: 6px;
-            color: #6B7280;
+            color: #a1a1aa;
             font-size: 13px;
             margin-bottom: 16px;
         }
 
         .meta-item { display: flex; align-items: center; gap: 4px; }
-        .dot { color: #D1D5DB; }
+        .dot { color: #3f3f46; }
 
         .card-footer { margin-top: auto; }
 
@@ -486,8 +496,9 @@ export default function ReservationPage() {
             justify-content: center;
             gap: 6px;
             padding: 12px;
-            background: #F3F4F6;
-            color: #111827;
+            background: #18181b;
+            color: #d5b263;
+            border: 1px solid rgba(213, 178, 99, 0.15);
             font-size: 14px;
             font-weight: 600;
             border-radius: 12px;
@@ -495,26 +506,28 @@ export default function ReservationPage() {
         }
 
         .card:hover .book-btn {
-            background: #111827;
-            color: white;
+            background: #d5b263;
+            color: black;
+            border-color: #d5b263;
         }
 
         /* --- SKELETON --- */
-        .skeleton-card { height: 300px; border: none; }
-        .skeleton-img { width: 100%; height: 180px; background: #E5E7EB; }
+        .skeleton-card { height: 300px; border: none; background: #0c0c0e; }
+        .skeleton-img { width: 100%; height: 180px; background: #18181b; }
         .skeleton-content { padding: 16px; display: flex; flex-direction: column; gap: 10px; }
-        .skeleton-line { height: 16px; background: #E5E7EB; border-radius: 4px; }
+        .skeleton-line { height: 16px; background: #18181b; border-radius: 4px; }
 
         /* --- EMPTY STATE --- */
         .empty-state {
             text-align: center;
             padding: 60px 0;
-            color: #6B7280;
+            color: #a1a1aa;
         }
         .icon-box { 
-            width: 64px; height: 64px; background: #F3F4F6; border-radius: 50%; 
+            width: 64px; height: 64px; background: #0c0c0e; border-radius: 50%; 
             display: flex; align-items: center; justify-content: center; margin: 0 auto 16px;
-            color: #9CA3AF;
+            color: #d5b263;
+            border: 1px solid rgba(213, 178, 99, 0.15);
         }
 
         /* --- ANIMATIONS --- */

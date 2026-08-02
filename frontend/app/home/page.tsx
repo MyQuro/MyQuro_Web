@@ -121,9 +121,6 @@ export default function HomePage() {
               <Link href="/explore" className="w-full sm:w-auto flex items-center justify-center gap-2 px-8 py-4 bg-[#d5b263] hover:bg-[#bfa052] text-black rounded-full font-bold shadow-[0_10px_25px_-5px_rgba(213,178,99,0.3)] transition-all hover:-translate-y-1">
                 Start Free Trial <ArrowRight className="w-5 h-5" />
               </Link>
-              <Link href="/favourites" className="w-full sm:w-auto flex items-center justify-center gap-2 px-8 py-4 bg-[#d5b263]/10 text-[#d5b263] border border-[#d5b263]/20 hover:bg-[#d5b263]/20 rounded-full font-bold shadow-sm transition-all hover:-translate-y-1">
-                <Heart className="w-5 h-5 fill-[#d5b263]" /> View Favourites
-              </Link>
             </div>
 
           </div>

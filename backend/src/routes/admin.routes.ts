@@ -19,6 +19,7 @@ import { tableQR } from "../db/schema/table-qr.js";
 
 import { requireAuth } from "../auth/requireAuth.js";
 import { db } from "../db/db.js";
+import { emitToRestaurant } from "../lib/socket.js";
 
 import { nanoid } from "nanoid";
 import { eq, sql, gte, lte, and, inArray, desc } from "drizzle-orm";
@@ -129,6 +130,9 @@ router.patch("/restaurants/:id/plan", requireAuth, async (req: any, res) => {
     }
 
     await db.update(restaurants).set({ plan, updatedAt: new Date() }).where(eq(restaurants.id, restaurantId));
+
+    // ✅ Emit WebSocket event to the restaurant room so that the dashboard updates instantly
+    emitToRestaurant(restaurantId, "plan-updated", { restaurantId, plan });
 
     return res.status(200).json({ success: true, restaurantId, plan });
   } catch (err) {

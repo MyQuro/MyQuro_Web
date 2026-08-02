@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useAuth } from "../lib/auth-context";
 import { useSession } from "../lib/session-context";
-import { QrCode, Receipt, Menu, X } from "lucide-react";
+import { QrCode, Receipt, Menu, X, Building2, Clock } from "lucide-react";
 
 // Hooks (Defined below or import from hooks folder)
 import { useRestaurantRequest } from "../hooks/useRestaurantRequest";
@@ -221,7 +221,7 @@ function RestaurantActionsDropdown({ onRequestStatus }: { onRequestStatus: () =>
     <div className="relative" ref={dropdownRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-1.5 px-3 py-2 text-sm font-medium text-gray-700 hover:text-red-600 transition-colors"
+        className="flex items-center gap-1.5 px-3 py-2 text-sm font-semibold text-zinc-300 hover:text-[#d5b263] transition-colors"
       >
         Partner
         <svg className={`w-4 h-4 transition-transform ${isOpen ? 'rotate-180' : ''}`} viewBox="0 0 20 20" fill="currentColor">
@@ -230,12 +230,13 @@ function RestaurantActionsDropdown({ onRequestStatus }: { onRequestStatus: () =>
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-56 bg-white border border-gray-100 shadow-xl rounded-xl py-2 z-50 animate-in fade-in slide-in-from-top-2">
+        <div className="absolute right-0 mt-2 w-56 bg-[#0c0c0e]/95 backdrop-blur-xl border border-white/5 shadow-2xl rounded-2xl py-1.5 z-50 animate-in fade-in slide-in-from-top-2">
           <Link
             href="/apply-for-restro"
             onClick={() => setIsOpen(false)}
-            className="flex items-center gap-2 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 hover:text-red-600"
+            className="flex items-center gap-2 px-4 py-2.5 text-sm text-zinc-400 hover:bg-[#d5b263]/10 hover:text-[#d5b263] transition-colors rounded-lg mx-1.5 font-medium"
           >
+            <Building2 className="w-4 h-4" />
             Apply for Restaurant
           </Link>
           <button
@@ -243,8 +244,9 @@ function RestaurantActionsDropdown({ onRequestStatus }: { onRequestStatus: () =>
               onRequestStatus();
               setIsOpen(false);
             }}
-            className="w-full flex items-center gap-2 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 hover:text-red-600 text-left"
+            className="w-[calc(100%-12px)] flex items-center gap-2 px-4 py-2.5 text-sm text-zinc-400 hover:bg-[#d5b263]/10 hover:text-[#d5b263] transition-colors rounded-lg mx-1.5 font-medium text-left"
           >
+            <Clock className="w-4 h-4" />
             Application Status
           </button>
         </div>
