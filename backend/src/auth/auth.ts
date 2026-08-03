@@ -23,7 +23,7 @@ console.log('  NODE_ENV:', process.env.NODE_ENV);
 console.log('  CLIENT_URL:', process.env.CLIENT_URL);
 console.log('  BACKEND_URL:', process.env.BACKEND_URL);
 
-const baseURL = process.env.BETTER_AUTH_URL || "https://api.myquro.com";
+const baseURL = process.env.BETTER_AUTH_URL || "https://backend.myquro.com";
 console.log('🔧 [AUTH CONFIG] Final baseURL:', baseURL);
 
 export const auth = betterAuth({
@@ -31,7 +31,7 @@ export const auth = betterAuth({
   trustHost: true,
   trustedOrigins: [
     ...(process.env.CLIENT_URL ? [process.env.CLIENT_URL] : []),
-    "https://api.myquro.com",
+    "https://backend.myquro.com",
     "https://myquro.com",
     "http://myquro.com",
     "https://www.myquro.com",

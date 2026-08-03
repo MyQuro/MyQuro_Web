@@ -6,7 +6,7 @@ export const authDebug = {
     console.log('=== AUTH DEBUG: Session Check ===');
 
     try {
-      const response = await fetch('https://api.myquro.com/api/auth/session', {
+      const response = await fetch('https://backend.myquro.com/api/auth/session', {
         method: 'GET',
         credentials: 'include',
         headers: {

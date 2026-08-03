@@ -50,7 +50,7 @@ export function useRestaurantRequest() {
         process.env.NEXT_PUBLIC_BACKEND_URL,
         typeof window !== 'undefined' ? window.location.origin : undefined,
         'https://myquro.com',
-        'https://api.myquro.com',
+        'https://backend.myquro.com',
       ].filter(Boolean))
     );
 
