@@ -5,7 +5,7 @@ import { useDashboard } from '@/lib/dashboard-context';
 import {
   Plus, Edit2, X, ChevronDown, ChevronUp, ChevronLeft, ChevronRight,
   AlertCircle, Search, Layers, Utensils, IndianRupee,
-  Move, Upload, Leaf, Beef, Eye, Menu, Trash2, Settings, RefreshCw
+  Move, Upload, Leaf, Beef, Eye, Menu, Trash2, Settings, RefreshCw, PlusCircle
 } from 'lucide-react';
 import { apiClient } from '@/lib/api-client';
 import { formatPrice, rupeesToPaise, paiseToRupees, capitalize } from '@/lib/utils';
@@ -183,6 +183,7 @@ export default function MenuManagementPage() {
   const [reordering, setReordering] = useState(false);
   const [previewModalOpen, setPreviewModalOpen] = useState(false);
   const [currentCategoryIndex, setCurrentCategoryIndex] = useState(0);
+  const [activeTab, setActiveTab] = useState<'menu' | 'extras'>('menu');
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [createSimilarItem, setCreateSimilarItem] = useState(false);
   const [existingSimilarItem, setExistingSimilarItem] = useState<MenuItem | null>(null);
@@ -296,27 +297,12 @@ export default function MenuManagementPage() {
       .filter(cat => cat.items.length > 0 || (debouncedSearchQuery === '' && cat.category.toLowerCase().includes(debouncedSearchQuery.toLowerCase())));
   }, [categories, debouncedSearchQuery, dietaryFilter]);
 
-  // Scroll Spy logic
+  // Set default active category
   useEffect(() => {
-    if (filteredCategories.length > 0 && !activeCategoryId) {
+    if (filteredCategories.length > 0 && (!activeCategoryId || !filteredCategories.some(c => c.id === activeCategoryId))) {
       setActiveCategoryId(filteredCategories[0].id);
     }
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          setActiveCategoryId(entry.target.id.replace('cat-', ''));
-        }
-      });
-    }, { rootMargin: '-20% 0px -70% 0px' });
-
-    filteredCategories.forEach(cat => {
-      const el = document.getElementById(`cat-${cat.id}`);
-      if (el) observer.observe(el);
-    });
-
-    return () => observer.disconnect();
-  }, [filteredCategories]);
+  }, [filteredCategories, activeCategoryId]);
 
   if (loading) return <MenuSkeleton />;
 
@@ -1166,304 +1152,359 @@ export default function MenuManagementPage() {
         </div>
       </div>
 
-      {/* 2. Search and Filter */}
-      <div className="flex flex-col sm:flex-row gap-3">
-        <div className="relative flex-1">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-500 w-4 h-4 transition-colors group-focus-within:text-[#d5b263]" strokeWidth={2} />
-          <input
-            type="text"
-            placeholder="Search menu items..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-11 pr-4 py-3 bg-zinc-900/40 border border-zinc-800/80 rounded-xl focus:ring-2 focus:ring-[#d5b263]/20 focus:border-[#d5b263] transition-all text-xs sm:text-sm outline-none shadow-sm placeholder-zinc-500 font-medium text-zinc-100"
-          />
-        </div>
-        <div className="relative">
-          <select
-            value={dietaryFilter}
-            onChange={(e) => setDietaryFilter(e.target.value as 'all' | 'veg' | 'non-veg')}
-            aria-label="Filter menu items by dietary type"
-            className="w-full sm:w-48 pl-4 pr-10 py-3 bg-zinc-900/40 border border-zinc-800/80 rounded-xl focus:ring-2 focus:ring-[#d5b263]/20 focus:border-[#d5b263] transition-all appearance-none text-xs sm:text-sm outline-none shadow-sm font-semibold text-zinc-300 cursor-pointer"
-          >
-            <option value="all" className="bg-[#0c0c0e] text-zinc-100">All Dietary Types</option>
-            <option value="veg" className="bg-[#0c0c0e] text-zinc-100">Vegetarian Only</option>
-            <option value="non-veg" className="bg-[#0c0c0e] text-zinc-100">Non-Vegetarian Only</option>
-          </select>
-          <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 text-zinc-500 w-4 h-4 pointer-events-none" strokeWidth={2} />
-        </div>
+      {/* 2. Tab Switcher */}
+      <div className="flex border-b border-white/5 gap-1 pb-0.5 mb-2 select-none">
+        <button
+          onClick={() => setActiveTab('menu')}
+          className={`flex items-center gap-2 px-5 py-3 text-xs font-black uppercase tracking-wider transition-all relative border-b-2 ${
+            activeTab === 'menu'
+              ? 'border-[#d5b263] text-[#d5b263]'
+              : 'border-transparent text-zinc-400 hover:text-zinc-200'
+          }`}
+        >
+          <Utensils className="w-3.5 h-3.5" />
+          Menu Dishes
+        </button>
+        <button
+          onClick={() => setActiveTab('extras')}
+          className={`flex items-center gap-2 px-5 py-3 text-xs font-black uppercase tracking-wider transition-all relative border-b-2 ${
+            activeTab === 'extras'
+              ? 'border-[#d5b263] text-[#d5b263]'
+              : 'border-transparent text-zinc-400 hover:text-zinc-200'
+          }`}
+        >
+          <PlusCircle className="w-3.5 h-3.5" />
+          Addons & Extras
+        </button>
       </div>
 
-      {/* 3. Menu Hierarchy */}
-      <div className="flex flex-col sm:flex-row gap-4">
-        {filteredCategories.length === 0 ? (
-          <div className="w-full text-center py-12 bg-[#0c0c0e]/80 rounded-2xl border border-dashed border-white/5">
-            <Layers className="w-10 h-10 text-zinc-600 mx-auto mb-2" strokeWidth={1.5} />
-            <p className="text-zinc-400 font-semibold text-sm">No categories found</p>
+      {activeTab === 'menu' ? (
+        <>
+          {/* Search and Filter */}
+          <div className="flex flex-col sm:flex-row gap-3">
+            <div className="relative flex-1">
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-500 w-4 h-4 transition-colors group-focus-within:text-[#d5b263]" strokeWidth={2} />
+              <input
+                type="text"
+                placeholder="Search menu items..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full pl-11 pr-4 py-3 bg-zinc-900/40 border border-zinc-800/80 rounded-xl focus:ring-2 focus:ring-[#d5b263]/20 focus:border-[#d5b263] transition-all text-xs sm:text-sm outline-none shadow-sm placeholder-zinc-500 font-medium text-zinc-100"
+              />
+            </div>
+            <div className="relative">
+              <select
+                value={dietaryFilter}
+                onChange={(e) => setDietaryFilter(e.target.value as 'all' | 'veg' | 'non-veg')}
+                aria-label="Filter menu items by dietary type"
+                className="w-full sm:w-48 pl-4 pr-10 py-3 bg-zinc-900/40 border border-zinc-800/80 rounded-xl focus:ring-2 focus:ring-[#d5b263]/20 focus:border-[#d5b263] transition-all appearance-none text-xs sm:text-sm outline-none shadow-sm font-semibold text-zinc-300 cursor-pointer"
+              >
+                <option value="all" className="bg-[#0c0c0e] text-zinc-100">All Dietary Types</option>
+                <option value="veg" className="bg-[#0c0c0e] text-zinc-100">Vegetarian Only</option>
+                <option value="non-veg" className="bg-[#0c0c0e] text-zinc-100">Non-Vegetarian Only</option>
+              </select>
+              <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 text-zinc-500 w-4 h-4 pointer-events-none" strokeWidth={2} />
+            </div>
           </div>
-        ) : (
-          <>
-            {/* Desktop Sidebar */}
-            <div className="hidden sm:block w-64 flex-shrink-0">
-              <div className="sticky top-6 bg-[#0c0c0e]/80 border border-white/5 rounded-2xl p-3 max-h-[calc(100vh-8rem)] overflow-y-auto scrollbar-hide">
-                <h3 className="font-black text-zinc-400 text-xs tracking-widest uppercase mb-3 px-2">Categories</h3>
-                <div className="space-y-1">
-                  {filteredCategories.map(category => {
-                    const isActive = activeCategoryId === category.id;
-                    return (
+
+          {/* Menu Hierarchy Workspace */}
+          <div className="flex flex-col md:flex-row gap-4 items-start">
+            {filteredCategories.length === 0 ? (
+              <div className="w-full text-center py-12 bg-[#0c0c0e]/80 rounded-2xl border border-dashed border-white/5">
+                <Layers className="w-10 h-10 text-zinc-600 mx-auto mb-2" strokeWidth={1.5} />
+                <p className="text-zinc-400 font-semibold text-sm">No categories found</p>
+              </div>
+            ) : (
+              <>
+                {/* Desktop Sidebar (Master List) */}
+                <div className="hidden md:block w-64 flex-shrink-0">
+                  <div className="bg-[#0c0c0e]/80 border border-white/5 rounded-2xl p-3 max-h-[calc(100vh-8rem)] overflow-y-auto scrollbar-hide">
+                    <div className="flex justify-between items-center mb-3 px-2">
+                      <h3 className="font-black text-zinc-400 text-xs tracking-widest uppercase">Categories</h3>
                       <button
-                        key={category.id}
-                        onClick={() => document.getElementById(`cat-${category.id}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
-                        className={`w-full text-left pl-3 pr-2.5 py-2.5 rounded-xl text-xs font-semibold transition-all duration-200 flex items-center justify-between group relative ${
-                          isActive 
-                            ? 'bg-gradient-to-r from-[#d5b263]/10 to-[#d5b263]/5 text-[#bfa052]' 
-                            : 'text-zinc-400 hover:text-white hover:bg-white/5'
-                        }`}
+                        onClick={() => openModal('category', 'create')}
+                        className="text-zinc-400 hover:text-white p-1 hover:bg-white/5 rounded-lg transition-colors"
+                        title="Add Category"
                       >
-                        {isActive && (
-                          <span className="absolute left-0 top-[20%] bottom-[20%] w-1 bg-[#d5b263] rounded-r-md" />
-                        )}
-                        <span className="truncate pr-2">{category.category}</span>
-                        <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full transition-colors ${
-                          isActive 
-                            ? 'bg-[#d5b263]/25 text-[#bfa052]' 
-                            : 'bg-white/5 text-zinc-400 group-hover:bg-white/10 group-hover:text-zinc-200'
-                        }`}>
-                          {category.items.length}
-                        </span>
+                        <Plus size={14} />
                       </button>
-                    );
-                  })}
-                </div>
-              </div>
-            </div>
-
-            {/* Mobile Category Pills */}
-            <div className="sm:hidden -mx-4 px-4 sticky top-0 z-10 bg-[#0c0c0e]/95 backdrop-blur-md py-2 border-b border-white/5 overflow-x-auto scrollbar-hide">
-              <div className="flex gap-2 w-max">
-                {filteredCategories.map(category => {
-                  const isActive = activeCategoryId === category.id;
-                  return (
-                    <button
-                      key={category.id}
-                      onClick={() => document.getElementById(`cat-${category.id}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
-                      className={`px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all border ${
-                        isActive 
-                          ? 'bg-[#d5b263]/10 border-[#d5b263]/40 text-[#bfa052] shadow-sm' 
-                          : 'bg-[#0c0c0e] border-white/5 text-zinc-400 shadow-sm'
-                      }`}
-                    >
-                      {category.category} <span className="opacity-60 ml-0.5">({category.items.length})</span>
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-
-            {/* Content Area */}
-            <div className="flex-1 space-y-8 pb-20">
-              {filteredCategories.map(category => (
-                <div key={category.id} id={`cat-${category.id}`} className="scroll-mt-24 space-y-4">
-                  {/* Category Header */}
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-white/5 pb-2.5">
-                    <div>
-                      <h2 className="text-lg sm:text-xl font-black text-white tracking-tight flex items-center gap-2">
-                        {category.category}
-                        {!category.isActive ? (
-                          <span className="text-[9px] font-bold bg-zinc-850 text-zinc-400 px-2 py-0.5 rounded-md tracking-wider uppercase border border-zinc-800/80 select-none">INACTIVE</span>
-                        ) : (
-                          <span className="text-[9px] font-bold bg-[#d5b263]/10 text-[#bfa052] px-2 py-0.5 rounded-md tracking-wider uppercase border border-[#d5b263]/20 select-none">{category.items.length} Items</span>
-                        )}
-                      </h2>
-                      {category.description && <p className="text-xs text-zinc-400 font-medium mt-0.5">{category.description}</p>}
                     </div>
-                    <div className="flex flex-wrap items-center gap-2">
-                      <div className="flex items-center gap-1.5 bg-[#141416]/40 border border-zinc-850 px-2.5 py-1 rounded-xl">
-                        <span className="text-[10px] font-bold text-zinc-455 select-none">Status</span>
-                        <StatusToggle isActive={category.isActive} onClick={() => handleToggleStatus('category', category.id, !category.isActive)} isLoading={loadingStatuses[`category-${category.id}`]} />
-                      </div>
-                      <div className="flex items-center gap-1">
-                        <button onClick={() => openModal('category', 'edit', undefined, category)} className="p-1.5 text-zinc-400 hover:text-[#bfa052] hover:bg-white/5 transition-all rounded-lg border border-zinc-800/80 active:scale-90" title="Edit Category"><Edit2 size={13} strokeWidth={2.5} /></button>
-                        <button onClick={() => handleDeleteCategory(category.id)} className="p-1.5 text-zinc-400 hover:text-rose-400 hover:bg-rose-500/10 transition-all rounded-lg border border-zinc-800/80 active:scale-90" title="Delete Category"><Trash2 size={13} strokeWidth={2.5} /></button>
-                      </div>
-                      <button onClick={() => openModal('item', 'create', category.id)} className="flex items-center text-xs font-black bg-zinc-800 hover:bg-zinc-750 text-zinc-100 px-3 py-2 rounded-xl transition-all shadow-md active:scale-95 gap-1 border border-zinc-700"><Plus size={13} strokeWidth={3} /> Add Item</button>
+                    <div className="space-y-1">
+                      {filteredCategories.map(category => {
+                        const isActive = activeCategoryId === category.id;
+                        return (
+                          <div
+                            key={category.id}
+                            draggable
+                            onDragStart={(e) => handleDragStart(e, category.id)}
+                            onDragOver={(e) => handleDragOver(e, category.id)}
+                            onDragEnd={handleDragEnd}
+                            onDrop={(e) => handleDrop(e, category.id)}
+                            className={`group relative rounded-xl transition-all duration-200 cursor-grab active:cursor-grabbing border ${
+                              isActive 
+                                ? 'bg-gradient-to-r from-[#d5b263]/10 to-[#d5b263]/5 text-[#bfa052] border-zinc-800' 
+                                : 'text-zinc-400 hover:text-white hover:bg-white/5 border-transparent'
+                            } ${dragOverCategory === category.id ? 'border-dashed border-[#d5b263]/50' : ''}`}
+                          >
+                            <button
+                              onClick={() => setActiveCategoryId(category.id)}
+                              className="w-full text-left pl-3.5 pr-10 py-2.5 text-xs font-semibold truncate flex items-center justify-between"
+                            >
+                              <span className="truncate pr-2">{category.category}</span>
+                              <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full transition-colors ${
+                                isActive 
+                                  ? 'bg-[#d5b263]/25 text-[#bfa052]' 
+                                  : 'bg-white/5 text-zinc-400'
+                              }`}>
+                                {category.items.length}
+                              </span>
+                            </button>
+                            {/* Hover Edit/Delete Action indicators on sidebar */}
+                            <div className="absolute right-1 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity flex items-center bg-zinc-950/80 px-1 py-0.5 rounded-lg gap-0.5">
+                              <button onClick={(e) => { e.stopPropagation(); openModal('category', 'edit', undefined, category); }} className="p-0.5 text-zinc-450 hover:text-[#bfa052]" title="Edit"><Edit2 size={11} /></button>
+                              <button onClick={(e) => { e.stopPropagation(); handleDeleteCategory(category.id); }} className="p-0.5 text-zinc-450 hover:text-rose-400" title="Delete"><Trash2 size={11} /></button>
+                            </div>
+                          </div>
+                        );
+                      })}
                     </div>
                   </div>
+                </div>
 
-                  {/* Items Grid */}
-                  {category.items.length === 0 ? (
-                    <div className="p-8 text-center text-zinc-500 text-xs font-medium italic bg-zinc-950/20 rounded-2xl border border-dashed border-zinc-800/60">No items available in this category.</div>
-                  ) : (
-                    <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
-                      {category.items.map(item => (
-                        <div key={item.id} className={`group bg-[#0c0c0e]/40 rounded-2xl border transition-all duration-300 ease-out flex flex-col overflow-hidden ${
-                          !item.isActive 
-                            ? 'border-zinc-800 bg-zinc-950/20 opacity-70 shadow-none' 
-                            : 'border-white/5 hover:border-[#d5b263]/30 hover:bg-[#0c0c0e]/80 shadow-md hover:-translate-y-0.5'
-                        }`}>
-                          {/* Top Content */}
-                          <div className="p-4 flex gap-4">
-                            <div className="flex-1 min-w-0">
-                              <div className="flex items-center gap-1.5 mb-1.5 flex-wrap">
-                                <FoodTypeIcon type={item.isVeg ? 'veg' : 'non-veg'} />
-                                {item.variants.length > 0 && (
-                                  <span className="text-[9px] font-bold text-zinc-400 bg-zinc-900 px-2 py-0.5 rounded-full tracking-wider uppercase border border-zinc-850 select-none">{item.variants.length} Variants</span>
-                                )}
-                              </div>
-                              <h3 className="font-black text-base text-white leading-snug mb-1 truncate group-hover:text-[#bfa052] transition-colors">{item.name}</h3>
+                {/* Mobile Category Pills */}
+                <div className="md:hidden -mx-4 px-4 sticky top-0 z-10 bg-[#0c0c0e]/95 backdrop-blur-md py-2 border-b border-white/5 overflow-x-auto scrollbar-hide w-full">
+                  <div className="flex gap-1.5 w-max">
+                    {filteredCategories.map(category => {
+                      const isActive = activeCategoryId === category.id;
+                      return (
+                        <button
+                          key={category.id}
+                          onClick={() => setActiveCategoryId(category.id)}
+                          className={`px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all border ${
+                            isActive 
+                              ? 'bg-[#d5b263]/10 border-[#d5b263]/40 text-[#bfa052] shadow-sm' 
+                              : 'bg-[#0c0c0e] border-white/5 text-zinc-400 shadow-sm'
+                          }`}
+                        >
+                          {category.category} <span className="opacity-60 ml-0.5">({category.items.length})</span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
 
-                              {/* Price Indicator */}
-                              <div className="font-extrabold text-[#bfa052] text-xs mb-1.5 flex items-center gap-1">
-                                <span className="text-zinc-500 text-[10px] font-semibold">Starts at</span>
-                                <span className="text-sm font-black text-white">{item.variants.length > 0 ? formatPrice(item.variants[0].price) : 'No Price'}</span>
-                              </div>
+                {/* Active Category Content (Detail View) */}
+                <div className="flex-1 space-y-4 min-w-0 w-full">
+                  {(() => {
+                    const category = filteredCategories.find(c => c.id === activeCategoryId) || filteredCategories[0];
+                    if (!category) return null;
 
-                              {item.description && <p className="text-xs text-zinc-400 font-medium line-clamp-2 leading-relaxed">{item.description}</p>}
-                            </div>
-
-                            {/* Right Image Container */}
-                            <div className="relative flex-shrink-0 select-none">
-                              {item.imageURL ? (
-                                <div className="w-18 h-18 sm:w-20 sm:h-20 overflow-hidden rounded-2xl border border-zinc-850 shadow-sm">
-                                  <img 
-                                    src={item.imageURL} 
-                                    alt={item.name} 
-                                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" 
-                                  />
-                                  {!item.isActive && <div className="absolute inset-0 bg-black/40 backdrop-blur-[0.5px]" />}
-                                </div>
+                    return (
+                      <div className="space-y-4">
+                        {/* Detail Header */}
+                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-white/5 pb-3">
+                          <div>
+                            <div className="flex items-center gap-2 flex-wrap">
+                              <h2 className="text-lg sm:text-xl font-black text-white tracking-tight">{category.category}</h2>
+                              {!category.isActive ? (
+                                <span className="text-[9px] font-bold bg-zinc-850 text-zinc-400 px-2 py-0.5 rounded-md border border-zinc-800/80">INACTIVE</span>
                               ) : (
-                                <div className="w-18 h-18 sm:w-20 sm:h-20 bg-zinc-900/60 rounded-2xl border border-dashed border-zinc-800 flex items-center justify-center text-zinc-650">
-                                  <Utensils className="w-6 h-6 opacity-60" strokeWidth={1.5} />
-                                </div>
+                                <span className="text-[9px] font-bold bg-[#d5b263]/10 text-[#bfa052] px-2 py-0.5 rounded-md border border-[#d5b263]/20">{category.items.length} Items</span>
                               )}
                             </div>
+                            {category.description && <p className="text-xs text-zinc-450 font-medium mt-1">{category.description}</p>}
                           </div>
-
-                          {/* Variants List (Inline) */}
-                          {item.variants.length > 0 && (
-                            <div className="px-4 pb-3">
-                              <div className="space-y-1 border-t border-zinc-900 pt-3">
-                                {item.variants.map(variant => (
-                                  <div key={variant.id} className="flex items-center justify-between text-xs py-1.5 px-2.5 rounded-xl hover:bg-zinc-900/60 transition-colors">
-                                    <div className="flex items-center gap-2 text-zinc-200 min-w-0 font-medium">
-                                      <span className="font-semibold truncate">{variant.variantName}</span>
-                                      {variant.portionSize && (
-                                        <span className="text-[9px] text-zinc-400 bg-zinc-900 px-1.5 py-0.5 rounded-full border border-zinc-800 font-bold select-none">{variant.portionSize}</span>
-                                      )}
-                                    </div>
-                                    <div className="flex items-center gap-2.5">
-                                      <span className="font-black text-zinc-150 flex-shrink-0">{formatPrice(variant.price)}</span>
-                                      <div className="flex items-center gap-1.5 border-l border-zinc-800 pl-2.5">
-                                        <button onClick={() => openModal('variant', 'edit', item.id, variant)} className="p-0.5 text-zinc-500 hover:text-white transition-colors" title="Edit Variant"><Edit2 size={12} strokeWidth={2.5} /></button>
-                                        <button onClick={() => handleDeleteVariant(variant.id, item.id)} className="p-0.5 text-zinc-600 hover:text-rose-450 transition-colors" title="Delete Variant"><Trash2 size={12} strokeWidth={2.5} /></button>
-                                        <StatusToggle isActive={variant.isActive} onClick={() => handleToggleStatus('variant', variant.id, !variant.isActive, item.id)} isLoading={loadingStatuses[`variant-${variant.id}`]} />
-                                      </div>
-                                    </div>
-                                  </div>
-                                ))}
-                              </div>
+                          <div className="flex flex-wrap items-center gap-2">
+                            <div className="flex items-center gap-1.5 bg-[#141416]/40 border border-zinc-850 px-2.5 py-1 rounded-xl">
+                              <span className="text-[10px] font-bold text-zinc-450">Active Status</span>
+                              <StatusToggle isActive={category.isActive} onClick={() => handleToggleStatus('category', category.id, !category.isActive)} isLoading={loadingStatuses[`category-${category.id}`]} />
                             </div>
-                          )}
-
-                          {/* Action Footer */}
-                          <div className="mt-auto border-t border-zinc-900 bg-zinc-950/40 px-4 py-2.5 flex items-center justify-between">
-                            <div className="flex items-center gap-1.5 bg-zinc-900/50 px-2.5 py-0.5 rounded-xl border border-zinc-850">
-                              <span className="text-[9px] font-bold text-zinc-450 select-none">Active</span>
-                              <StatusToggle isActive={item.isActive} onClick={() => handleToggleStatus('item', item.id, !item.isActive)} isLoading={loadingStatuses[`item-${item.id}`]} />
-                            </div>
-                            <div className="flex items-center gap-1 sm:gap-1.5">
-                              <button onClick={() => openModal('item', 'edit', category.id, item)} className="px-2 py-1 text-xs font-semibold text-zinc-300 hover:text-white hover:bg-zinc-900 rounded-lg border border-transparent hover:border-zinc-800 transition-all flex items-center gap-1"><Edit2 size={11} strokeWidth={2.5} /> <span className="hidden sm:inline">Edit</span></button>
-                              <button onClick={() => openModal('variant', 'create', item.id)} className="px-2 py-1 text-xs font-semibold text-zinc-300 hover:text-white hover:bg-zinc-900 rounded-lg border border-transparent hover:border-zinc-800 transition-all flex items-center gap-1"><Plus size={11} strokeWidth={2.5} /> <span className="hidden sm:inline">Add Variant</span></button>
-                              <button onClick={() => openAssignmentModal('item', item.id, item.name)} className="px-2 py-1 text-xs font-semibold text-purple-400 hover:text-purple-300 hover:bg-zinc-900 rounded-lg border border-transparent hover:border-purple-900/60 transition-all flex items-center gap-1"><Settings size={11} strokeWidth={2.5} /> <span className="hidden sm:inline">Extras</span></button>
-                              <button onClick={() => handleDeleteItem(item.id)} className="p-1.5 text-zinc-550 hover:text-rose-450 rounded-lg hover:bg-rose-950/10 transition-colors"><Trash2 size={13} strokeWidth={2} /></button>
-                            </div>
+                            <button onClick={() => openModal('category', 'edit', undefined, category)} className="p-2 text-zinc-400 hover:text-[#bfa052] hover:bg-white/5 transition-all rounded-lg border border-zinc-800" title="Edit Category"><Edit2 size={13} strokeWidth={2.5} /></button>
+                            <button onClick={() => handleDeleteCategory(category.id)} className="p-2 text-zinc-400 hover:text-rose-450 hover:bg-rose-500/10 transition-all rounded-lg border border-zinc-800" title="Delete Category"><Trash2 size={13} strokeWidth={2.5} /></button>
+                            <button onClick={() => openModal('item', 'create', category.id)} className="flex items-center text-xs font-black bg-[#d5b263] hover:bg-[#c4a152] text-black px-3.5 py-2 rounded-xl transition-all shadow-md active:scale-95 gap-1 border-none"><Plus size={13} strokeWidth={3} /> Add Dish</button>
                           </div>
                         </div>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
-          </>
-        )}
-      </div>
 
-      {/* 4. Extras Management */}
-      <div className="bg-[#0c0c0e]/80 rounded-2xl border border-white/5 overflow-hidden">
-        <div className="p-4 sm:p-5 border-b border-white/5 bg-[#141416]/20 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-          <div>
-            <h2 className="text-lg sm:text-xl font-black text-white tracking-tight flex items-center gap-2">
-              Extras Management
-            </h2>
-            <p className="text-zinc-400 text-xs sm:text-sm mt-0.5 font-medium">Configure global modifiers like extra cheese, sauces, toppings, or custom prep items.</p>
+                        {/* Items List in Active Category */}
+                        {category.items.length === 0 ? (
+                          <div className="text-center py-16 border border-dashed border-zinc-800 rounded-2xl bg-zinc-950/10 p-6">
+                            <Utensils className="w-10 h-10 text-zinc-650 mx-auto mb-3" />
+                            <p className="text-zinc-400 font-bold text-sm">No items in this category</p>
+                            <p className="text-zinc-555 text-xs mt-1">Get started by creating a new dish in {category.category}.</p>
+                          </div>
+                        ) : (
+                          <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
+                            {category.items.map(item => (
+                              <div key={item.id} className={`group bg-[#0c0c0e]/40 rounded-2xl border transition-all duration-300 flex flex-col overflow-hidden ${
+                                !item.isActive 
+                                  ? 'border-zinc-800 bg-zinc-950/20 opacity-70 shadow-none' 
+                                  : 'border-white/5 hover:border-[#d5b263]/30 hover:bg-[#0c0c0e]/85 shadow-md'
+                              }`}>
+                                <div className="p-4 flex gap-4">
+                                  <div className="flex-1 min-w-0">
+                                    <div className="flex items-center gap-1.5 mb-1.5 flex-wrap">
+                                      <FoodTypeIcon type={item.isVeg ? 'veg' : 'non-veg'} />
+                                      {item.variants.length > 0 && (
+                                        <span className="text-[9px] font-bold text-zinc-400 bg-zinc-900 px-2 py-0.5 rounded-full tracking-wider border border-zinc-850 select-none">{item.variants.length} Variants</span>
+                                      )}
+                                    </div>
+                                    <h3 className="font-black text-base text-white leading-snug mb-1 truncate group-hover:text-[#bfa052] transition-colors">{item.name}</h3>
+
+                                    {/* Price */}
+                                    <div className="font-extrabold text-[#bfa052] text-xs mb-1.5 flex items-center gap-1">
+                                      <span className="text-zinc-500 text-[10px]">Starts at</span>
+                                      <span className="text-sm font-black text-white">{item.variants.length > 0 ? formatPrice(item.variants[0].price) : 'No Price'}</span>
+                                    </div>
+
+                                    {item.description && <p className="text-xs text-zinc-400 font-medium line-clamp-2 leading-relaxed">{item.description}</p>}
+                                  </div>
+
+                                  <div className="relative flex-shrink-0 select-none">
+                                    {item.imageURL ? (
+                                      <div className="w-18 h-18 sm:w-20 sm:h-20 overflow-hidden rounded-2xl border border-zinc-855 shadow-sm">
+                                        <img 
+                                          src={item.imageURL} 
+                                          alt={item.name} 
+                                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" 
+                                        />
+                                        {!item.isActive && <div className="absolute inset-0 bg-black/40" />}
+                                      </div>
+                                    ) : (
+                                      <div className="w-18 h-18 sm:w-20 sm:h-20 bg-zinc-900/60 rounded-2xl border border-dashed border-zinc-800 flex items-center justify-center text-zinc-655">
+                                        <Utensils className="w-6 h-6 opacity-60" strokeWidth={1.5} />
+                                      </div>
+                                    )}
+                                  </div>
+                                </div>
+
+                                {/* Variants (Inline) */}
+                                {item.variants.length > 0 && (
+                                  <div className="px-4 pb-3">
+                                    <div className="space-y-1 border-t border-zinc-900 pt-3">
+                                      {item.variants.map(variant => (
+                                        <div key={variant.id} className="flex items-center justify-between text-xs py-1.5 px-2.5 rounded-xl hover:bg-zinc-900/60 transition-colors">
+                                          <div className="flex items-center gap-2 text-zinc-200 min-w-0 font-medium">
+                                            <span className="font-semibold truncate">{variant.variantName}</span>
+                                            {variant.portionSize && (
+                                              <span className="text-[9px] text-zinc-400 bg-zinc-900 px-1.5 py-0.5 rounded-full border border-zinc-800 font-bold select-none">{variant.portionSize}</span>
+                                            )}
+                                          </div>
+                                          <div className="flex items-center gap-2.5">
+                                            <span className="font-black text-zinc-150 flex-shrink-0">{formatPrice(variant.price)}</span>
+                                            <div className="flex items-center gap-1.5 border-l border-zinc-800 pl-2.5">
+                                              <button onClick={() => openModal('variant', 'edit', item.id, variant)} className="p-0.5 text-zinc-500 hover:text-white" title="Edit Variant"><Edit2 size={12} /></button>
+                                              <button onClick={() => handleDeleteVariant(variant.id, item.id)} className="p-0.5 text-zinc-600 hover:text-rose-450" title="Delete Variant"><Trash2 size={12} /></button>
+                                              <StatusToggle isActive={variant.isActive} onClick={() => handleToggleStatus('variant', variant.id, !variant.isActive, item.id)} isLoading={loadingStatuses[`variant-${variant.id}`]} />
+                                            </div>
+                                          </div>
+                                        </div>
+                                      ))}
+                                    </div>
+                                  </div>
+                                )}
+
+                                {/* Card Actions */}
+                                <div className="mt-auto border-t border-zinc-900 bg-zinc-950/40 px-4 py-2.5 flex items-center justify-between">
+                                  <div className="flex items-center gap-1.5 bg-zinc-900/50 px-2.5 py-0.5 rounded-xl border border-zinc-850">
+                                    <span className="text-[9px] font-bold text-zinc-450 select-none">Active</span>
+                                    <StatusToggle isActive={item.isActive} onClick={() => handleToggleStatus('item', item.id, !item.isActive)} isLoading={loadingStatuses[`item-${item.id}`]} />
+                                  </div>
+                                  <div className="flex items-center gap-1 sm:gap-1.5">
+                                    <button onClick={() => openModal('item', 'edit', category.id, item)} className="px-2 py-1 text-xs font-semibold text-zinc-300 hover:text-white hover:bg-zinc-900 rounded-lg border border-transparent hover:border-zinc-800 transition-all flex items-center gap-1"><Edit2 size={11} /> <span className="hidden sm:inline">Edit</span></button>
+                                    <button onClick={() => openModal('variant', 'create', item.id)} className="px-2 py-1 text-xs font-semibold text-zinc-300 hover:text-white hover:bg-zinc-900 rounded-lg border border-transparent hover:border-zinc-800 transition-all flex items-center gap-1"><Plus size={11} /> <span className="hidden sm:inline">Add Variant</span></button>
+                                    <button onClick={() => openAssignmentModal('item', item.id, item.name)} className="px-2 py-1 text-xs font-semibold text-purple-400 hover:text-purple-300 hover:bg-zinc-900 rounded-lg border border-transparent hover:border-purple-900/60 transition-all flex items-center gap-1"><Settings size={11} /> <span className="hidden sm:inline">Extras</span></button>
+                                    <button onClick={() => handleDeleteItem(item.id)} className="p-1.5 text-zinc-550 hover:text-rose-450 rounded-lg hover:bg-rose-950/10 transition-colors"><Trash2 size={13} /></button>
+                                  </div>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })()}
+                </div>
+              </>
+            )}
           </div>
-          <button
-            onClick={() => openModal('extra', 'create')}
-            className="flex items-center justify-center px-4 py-2 bg-zinc-800 hover:bg-zinc-750 text-zinc-100 rounded-xl font-bold transition-all shadow-md active:scale-95 text-xs sm:text-sm border border-zinc-700 self-start sm:self-center"
-          >
-            <Plus className="w-4 h-4 mr-1.5 text-[#d5b263]" strokeWidth={2.5} />
-            Add Option
-          </button>
-        </div>
-
-        <div className="p-4 sm:p-5">
-          {extras.length === 0 ? (
-            <div className="text-center py-12 border border-dashed border-zinc-800/80 rounded-xl bg-zinc-950/10">
-              <div className="w-10 h-10 bg-zinc-900 rounded-full flex items-center justify-center mx-auto mb-3">
-                <Plus className="w-4 h-4 text-zinc-500" strokeWidth={2} />
-              </div>
-              <p className="text-zinc-400 font-bold text-xs sm:text-sm">No extras created yet</p>
-              <p className="text-zinc-500 text-xs mt-0.5">Create addons that customers can optionally attach to menu selections.</p>
+        </>
+      ) : (
+        /* Tab 2: Extras Management */
+        <div className="bg-[#0c0c0e]/80 rounded-2xl border border-white/5 overflow-hidden">
+          <div className="p-4 sm:p-5 border-b border-white/5 bg-[#141416]/20 flex flex-col sm:flex-row sm:items-center justify-between gap-3 animate-in fade-in duration-200">
+            <div>
+              <h2 className="text-lg sm:text-xl font-black text-white tracking-tight flex items-center gap-2">
+                Extras Management
+              </h2>
+              <p className="text-zinc-400 text-xs sm:text-sm mt-0.5 font-medium">Configure global modifiers like extra cheese, sauces, toppings, or custom prep items.</p>
             </div>
-          ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {extras.map((extra) => (
-                <div key={extra.id} className={`group bg-[#0c0c0e]/40 rounded-xl border transition-all duration-300 flex flex-col h-full ${
-                  !extra.isActive 
-                    ? 'border-zinc-800 bg-zinc-950/20 opacity-70 shadow-none' 
-                    : 'border-white/5 hover:border-[#d5b263]/30 hover:bg-[#0c0c0e]/80 shadow-md'
-                } p-4`}>
-                  <div className="flex items-start justify-between gap-3 mb-3">
-                    <div className="min-w-0 flex-1">
-                      <h3 className={`font-black text-sm sm:text-base leading-tight mb-0.5 truncate transition-colors group-hover:text-[#bfa052] ${
-                        !extra.isActive ? 'text-zinc-500' : 'text-white'
-                      }`}>
-                        {extra.name}
-                      </h3>
-                      {extra.description && (
-                        <p className={`text-xs line-clamp-2 leading-relaxed ${
-                          !extra.isActive ? 'text-zinc-650' : 'text-zinc-400 font-medium'
-                        }`}>
-                          {extra.description}
-                        </p>
-                      )}
-                    </div>
-                    <div className="flex-shrink-0 flex items-center gap-1 bg-zinc-900 border border-zinc-850 px-2 py-0.5 rounded-lg">
-                      <span className="text-[9px] font-bold text-zinc-450 uppercase select-none">Active</span>
-                      <StatusToggle
-                        isActive={extra.isActive}
-                        onClick={() => handleToggleStatus('extra', extra.id, !extra.isActive)}
-                        isLoading={loadingStatuses[`extra-${extra.id}`]}
-                      />
-                    </div>
-                  </div>
+            <button
+              onClick={() => openModal('extra', 'create')}
+              className="flex items-center justify-center px-4 py-2 bg-zinc-800 hover:bg-zinc-750 text-zinc-100 rounded-xl font-bold transition-all shadow-md active:scale-95 text-xs sm:text-sm border border-zinc-700 self-start sm:self-center"
+            >
+              <Plus className="w-4 h-4 mr-1.5 text-[#d5b263]" strokeWidth={2.5} />
+              Add Option
+            </button>
+          </div>
 
-                  <div className="mt-auto pt-3 border-t border-zinc-900 flex items-center justify-between">
-                    <span className={`font-black text-sm sm:text-base ${!extra.isActive ? 'text-zinc-500' : 'text-white'}`}>
-                      {formatPrice(extra.price)}
-                    </span>
-                    <div className="flex items-center gap-1 sm:gap-1.5">
-                      <button onClick={() => openModal('extra', 'edit', undefined, extra)} className="px-2.5 py-1 text-xs font-semibold text-zinc-300 hover:text-white hover:bg-zinc-900 rounded-lg border border-transparent hover:border-zinc-800 transition-all flex items-center gap-1"><Edit2 size={11} strokeWidth={2.5} /> Edit</button>
-                      <button onClick={() => handleDeleteExtra(extra.id)} disabled={loadingStatuses[`extra-${extra.id}`]} className="p-1.5 text-zinc-550 hover:text-rose-450 hover:bg-rose-950/10 rounded-lg transition-colors disabled:opacity-50"><Trash2 size={13} /></button>
-                    </div>
-                  </div>
+          <div className="p-4 sm:p-5">
+            {extras.length === 0 ? (
+              <div className="text-center py-12 border border-dashed border-zinc-800/80 rounded-xl bg-zinc-950/10">
+                <div className="w-10 h-10 bg-zinc-900 rounded-full flex items-center justify-center mx-auto mb-3">
+                  <Plus className="w-4 h-4 text-zinc-500" strokeWidth={2} />
                 </div>
-              ))}
-            </div>
-          )}
+                <p className="text-zinc-400 font-bold text-xs sm:text-sm">No extras created yet</p>
+                <p className="text-zinc-555 text-xs mt-0.5">Create addons that customers can optionally attach to menu selections.</p>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                {extras.map((extra) => (
+                  <div key={extra.id} className={`group bg-[#0c0c0e]/40 rounded-xl border transition-all duration-300 flex flex-col h-full ${
+                    !extra.isActive 
+                      ? 'border-zinc-800 bg-zinc-950/20 opacity-70 shadow-none' 
+                      : 'border-white/5 hover:border-[#d5b263]/30 hover:bg-[#0c0c0e]/80 shadow-md'
+                  } p-4`}>
+                    <div className="flex items-start justify-between gap-3 mb-3">
+                      <div className="min-w-0 flex-1">
+                        <h3 className={`font-black text-sm sm:text-base leading-tight mb-0.5 truncate transition-colors group-hover:text-[#bfa052] ${
+                          !extra.isActive ? 'text-zinc-500' : 'text-white'
+                        }`}>
+                          {extra.name}
+                        </h3>
+                        {extra.description && (
+                          <p className={`text-xs line-clamp-2 leading-relaxed ${
+                            !extra.isActive ? 'text-zinc-655' : 'text-zinc-400 font-medium'
+                          }`}>
+                            {extra.description}
+                          </p>
+                        )}
+                      </div>
+                      <div className="flex-shrink-0 flex items-center gap-1 bg-zinc-900 border border-zinc-850 px-2 py-0.5 rounded-lg">
+                        <span className="text-[9px] font-bold text-zinc-450 uppercase select-none">Active</span>
+                        <StatusToggle
+                          isActive={extra.isActive}
+                          onClick={() => handleToggleStatus('extra', extra.id, !extra.isActive)}
+                          isLoading={loadingStatuses[`extra-${extra.id}`]}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="mt-auto pt-3 border-t border-zinc-900 flex items-center justify-between">
+                      <span className={`font-black text-sm sm:text-base ${!extra.isActive ? 'text-zinc-500' : 'text-white'}`}>
+                        {formatPrice(extra.price)}
+                      </span>
+                      <div className="flex items-center gap-1 sm:gap-1.5">
+                        <button onClick={() => openModal('extra', 'edit', undefined, extra)} className="px-2.5 py-1 text-xs font-semibold text-zinc-300 hover:text-white hover:bg-zinc-900 rounded-lg border border-transparent hover:border-zinc-800 transition-all flex items-center gap-1"><Edit2 size={11} strokeWidth={2.5} /> Edit</button>
+                        <button onClick={() => handleDeleteExtra(extra.id)} disabled={loadingStatuses[`extra-${extra.id}`]} className="p-1.5 text-zinc-555 hover:text-rose-450 hover:bg-rose-950/10 rounded-lg transition-colors disabled:opacity-50"><Trash2 size={13} /></button>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
-      </div>
+      )}
 
       {/* --- UNIFIED MODAL --- */}
       {modalOpen && modalConfig && (
