@@ -36,6 +36,7 @@ export const auth = betterAuth({
     "http://myquro.com",
     "https://www.myquro.com",
     "http://www.myquro.com",
+    "https://hypekimedia.myquro.com",
     "https://myquro-paisa-speaks.onrender.com",
     "https://myquro-backend-myquro-paisa-speaks.onrender.com",
     "https://myquro-frontend-myquro-paisa-speaks.onrender.com",
