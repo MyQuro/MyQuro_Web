@@ -1129,21 +1129,21 @@ export default function MenuManagementPage() {
   }
 
   return (
-    <div className="space-y-6 pb-20">
+    <div className="space-y-5 pb-12">
 
       {/* 1. Header */}
-      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 bg-white p-6 sm:p-8 rounded-[2rem] border border-slate-100 shadow-[0_4px_30px_-4px_rgba(0,0,0,0.03)] border-l-[6px] border-l-[#d5b263] transition-all duration-300">
+      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 bg-[#0c0c0e]/80 p-5 sm:p-6 rounded-3xl border border-white/5 border-l-[6px] border-l-[#d5b263] transition-all duration-300">
         <div>
-          <h1 className="text-3xl font-black text-slate-900 tracking-tight">Menu Management</h1>
-          <p className="text-slate-500 text-sm sm:text-base mt-1 font-medium">Create categories, items, variants, and configure prices dynamically.</p>
+          <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight">Menu Management</h1>
+          <p className="text-zinc-400 text-xs sm:text-sm mt-1 font-medium">Create categories, items, variants, and configure prices dynamically.</p>
         </div>
-        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5">
           <button
             onClick={refreshMenu}
             disabled={loading}
-            className="flex items-center justify-center px-5 py-3 bg-slate-50 border border-slate-200/80 text-slate-700 hover:text-slate-950 hover:bg-slate-100 rounded-xl font-bold transition-all shadow-sm active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed text-sm"
+            className="flex items-center justify-center px-4 py-2.5 bg-white/5 border border-white/5 text-zinc-300 hover:text-white hover:bg-white/10 rounded-xl font-bold transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed text-xs sm:text-sm"
           >
-            <RefreshCw className={`w-4 h-4 mr-2 ${loading ? 'animate-spin' : ''}`} strokeWidth={2.5} />
+            <RefreshCw className={`w-3.5 h-3.5 mr-2 ${loading ? 'animate-spin' : ''}`} strokeWidth={2.5} />
             {loading ? 'Refreshing...' : 'Refresh'}
           </button>
           <button
@@ -1151,31 +1151,31 @@ export default function MenuManagementPage() {
               setCurrentCategoryIndex(0);
               setPreviewModalOpen(true);
             }}
-            className="flex items-center justify-center px-5 py-3 bg-slate-900 hover:bg-slate-800 text-white rounded-xl font-bold transition-all shadow-md hover:shadow-lg active:scale-95 text-sm"
+            className="flex items-center justify-center px-4 py-2.5 bg-zinc-900 hover:bg-zinc-850 text-zinc-150 rounded-xl font-bold border border-zinc-800 transition-all active:scale-95 text-xs sm:text-sm"
           >
-            <Eye className="w-4 h-4 mr-2 text-[#d5b263]" strokeWidth={2.5} />
+            <Eye className="w-3.5 h-3.5 mr-2 text-[#d5b263]" strokeWidth={2.5} />
             Preview Menu
           </button>
           <button
             onClick={() => openModal('category', 'create')}
-            className="flex items-center justify-center px-5 py-3 bg-gradient-to-r from-[#d5b263] to-[#bfa052] text-slate-950 rounded-xl font-black hover:from-[#e0bf70] hover:to-[#d5b263] transition-all shadow-md hover:shadow-xl hover:shadow-[#d5b263]/25 active:scale-95 text-sm border-none"
+            className="flex items-center justify-center px-4 py-2.5 bg-[#d5b263] text-black rounded-xl font-black hover:bg-[#c4a152] transition-all shadow-md active:scale-95 text-xs sm:text-sm border-none"
           >
-            <Plus className="w-4 h-4 mr-2" strokeWidth={3} />
+            <Plus className="w-3.5 h-3.5 mr-2" strokeWidth={3} />
             Add Category
           </button>
         </div>
       </div>
 
       {/* 2. Search and Filter */}
-      <div className="flex flex-col sm:flex-row gap-4">
+      <div className="flex flex-col sm:flex-row gap-3">
         <div className="relative flex-1">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 w-4 h-4 transition-colors group-focus-within:text-[#d5b263]" strokeWidth={2} />
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-500 w-4 h-4 transition-colors group-focus-within:text-[#d5b263]" strokeWidth={2} />
           <input
             type="text"
             placeholder="Search menu items..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-11 pr-4 py-3.5 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-[#d5b263]/20 focus:border-[#d5b263] transition-all text-sm outline-none shadow-sm placeholder-slate-400 font-medium text-slate-700"
+            className="w-full pl-11 pr-4 py-3 bg-zinc-900/40 border border-zinc-800/80 rounded-xl focus:ring-2 focus:ring-[#d5b263]/20 focus:border-[#d5b263] transition-all text-xs sm:text-sm outline-none shadow-sm placeholder-zinc-500 font-medium text-zinc-100"
           />
         </div>
         <div className="relative">
@@ -1183,29 +1183,29 @@ export default function MenuManagementPage() {
             value={dietaryFilter}
             onChange={(e) => setDietaryFilter(e.target.value as 'all' | 'veg' | 'non-veg')}
             aria-label="Filter menu items by dietary type"
-            className="w-full sm:w-56 pl-4 pr-10 py-3.5 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-[#d5b263]/20 focus:border-[#d5b263] transition-all appearance-none text-sm outline-none shadow-sm font-semibold text-slate-700 cursor-pointer"
+            className="w-full sm:w-48 pl-4 pr-10 py-3 bg-zinc-900/40 border border-zinc-800/80 rounded-xl focus:ring-2 focus:ring-[#d5b263]/20 focus:border-[#d5b263] transition-all appearance-none text-xs sm:text-sm outline-none shadow-sm font-semibold text-zinc-300 cursor-pointer"
           >
-            <option value="all">All Dietary Types</option>
-            <option value="veg">Vegetarian Only</option>
-            <option value="non-veg">Non-Vegetarian Only</option>
+            <option value="all" className="bg-[#0c0c0e] text-zinc-100">All Dietary Types</option>
+            <option value="veg" className="bg-[#0c0c0e] text-zinc-100">Vegetarian Only</option>
+            <option value="non-veg" className="bg-[#0c0c0e] text-zinc-100">Non-Vegetarian Only</option>
           </select>
-          <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 w-4 h-4 pointer-events-none" strokeWidth={2} />
+          <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 text-zinc-500 w-4 h-4 pointer-events-none" strokeWidth={2} />
         </div>
       </div>
 
       {/* 3. Menu Hierarchy */}
-      <div className="flex flex-col sm:flex-row gap-6">
+      <div className="flex flex-col sm:flex-row gap-4">
         {filteredCategories.length === 0 ? (
-          <div className="w-full text-center py-16 bg-white rounded-2xl border-2 border-dashed border-gray-200">
-            <Layers className="w-12 h-12 text-gray-300 mx-auto mb-3" strokeWidth={1.5} />
-            <p className="text-gray-500 font-medium">No categories found</p>
+          <div className="w-full text-center py-12 bg-[#0c0c0e]/80 rounded-2xl border border-dashed border-white/5">
+            <Layers className="w-10 h-10 text-zinc-600 mx-auto mb-2" strokeWidth={1.5} />
+            <p className="text-zinc-400 font-semibold text-sm">No categories found</p>
           </div>
         ) : (
           <>
             {/* Desktop Sidebar */}
-            <div className="hidden sm:block w-72 flex-shrink-0">
-              <div className="sticky top-6 bg-white border border-slate-100 rounded-[1.5rem] shadow-[0_4px_20px_-4px_rgba(0,0,0,0.02)] p-4 max-h-[calc(100vh-8rem)] overflow-y-auto scrollbar-hide">
-                <h3 className="font-black text-slate-900 text-sm tracking-widest uppercase mb-4 px-3">Categories</h3>
+            <div className="hidden sm:block w-64 flex-shrink-0">
+              <div className="sticky top-6 bg-[#0c0c0e]/80 border border-white/5 rounded-2xl p-3 max-h-[calc(100vh-8rem)] overflow-y-auto scrollbar-hide">
+                <h3 className="font-black text-zinc-400 text-xs tracking-widest uppercase mb-3 px-2">Categories</h3>
                 <div className="space-y-1">
                   {filteredCategories.map(category => {
                     const isActive = activeCategoryId === category.id;
@@ -1213,10 +1213,10 @@ export default function MenuManagementPage() {
                       <button
                         key={category.id}
                         onClick={() => document.getElementById(`cat-${category.id}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
-                        className={`w-full text-left pl-4 pr-3 py-3 rounded-xl text-sm font-semibold transition-all duration-200 flex items-center justify-between group relative ${
+                        className={`w-full text-left pl-3 pr-2.5 py-2.5 rounded-xl text-xs font-semibold transition-all duration-200 flex items-center justify-between group relative ${
                           isActive 
                             ? 'bg-gradient-to-r from-[#d5b263]/10 to-[#d5b263]/5 text-[#bfa052]' 
-                            : 'text-slate-500 hover:text-slate-900 hover:bg-slate-50'
+                            : 'text-zinc-400 hover:text-white hover:bg-white/5'
                         }`}
                       >
                         {isActive && (
@@ -1226,7 +1226,7 @@ export default function MenuManagementPage() {
                         <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full transition-colors ${
                           isActive 
                             ? 'bg-[#d5b263]/25 text-[#bfa052]' 
-                            : 'bg-slate-100 text-slate-500 group-hover:bg-slate-200/80 group-hover:text-slate-800'
+                            : 'bg-white/5 text-zinc-400 group-hover:bg-white/10 group-hover:text-zinc-200'
                         }`}>
                           {category.items.length}
                         </span>
@@ -1238,7 +1238,7 @@ export default function MenuManagementPage() {
             </div>
 
             {/* Mobile Category Pills */}
-            <div className="sm:hidden -mx-4 px-4 sticky top-0 z-10 bg-slate-50/90 backdrop-blur-md py-3 border-b border-slate-100 overflow-x-auto scrollbar-hide">
+            <div className="sm:hidden -mx-4 px-4 sticky top-0 z-10 bg-[#0c0c0e]/95 backdrop-blur-md py-2 border-b border-white/5 overflow-x-auto scrollbar-hide">
               <div className="flex gap-2 w-max">
                 {filteredCategories.map(category => {
                   const isActive = activeCategoryId === category.id;
@@ -1246,10 +1246,10 @@ export default function MenuManagementPage() {
                     <button
                       key={category.id}
                       onClick={() => document.getElementById(`cat-${category.id}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
-                      className={`px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all border ${
+                      className={`px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all border ${
                         isActive 
                           ? 'bg-[#d5b263]/10 border-[#d5b263]/40 text-[#bfa052] shadow-sm' 
-                          : 'bg-white border-slate-200 text-slate-500 shadow-sm'
+                          : 'bg-[#0c0c0e] border-white/5 text-zinc-400 shadow-sm'
                       }`}
                     >
                       {category.category} <span className="opacity-60 ml-0.5">({category.items.length})</span>
@@ -1260,80 +1260,80 @@ export default function MenuManagementPage() {
             </div>
 
             {/* Content Area */}
-            <div className="flex-1 space-y-12 pb-32">
+            <div className="flex-1 space-y-8 pb-20">
               {filteredCategories.map(category => (
-                <div key={category.id} id={`cat-${category.id}`} className="scroll-mt-24 space-y-6">
+                <div key={category.id} id={`cat-${category.id}`} className="scroll-mt-24 space-y-4">
                   {/* Category Header */}
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 pb-3">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-white/5 pb-2.5">
                     <div>
-                      <h2 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight flex items-center gap-2.5">
+                      <h2 className="text-lg sm:text-xl font-black text-white tracking-tight flex items-center gap-2">
                         {category.category}
                         {!category.isActive ? (
-                          <span className="text-[10px] font-bold bg-slate-100 text-slate-500 px-2 py-1 rounded-md tracking-wider uppercase border border-slate-200/65 select-none">INACTIVE</span>
+                          <span className="text-[9px] font-bold bg-zinc-850 text-zinc-400 px-2 py-0.5 rounded-md tracking-wider uppercase border border-zinc-800/80 select-none">INACTIVE</span>
                         ) : (
-                          <span className="text-[10px] font-bold bg-[#d5b263]/10 text-[#bfa052] px-2 py-1 rounded-md tracking-wider uppercase border border-[#d5b263]/20 select-none">{category.items.length} Items</span>
+                          <span className="text-[9px] font-bold bg-[#d5b263]/10 text-[#bfa052] px-2 py-0.5 rounded-md tracking-wider uppercase border border-[#d5b263]/20 select-none">{category.items.length} Items</span>
                         )}
                       </h2>
-                      {category.description && <p className="text-sm text-slate-400 font-medium mt-1">{category.description}</p>}
+                      {category.description && <p className="text-xs text-zinc-400 font-medium mt-0.5">{category.description}</p>}
                     </div>
-                    <div className="flex flex-wrap items-center gap-3">
-                      <div className="flex items-center gap-2 mr-2 bg-slate-50 border border-slate-200/60 px-3 py-1.5 rounded-xl">
-                        <span className="text-xs font-bold text-slate-500 select-none">Status</span>
+                    <div className="flex flex-wrap items-center gap-2">
+                      <div className="flex items-center gap-1.5 bg-[#141416]/40 border border-zinc-850 px-2.5 py-1 rounded-xl">
+                        <span className="text-[10px] font-bold text-zinc-455 select-none">Status</span>
                         <StatusToggle isActive={category.isActive} onClick={() => handleToggleStatus('category', category.id, !category.isActive)} isLoading={loadingStatuses[`category-${category.id}`]} />
                       </div>
-                      <div className="flex items-center gap-1.5">
-                        <button onClick={() => openModal('category', 'edit', undefined, category)} className="p-2 text-slate-500 hover:text-[#bfa052] hover:bg-slate-50 transition-all rounded-xl border border-slate-100 shadow-sm active:scale-90" title="Edit Category"><Edit2 size={15} strokeWidth={2.5} /></button>
-                        <button onClick={() => handleDeleteCategory(category.id)} className="p-2 text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition-all rounded-xl border border-slate-100 shadow-sm active:scale-90" title="Delete Category"><Trash2 size={15} strokeWidth={2.5} /></button>
+                      <div className="flex items-center gap-1">
+                        <button onClick={() => openModal('category', 'edit', undefined, category)} className="p-1.5 text-zinc-400 hover:text-[#bfa052] hover:bg-white/5 transition-all rounded-lg border border-zinc-800/80 active:scale-90" title="Edit Category"><Edit2 size={13} strokeWidth={2.5} /></button>
+                        <button onClick={() => handleDeleteCategory(category.id)} className="p-1.5 text-zinc-400 hover:text-rose-400 hover:bg-rose-500/10 transition-all rounded-lg border border-zinc-800/80 active:scale-90" title="Delete Category"><Trash2 size={13} strokeWidth={2.5} /></button>
                       </div>
-                      <button onClick={() => openModal('item', 'create', category.id)} className="flex items-center text-xs font-black bg-slate-900 hover:bg-slate-800 text-white px-4 py-2.5 rounded-xl transition-all shadow-md active:scale-95 gap-1.5 border-none"><Plus size={14} strokeWidth={3} /> Add Item</button>
+                      <button onClick={() => openModal('item', 'create', category.id)} className="flex items-center text-xs font-black bg-zinc-800 hover:bg-zinc-750 text-zinc-100 px-3 py-2 rounded-xl transition-all shadow-md active:scale-95 gap-1 border border-zinc-700"><Plus size={13} strokeWidth={3} /> Add Item</button>
                     </div>
                   </div>
 
                   {/* Items Grid */}
                   {category.items.length === 0 ? (
-                    <div className="p-10 text-center text-slate-400 text-sm font-medium italic bg-slate-50/50 rounded-3xl border-2 border-dashed border-slate-200/80">No items available in this category.</div>
+                    <div className="p-8 text-center text-zinc-500 text-xs font-medium italic bg-zinc-950/20 rounded-2xl border border-dashed border-zinc-800/60">No items available in this category.</div>
                   ) : (
-                    <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
+                    <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
                       {category.items.map(item => (
-                        <div key={item.id} className={`group bg-white rounded-3xl border transition-all duration-300 ease-out flex flex-col overflow-hidden ${
+                        <div key={item.id} className={`group bg-[#0c0c0e]/40 rounded-2xl border transition-all duration-300 ease-out flex flex-col overflow-hidden ${
                           !item.isActive 
-                            ? 'border-slate-200 bg-slate-50/50 opacity-80 shadow-none' 
-                            : 'border-slate-100 hover:border-[#d5b263]/30 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.02)] hover:shadow-[0_16px_40px_-8px_rgba(0,0,0,0.05)] hover:-translate-y-0.5'
+                            ? 'border-zinc-800 bg-zinc-950/20 opacity-70 shadow-none' 
+                            : 'border-white/5 hover:border-[#d5b263]/30 hover:bg-[#0c0c0e]/80 shadow-md hover:-translate-y-0.5'
                         }`}>
                           {/* Top Content */}
-                          <div className="p-5 sm:p-6 flex gap-5">
+                          <div className="p-4 flex gap-4">
                             <div className="flex-1 min-w-0">
-                              <div className="flex items-center gap-2 mb-2 flex-wrap">
+                              <div className="flex items-center gap-1.5 mb-1.5 flex-wrap">
                                 <FoodTypeIcon type={item.isVeg ? 'veg' : 'non-veg'} />
                                 {item.variants.length > 0 && (
-                                  <span className="text-[10px] font-bold text-slate-500 bg-slate-100 px-2 py-0.5 rounded-full tracking-wider uppercase border border-slate-200/40 select-none">{item.variants.length} Variants</span>
+                                  <span className="text-[9px] font-bold text-zinc-400 bg-zinc-900 px-2 py-0.5 rounded-full tracking-wider uppercase border border-zinc-850 select-none">{item.variants.length} Variants</span>
                                 )}
                               </div>
-                              <h3 className="font-black text-lg text-slate-900 leading-snug mb-1.5 truncate group-hover:text-[#bfa052] transition-colors">{item.name}</h3>
+                              <h3 className="font-black text-base text-white leading-snug mb-1 truncate group-hover:text-[#bfa052] transition-colors">{item.name}</h3>
 
                               {/* Price Indicator */}
-                              <div className="font-extrabold text-[#bfa052] text-sm mb-2.5 flex items-center gap-1">
-                                <span className="text-slate-400 text-xs font-semibold">Starts at</span>
-                                <span className="text-base font-black text-slate-900">{item.variants.length > 0 ? formatPrice(item.variants[0].price) : 'No Price'}</span>
+                              <div className="font-extrabold text-[#bfa052] text-xs mb-1.5 flex items-center gap-1">
+                                <span className="text-zinc-500 text-[10px] font-semibold">Starts at</span>
+                                <span className="text-sm font-black text-white">{item.variants.length > 0 ? formatPrice(item.variants[0].price) : 'No Price'}</span>
                               </div>
 
-                              {item.description && <p className="text-xs sm:text-sm text-slate-400 font-medium line-clamp-2 leading-relaxed">{item.description}</p>}
+                              {item.description && <p className="text-xs text-zinc-400 font-medium line-clamp-2 leading-relaxed">{item.description}</p>}
                             </div>
 
                             {/* Right Image Container */}
                             <div className="relative flex-shrink-0 select-none">
                               {item.imageURL ? (
-                                <div className="w-24 h-24 sm:w-28 sm:h-28 overflow-hidden rounded-2xl border border-slate-100 shadow-sm">
+                                <div className="w-18 h-18 sm:w-20 sm:h-20 overflow-hidden rounded-2xl border border-zinc-850 shadow-sm">
                                   <img 
                                     src={item.imageURL} 
                                     alt={item.name} 
                                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" 
                                   />
-                                  {!item.isActive && <div className="absolute inset-0 bg-white/40 backdrop-blur-[0.5px]" />}
+                                  {!item.isActive && <div className="absolute inset-0 bg-black/40 backdrop-blur-[0.5px]" />}
                                 </div>
                               ) : (
-                                <div className="w-24 h-24 sm:w-28 sm:h-28 bg-slate-50 rounded-2xl border border-dashed border-slate-200/80 flex items-center justify-center text-slate-300">
-                                  <Utensils className="w-8 h-8 opacity-60" strokeWidth={1.5} />
+                                <div className="w-18 h-18 sm:w-20 sm:h-20 bg-zinc-900/60 rounded-2xl border border-dashed border-zinc-800 flex items-center justify-center text-zinc-650">
+                                  <Utensils className="w-6 h-6 opacity-60" strokeWidth={1.5} />
                                 </div>
                               )}
                             </div>
@@ -1341,21 +1341,21 @@ export default function MenuManagementPage() {
 
                           {/* Variants List (Inline) */}
                           {item.variants.length > 0 && (
-                            <div className="px-5 sm:px-6 pb-4">
-                              <div className="space-y-1.5 border-t border-slate-100 pt-4">
+                            <div className="px-4 pb-3">
+                              <div className="space-y-1 border-t border-zinc-900 pt-3">
                                 {item.variants.map(variant => (
-                                  <div key={variant.id} className="flex items-center justify-between text-xs sm:text-sm py-1.5 px-3 rounded-xl hover:bg-slate-50 transition-colors">
-                                    <div className="flex items-center gap-2.5 text-slate-700 min-w-0 font-medium">
+                                  <div key={variant.id} className="flex items-center justify-between text-xs py-1.5 px-2.5 rounded-xl hover:bg-zinc-900/60 transition-colors">
+                                    <div className="flex items-center gap-2 text-zinc-200 min-w-0 font-medium">
                                       <span className="font-semibold truncate">{variant.variantName}</span>
                                       {variant.portionSize && (
-                                        <span className="text-[10px] text-slate-400 bg-white px-2 py-0.5 rounded-full border border-slate-150 font-bold select-none">{variant.portionSize}</span>
+                                        <span className="text-[9px] text-zinc-400 bg-zinc-900 px-1.5 py-0.5 rounded-full border border-zinc-800 font-bold select-none">{variant.portionSize}</span>
                                       )}
                                     </div>
-                                    <div className="flex items-center gap-3">
-                                      <span className="font-black text-slate-900 flex-shrink-0">{formatPrice(variant.price)}</span>
-                                      <div className="flex items-center gap-1.5 border-l border-slate-200/80 pl-3">
-                                        <button onClick={() => openModal('variant', 'edit', item.id, variant)} className="p-1 text-slate-400 hover:text-slate-900 transition-colors" title="Edit Variant"><Edit2 size={13} strokeWidth={2.5} /></button>
-                                        <button onClick={() => handleDeleteVariant(variant.id, item.id)} className="p-1 text-slate-300 hover:text-rose-600 transition-colors" title="Delete Variant"><Trash2 size={13} strokeWidth={2.5} /></button>
+                                    <div className="flex items-center gap-2.5">
+                                      <span className="font-black text-zinc-150 flex-shrink-0">{formatPrice(variant.price)}</span>
+                                      <div className="flex items-center gap-1.5 border-l border-zinc-800 pl-2.5">
+                                        <button onClick={() => openModal('variant', 'edit', item.id, variant)} className="p-0.5 text-zinc-500 hover:text-white transition-colors" title="Edit Variant"><Edit2 size={12} strokeWidth={2.5} /></button>
+                                        <button onClick={() => handleDeleteVariant(variant.id, item.id)} className="p-0.5 text-zinc-600 hover:text-rose-450 transition-colors" title="Delete Variant"><Trash2 size={12} strokeWidth={2.5} /></button>
                                         <StatusToggle isActive={variant.isActive} onClick={() => handleToggleStatus('variant', variant.id, !variant.isActive, item.id)} isLoading={loadingStatuses[`variant-${variant.id}`]} />
                                       </div>
                                     </div>
@@ -1366,16 +1366,16 @@ export default function MenuManagementPage() {
                           )}
 
                           {/* Action Footer */}
-                          <div className="mt-auto border-t border-slate-100 bg-slate-50/50 px-5 sm:px-6 py-3 flex items-center justify-between">
-                            <div className="flex items-center gap-2 bg-white px-3 py-1 rounded-xl border border-slate-200/40">
-                              <span className="text-[10px] font-bold text-slate-400 select-none">Active</span>
+                          <div className="mt-auto border-t border-zinc-900 bg-zinc-950/40 px-4 py-2.5 flex items-center justify-between">
+                            <div className="flex items-center gap-1.5 bg-zinc-900/50 px-2.5 py-0.5 rounded-xl border border-zinc-850">
+                              <span className="text-[9px] font-bold text-zinc-450 select-none">Active</span>
                               <StatusToggle isActive={item.isActive} onClick={() => handleToggleStatus('item', item.id, !item.isActive)} isLoading={loadingStatuses[`item-${item.id}`]} />
                             </div>
-                            <div className="flex items-center gap-1.5 sm:gap-2">
-                              <button onClick={() => openModal('item', 'edit', category.id, item)} className="px-3 py-1.5 text-xs font-bold text-slate-700 hover:text-slate-900 hover:bg-white hover:shadow-sm rounded-lg border border-transparent hover:border-slate-200/60 transition-all flex items-center gap-1"><Edit2 size={12} strokeWidth={2.5} /> <span className="hidden sm:inline">Edit</span></button>
-                              <button onClick={() => openModal('variant', 'create', item.id)} className="px-3 py-1.5 text-xs font-bold text-slate-700 hover:text-slate-900 hover:bg-white hover:shadow-sm rounded-lg border border-transparent hover:border-slate-200/60 transition-all flex items-center gap-1"><Plus size={12} strokeWidth={2.5} /> <span className="hidden sm:inline">Add Variant</span></button>
-                              <button onClick={() => openAssignmentModal('item', item.id, item.name)} className="px-3 py-1.5 text-xs font-bold text-purple-600 hover:text-purple-800 hover:bg-white hover:shadow-sm rounded-lg border border-transparent hover:border-purple-200/60 transition-all flex items-center gap-1"><Settings size={12} strokeWidth={2.5} /> <span className="hidden sm:inline">Extras</span></button>
-                              <button onClick={() => handleDeleteItem(item.id)} className="p-2 text-slate-400 hover:text-rose-600 rounded-lg hover:bg-rose-50 transition-colors"><Trash2 size={15} strokeWidth={2} /></button>
+                            <div className="flex items-center gap-1 sm:gap-1.5">
+                              <button onClick={() => openModal('item', 'edit', category.id, item)} className="px-2 py-1 text-xs font-semibold text-zinc-300 hover:text-white hover:bg-zinc-900 rounded-lg border border-transparent hover:border-zinc-800 transition-all flex items-center gap-1"><Edit2 size={11} strokeWidth={2.5} /> <span className="hidden sm:inline">Edit</span></button>
+                              <button onClick={() => openModal('variant', 'create', item.id)} className="px-2 py-1 text-xs font-semibold text-zinc-300 hover:text-white hover:bg-zinc-900 rounded-lg border border-transparent hover:border-zinc-800 transition-all flex items-center gap-1"><Plus size={11} strokeWidth={2.5} /> <span className="hidden sm:inline">Add Variant</span></button>
+                              <button onClick={() => openAssignmentModal('item', item.id, item.name)} className="px-2 py-1 text-xs font-semibold text-purple-400 hover:text-purple-300 hover:bg-zinc-900 rounded-lg border border-transparent hover:border-purple-900/60 transition-all flex items-center gap-1"><Settings size={11} strokeWidth={2.5} /> <span className="hidden sm:inline">Extras</span></button>
+                              <button onClick={() => handleDeleteItem(item.id)} className="p-1.5 text-zinc-550 hover:text-rose-450 rounded-lg hover:bg-rose-950/10 transition-colors"><Trash2 size={13} strokeWidth={2} /></button>
                             </div>
                           </div>
                         </div>
@@ -1390,57 +1390,57 @@ export default function MenuManagementPage() {
       </div>
 
       {/* 4. Extras Management */}
-      <div className="bg-white rounded-3xl border border-slate-100 shadow-[0_4px_30px_-4px_rgba(0,0,0,0.02)] overflow-hidden">
-        <div className="p-6 sm:p-8 border-b border-slate-100 bg-slate-50/40 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="bg-[#0c0c0e]/80 rounded-2xl border border-white/5 overflow-hidden">
+        <div className="p-4 sm:p-5 border-b border-white/5 bg-[#141416]/20 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div>
-            <h2 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight flex items-center gap-2">
+            <h2 className="text-lg sm:text-xl font-black text-white tracking-tight flex items-center gap-2">
               Extras Management
             </h2>
-            <p className="text-slate-400 text-sm sm:text-base mt-1 font-medium">Configure global modifiers like extra cheese, sauces, toppings, or custom prep items.</p>
+            <p className="text-zinc-400 text-xs sm:text-sm mt-0.5 font-medium">Configure global modifiers like extra cheese, sauces, toppings, or custom prep items.</p>
           </div>
           <button
             onClick={() => openModal('extra', 'create')}
-            className="flex items-center justify-center px-5 py-3 bg-slate-900 hover:bg-slate-800 text-white rounded-xl font-bold transition-all shadow-md active:scale-95 text-sm border-none self-start sm:self-center"
+            className="flex items-center justify-center px-4 py-2 bg-zinc-800 hover:bg-zinc-750 text-zinc-100 rounded-xl font-bold transition-all shadow-md active:scale-95 text-xs sm:text-sm border border-zinc-700 self-start sm:self-center"
           >
-            <Plus className="w-4 h-4 mr-2 text-[#d5b263]" strokeWidth={2.5} />
-            Add Extra Option
+            <Plus className="w-4 h-4 mr-1.5 text-[#d5b263]" strokeWidth={2.5} />
+            Add Option
           </button>
         </div>
 
-        <div className="p-6 sm:p-8">
+        <div className="p-4 sm:p-5">
           {extras.length === 0 ? (
-            <div className="text-center py-16 border-2 border-dashed border-slate-100 rounded-2xl bg-slate-50/20">
-              <div className="w-12 h-12 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Plus className="w-5 h-5 text-slate-400" strokeWidth={2} />
+            <div className="text-center py-12 border border-dashed border-zinc-800/80 rounded-xl bg-zinc-950/10">
+              <div className="w-10 h-10 bg-zinc-900 rounded-full flex items-center justify-center mx-auto mb-3">
+                <Plus className="w-4 h-4 text-zinc-500" strokeWidth={2} />
               </div>
-              <p className="text-slate-500 font-bold">No extras created yet</p>
-              <p className="text-slate-400 text-xs mt-1">Create addons that customers can optionally attach to menu selections.</p>
+              <p className="text-zinc-400 font-bold text-xs sm:text-sm">No extras created yet</p>
+              <p className="text-zinc-500 text-xs mt-0.5">Create addons that customers can optionally attach to menu selections.</p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {extras.map((extra) => (
-                <div key={extra.id} className={`group bg-white rounded-2xl border transition-all duration-300 flex flex-col h-full ${
+                <div key={extra.id} className={`group bg-[#0c0c0e]/40 rounded-xl border transition-all duration-300 flex flex-col h-full ${
                   !extra.isActive 
-                    ? 'border-slate-200 bg-slate-50/50 opacity-80 shadow-none' 
-                    : 'border-slate-100 hover:border-[#d5b263]/30 shadow-[0_2px_12px_-4px_rgba(0,0,0,0.02)] hover:shadow-[0_12px_32px_-6px_rgba(0,0,0,0.05)]'
-                } p-5`}>
-                  <div className="flex items-start justify-between gap-3 mb-4">
+                    ? 'border-zinc-800 bg-zinc-950/20 opacity-70 shadow-none' 
+                    : 'border-white/5 hover:border-[#d5b263]/30 hover:bg-[#0c0c0e]/80 shadow-md'
+                } p-4`}>
+                  <div className="flex items-start justify-between gap-3 mb-3">
                     <div className="min-w-0 flex-1">
-                      <h3 className={`font-black text-base sm:text-lg leading-tight mb-1 truncate transition-colors group-hover:text-[#bfa052] ${
-                        !extra.isActive ? 'text-slate-400' : 'text-slate-900'
+                      <h3 className={`font-black text-sm sm:text-base leading-tight mb-0.5 truncate transition-colors group-hover:text-[#bfa052] ${
+                        !extra.isActive ? 'text-zinc-500' : 'text-white'
                       }`}>
                         {extra.name}
                       </h3>
                       {extra.description && (
-                        <p className={`text-xs sm:text-sm line-clamp-2 leading-relaxed ${
-                          !extra.isActive ? 'text-slate-400/80' : 'text-slate-400 font-medium'
+                        <p className={`text-xs line-clamp-2 leading-relaxed ${
+                          !extra.isActive ? 'text-zinc-650' : 'text-zinc-400 font-medium'
                         }`}>
                           {extra.description}
                         </p>
                       )}
                     </div>
-                    <div className="flex-shrink-0 flex items-center gap-1.5 bg-slate-50 border border-slate-200/40 px-2 py-1 rounded-lg">
-                      <span className="text-[9px] font-bold text-slate-400 uppercase select-none">Active</span>
+                    <div className="flex-shrink-0 flex items-center gap-1 bg-zinc-900 border border-zinc-850 px-2 py-0.5 rounded-lg">
+                      <span className="text-[9px] font-bold text-zinc-450 uppercase select-none">Active</span>
                       <StatusToggle
                         isActive={extra.isActive}
                         onClick={() => handleToggleStatus('extra', extra.id, !extra.isActive)}
@@ -1449,13 +1449,13 @@ export default function MenuManagementPage() {
                     </div>
                   </div>
 
-                  <div className="mt-auto pt-4 border-t border-slate-100 flex items-center justify-between">
-                    <span className={`font-black text-base sm:text-lg ${!extra.isActive ? 'text-slate-400' : 'text-slate-900'}`}>
+                  <div className="mt-auto pt-3 border-t border-zinc-900 flex items-center justify-between">
+                    <span className={`font-black text-sm sm:text-base ${!extra.isActive ? 'text-zinc-500' : 'text-white'}`}>
                       {formatPrice(extra.price)}
                     </span>
                     <div className="flex items-center gap-1 sm:gap-1.5">
-                      <button onClick={() => openModal('extra', 'edit', undefined, extra)} className="px-3 py-1.5 text-xs font-bold text-slate-700 hover:text-slate-950 hover:bg-slate-50 rounded-lg border border-transparent hover:border-slate-200/60 transition-all flex items-center gap-1"><Edit2 size={12} strokeWidth={2.5} /> Edit</button>
-                      <button onClick={() => handleDeleteExtra(extra.id)} disabled={loadingStatuses[`extra-${extra.id}`]} className="p-2 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors disabled:opacity-50"><Trash2 size={14} /></button>
+                      <button onClick={() => openModal('extra', 'edit', undefined, extra)} className="px-2.5 py-1 text-xs font-semibold text-zinc-300 hover:text-white hover:bg-zinc-900 rounded-lg border border-transparent hover:border-zinc-800 transition-all flex items-center gap-1"><Edit2 size={11} strokeWidth={2.5} /> Edit</button>
+                      <button onClick={() => handleDeleteExtra(extra.id)} disabled={loadingStatuses[`extra-${extra.id}`]} className="p-1.5 text-zinc-550 hover:text-rose-450 hover:bg-rose-950/10 rounded-lg transition-colors disabled:opacity-50"><Trash2 size={13} /></button>
                     </div>
                   </div>
                 </div>
@@ -1467,29 +1467,29 @@ export default function MenuManagementPage() {
 
       {/* --- UNIFIED MODAL --- */}
       {modalOpen && modalConfig && (
-        <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-in fade-in duration-200">
-          <div className="bg-white rounded-[2rem] w-full max-w-lg max-h-[90vh] shadow-2xl overflow-hidden scale-100 animate-in zoom-in-95 duration-200 border border-slate-100/80">
-            <div className="px-6 py-5 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
-              <h3 className="font-black text-lg text-slate-950">
+        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-in fade-in duration-200">
+          <div className="bg-[#0c0c0e]/95 border border-white/10 rounded-2xl w-full max-w-md max-h-[85vh] shadow-2xl overflow-hidden scale-100 animate-in zoom-in-95 duration-200 flex flex-col">
+            <div className="px-5 py-4 border-b border-zinc-900 flex justify-between items-center bg-[#141416]/20">
+              <h3 className="font-black text-base sm:text-lg text-white">
                 {modalConfig.mode === 'create' ? 'Create New' : 'Edit'} {capitalize(modalConfig.type)}
               </h3>
-              <button onClick={() => setModalOpen(false)} className="text-slate-400 hover:text-slate-900 p-1.5 rounded-full hover:bg-slate-100 transition-colors" aria-label="Close modal" title="Close">
+              <button onClick={() => setModalOpen(false)} className="text-zinc-450 hover:text-white hover:bg-white/5 p-1 rounded-full animate-in duration-200" aria-label="Close modal" title="Close">
                 <X size={20} strokeWidth={2.5} />
               </button>
             </div>
 
-            <div className="max-h-[calc(90vh-120px)] overflow-y-auto scrollbar-hide">
-              <form onSubmit={handleSubmit} className="p-6 space-y-5">
+            <div className="max-h-[calc(85vh-80px)] overflow-y-auto scrollbar-hide">
+              <form onSubmit={handleSubmit} className="p-5 space-y-4">
 
                 {/* Name Field (All Types) */}
-                <div className="space-y-1.5">
-                  <label className="text-xs font-bold text-slate-500 uppercase tracking-wider block">Name</label>
+                <div className="space-y-1">
+                  <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider block">Name</label>
                   <input
                     autoFocus
                     type="text"
                     required
                     placeholder={modalConfig.type === 'variant' ? "e.g., Small, Regular, Large" : modalConfig.type === 'item' ? "e.g., Chicken Biryani" : modalConfig.type === 'extra' ? "e.g., Extra Cheese, Spicy Sauce" : "Category Name"}
-                    className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-[#d5b263]/25 focus:border-[#d5b263] outline-none transition-all text-sm font-medium text-slate-700 placeholder-slate-400"
+                    className="w-full px-3 py-2.5 bg-zinc-900/40 border border-zinc-800 focus:ring-2 focus:ring-[#d5b263]/25 focus:border-[#d5b263] outline-none transition-all text-xs sm:text-sm font-medium text-white placeholder-zinc-500 rounded-xl"
                     value={formData.name}
                     onChange={e => setFormData({ ...formData, name: e.target.value })}
                   />
@@ -1497,12 +1497,12 @@ export default function MenuManagementPage() {
 
                 {/* Description (Category & Item) */}
                 {modalConfig.type !== 'variant' && (
-                  <div className="space-y-1.5">
-                    <label className="text-xs font-bold text-slate-500 uppercase tracking-wider block">Description</label>
+                  <div className="space-y-1">
+                    <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider block">Description</label>
                     <textarea
-                      rows={3}
+                      rows={2.5}
                       placeholder={modalConfig.type === 'item' ? "e.g., Aromatic basmati rice with tender chicken and spices" : "Brief category description"}
-                      className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-[#d5b263]/25 focus:border-[#d5b263] outline-none transition-all text-sm font-medium text-slate-700 placeholder-slate-400"
+                      className="w-full px-3 py-2.5 bg-zinc-900/40 border border-zinc-800 focus:ring-2 focus:ring-[#d5b263]/25 focus:border-[#d5b263] outline-none transition-all text-xs sm:text-sm font-medium text-white placeholder-zinc-500 rounded-xl"
                       value={formData.description}
                       onChange={e => setFormData({ ...formData, description: e.target.value })}
                     />
@@ -1511,38 +1511,38 @@ export default function MenuManagementPage() {
 
                 {/* Veg/Non-Veg Selection (Item only) */}
                 {modalConfig.type === 'item' && (
-                  <div className="space-y-3">
-                    <div className="flex items-center gap-2">
-                      <label className="text-xs font-bold text-slate-500 uppercase tracking-wider block">Dietary Type</label>
-                      <AlertCircle className="w-4 h-4 text-amber-500" aria-label="Critical: This affects customer filtering and ordering" />
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-1.5">
+                      <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider block">Dietary Type</label>
+                      <AlertCircle className="w-3.5 h-3.5 text-amber-500" aria-label="Critical: This affects customer filtering and ordering" />
                     </div>
-                    <p className="text-[11px] text-amber-700 bg-amber-50/70 p-2.5 rounded-xl border border-amber-200/50 leading-relaxed font-medium">
+                    <p className="text-[10px] text-amber-400 bg-amber-950/20 p-2 rounded-lg border border-amber-900/30 leading-relaxed font-medium">
                       ⚠️ Correct dietary tag assignment is critical for client-side filtering and compliance.
                     </p>
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-2 gap-3">
                       <button
                         type="button"
                         onClick={() => setFormData({ ...formData, isVeg: true })}
-                        className={`p-4 rounded-xl border-2 text-sm font-bold transition-all flex flex-col items-center gap-2 ${formData.isVeg
-                          ? 'bg-emerald-50/60 border-emerald-500 text-emerald-800 shadow-md ring-2 ring-emerald-500/10'
-                          : 'border-slate-200 text-slate-500 hover:bg-slate-50 hover:border-slate-300'
+                        className={`p-3 rounded-xl border text-xs font-bold transition-all flex flex-col items-center gap-1.5 ${formData.isVeg
+                          ? 'bg-emerald-950/20 border-emerald-500 text-emerald-400'
+                          : 'border-zinc-800 text-zinc-450 hover:bg-white/5'
                           }`}
                       >
-                        <Leaf className={`w-5 h-5 ${formData.isVeg ? 'text-emerald-600' : 'text-slate-400'}`} />
+                        <Leaf className={`w-4 h-4 ${formData.isVeg ? 'text-emerald-500' : 'text-zinc-650'}`} />
                         <span>Vegetarian</span>
-                        <span className="text-[10px] opacity-75 font-normal">Pure vegetarian prep</span>
+                        <span className="text-[9px] opacity-60 font-normal">Pure vegetarian prep</span>
                       </button>
                       <button
                         type="button"
                         onClick={() => setFormData({ ...formData, isVeg: false })}
-                        className={`p-4 rounded-xl border-2 text-sm font-bold transition-all flex flex-col items-center gap-2 ${!formData.isVeg
-                          ? 'bg-rose-50/60 border-rose-500 text-rose-800 shadow-md ring-2 ring-rose-500/10'
-                          : 'border-slate-200 text-slate-500 hover:bg-slate-50 hover:border-slate-300'
+                        className={`p-3 rounded-xl border text-xs font-bold transition-all flex flex-col items-center gap-1.5 ${!formData.isVeg
+                          ? 'bg-rose-950/20 border-rose-500 text-rose-400'
+                          : 'border-zinc-800 text-zinc-450 hover:bg-white/5'
                           }`}
                       >
-                        <Beef className={`w-5 h-5 ${!formData.isVeg ? 'text-rose-600' : 'text-slate-400'}`} />
+                        <Beef className={`w-4 h-4 ${!formData.isVeg ? 'text-rose-500' : 'text-zinc-650'}`} />
                         <span>Non-Vegetarian</span>
-                        <span className="text-[10px] opacity-75 font-normal">Contains meat/poultry</span>
+                        <span className="text-[9px] opacity-60 font-normal">Contains meat/poultry</span>
                       </button>
                     </div>
                   </div>
@@ -1550,15 +1550,15 @@ export default function MenuManagementPage() {
 
                 {/* Create Similar Item Checkbox (Item create only) */}
                 {modalConfig.type === 'item' && modalConfig.mode === 'create' && existingSimilarItem && (
-                  <div className="bg-slate-50 p-3 rounded-xl border border-slate-200/50">
-                    <label className="flex items-center gap-3 cursor-pointer">
+                  <div className="bg-zinc-900/40 p-2.5 border border-zinc-850 rounded-xl">
+                    <label className="flex items-center gap-2.5 cursor-pointer">
                       <input
                         type="checkbox"
                         checked={createSimilarItem}
                         onChange={(e) => setCreateSimilarItem(e.target.checked)}
-                        className="w-4 h-4 text-[#d5b263] bg-white border-slate-300 rounded focus:ring-[#d5b263]"
+                        className="w-4 h-4 text-[#d5b263] bg-zinc-950 border-zinc-800 rounded focus:ring-[#d5b263] focus:ring-offset-0"
                       />
-                      <span className="text-xs font-semibold text-slate-600">
+                      <span className="text-[11px] font-semibold text-zinc-400">
                         Copy variants from existing {existingSimilarItem.isVeg ? 'vegetarian' : 'non-vegetarian'} version
                       </span>
                     </label>
@@ -1567,36 +1567,36 @@ export default function MenuManagementPage() {
 
                 {/* Image Upload (Item only) */}
                 {modalConfig.type === 'item' && (
-                  <div className="space-y-1.5">
-                    <label className="text-xs font-bold text-slate-500 uppercase tracking-wider block">Image</label>
+                  <div className="space-y-1">
+                    <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider block">Image</label>
                     <div
-                      className="flex items-center gap-4"
+                      className="flex items-center gap-3"
                       onDrop={handleItemImageDrop}
                       onDragOver={(e) => e.preventDefault()}
                     >
                       {isUploading ? (
-                        <div className="w-20 h-20 rounded-2xl border-2 border-dashed border-slate-200 bg-slate-50 flex items-center justify-center text-slate-400 select-none">
-                          <span className="text-[10px] font-black animate-pulse">UPLOADING...</span>
+                        <div className="w-16 h-16 rounded-xl border border-dashed border-zinc-800 bg-zinc-900/40 flex items-center justify-center text-zinc-550 select-none">
+                          <span className="text-[9px] font-black animate-pulse">UPLOADING...</span>
                         </div>
                       ) : formData.imageURL ? (
                         <div className="relative group">
                           <img
                             src={formData.imageURL}
                             alt="Item"
-                            className="w-20 h-20 rounded-2xl object-cover border border-slate-200 shadow-sm"
+                            className="w-16 h-16 rounded-xl object-cover border border-zinc-800 shadow-sm"
                           />
                           <button
                             type="button"
                             onClick={() => setFormData({ ...formData, imageURL: '' })}
-                            className="absolute -top-2 -right-2 w-6 h-6 bg-rose-500 text-white rounded-full flex items-center justify-center text-xs hover:bg-rose-600 transition-colors shadow-md"
+                            className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-rose-600 text-white rounded-full flex items-center justify-center text-xs hover:bg-rose-700 transition-colors shadow-md"
                             title="Remove image"
                           >
                             ×
                           </button>
                         </div>
                       ) : (
-                        <div className="w-20 h-20 rounded-2xl border-2 border-dashed border-slate-200 hover:border-[#d5b263]/60 bg-slate-50 flex items-center justify-center text-slate-400 hover:text-[#bfa052] transition-colors cursor-pointer select-none">
-                          <Upload size={22} strokeWidth={2} />
+                        <div className="w-16 h-16 rounded-xl border border-dashed border-zinc-800 hover:border-[#d5b263]/50 bg-zinc-900/40 flex items-center justify-center text-zinc-500 hover:text-white transition-colors cursor-pointer select-none">
+                          <Upload size={18} strokeWidth={2} />
                         </div>
                       )}
                       <div className="flex-1">
@@ -1611,7 +1611,7 @@ export default function MenuManagementPage() {
                               handleItemImageUpload(file);
                             }
                           }}
-                          className="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-black file:bg-[#d5b263]/10 file:text-[#bfa052] hover:file:bg-[#d5b263]/25 file:cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+                          className="w-full text-xs text-zinc-400 file:mr-3 file:py-1.5 file:px-2.5 file:rounded-lg file:border-0 file:text-[10px] file:font-black file:bg-[#d5b263] file:text-black hover:file:bg-[#c4a152] file:cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                         />
                       </div>
                     </div>
@@ -1621,28 +1621,28 @@ export default function MenuManagementPage() {
                 {/* Variant Specific Fields */}
                 {modalConfig.type === 'variant' && (
                   <>
-                    <div className="grid grid-cols-2 gap-4">
-                      <div className="space-y-1.5">
-                        <label className="text-xs font-bold text-slate-500 uppercase tracking-wider block">Price (₹)</label>
+                    <div className="grid grid-cols-2 gap-3">
+                      <div className="space-y-1">
+                        <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider block">Price (₹)</label>
                         <div className="relative">
-                          <IndianRupee className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" strokeWidth={2.5} />
+                          <IndianRupee className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-zinc-500" strokeWidth={2.5} />
                           <input
                             type="number"
                             step="0.01"
                             required
                             placeholder="0.00"
-                            className="w-full pl-9 pr-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-[#d5b263]/25 focus:border-[#d5b263] outline-none text-sm font-medium text-slate-700 placeholder-slate-400"
+                            className="w-full pl-8 pr-3 py-2.5 bg-zinc-900/40 border border-zinc-800 focus:ring-2 focus:ring-[#d5b263]/25 focus:border-[#d5b263] outline-none text-xs sm:text-sm font-medium text-white placeholder-zinc-500 rounded-xl"
                             value={formData.price}
                             onChange={e => setFormData({ ...formData, price: e.target.value })}
                           />
                         </div>
                       </div>
-                      <div className="space-y-1.5">
-                        <label className="text-xs font-bold text-slate-500 uppercase tracking-wider block">Portion</label>
+                      <div className="space-y-1">
+                        <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider block">Portion</label>
                         <input
                           type="text"
                           placeholder="e.g. 250g"
-                          className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-[#d5b263]/25 focus:border-[#d5b263] outline-none text-sm font-medium text-slate-700 placeholder-slate-400"
+                          className="w-full px-3 py-2.5 bg-zinc-900/40 border border-zinc-800 focus:ring-2 focus:ring-[#d5b263]/25 focus:border-[#d5b263] outline-none text-xs sm:text-sm font-medium text-white placeholder-zinc-500 rounded-xl"
                           value={formData.portionSize}
                           onChange={e => setFormData({ ...formData, portionSize: e.target.value })}
                         />
@@ -1653,16 +1653,16 @@ export default function MenuManagementPage() {
 
                 {/* Extra Specific Fields */}
                 {modalConfig.type === 'extra' && (
-                  <div className="space-y-1.5">
-                    <label className="text-xs font-bold text-slate-500 uppercase tracking-wider block">Price (₹)</label>
+                  <div className="space-y-1">
+                    <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider block">Price (₹)</label>
                     <div className="relative">
-                      <IndianRupee className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" strokeWidth={2.5} />
+                      <IndianRupee className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-zinc-500" strokeWidth={2.5} />
                       <input
                         type="number"
                         step="0.01"
                         required
                         placeholder="0.00"
-                        className="w-full pl-9 pr-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-[#d5b263]/25 focus:border-[#d5b263] outline-none text-sm font-medium text-slate-700 placeholder-slate-400"
+                        className="w-full pl-8 pr-3 py-2.5 bg-zinc-900/40 border border-zinc-800 focus:ring-2 focus:ring-[#d5b263]/25 focus:border-[#d5b263] outline-none text-xs sm:text-sm font-medium text-white placeholder-zinc-500 rounded-xl"
                         value={formData.price}
                         onChange={e => setFormData({ ...formData, price: e.target.value })}
                       />
@@ -1673,9 +1673,9 @@ export default function MenuManagementPage() {
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="w-full py-3.5 bg-gradient-to-r from-[#d5b263] to-[#bfa052] hover:from-[#e0bf70] hover:to-[#d5b263] text-slate-950 rounded-xl font-black shadow-lg shadow-[#d5b263]/15 transition-all active:scale-[0.98] mt-4 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 border-none"
+                  className="w-full py-3 bg-[#d5b263] text-black font-black uppercase tracking-wider text-xs rounded-xl hover:bg-[#c4a152] transition-all active:scale-[0.98] mt-3 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-1.5 border-none"
                 >
-                  {submitting && <div className="w-4 h-4 border-2 border-slate-950 border-t-transparent rounded-full animate-spin"></div>}
+                  {submitting && <div className="w-3.5 h-3.5 border-2 border-black border-t-transparent rounded-full animate-spin"></div>}
                   {submitting ? 'Saving changes...' : (modalConfig.mode === 'create' ? 'Create Option' : 'Save Changes')}
                 </button>
               </form>
@@ -1686,54 +1686,54 @@ export default function MenuManagementPage() {
              {/* --- PREVIEW MODAL --- */}
       {previewModalOpen && (
         <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-in fade-in duration-200">
-          <div className="bg-white rounded-[2rem] w-full max-w-5xl h-[85vh] shadow-2xl overflow-hidden scale-100 animate-in zoom-in-95 duration-200 flex flex-col border border-slate-100/80">
+          <div className="bg-[#0c0c0e]/95 border border-white/10 rounded-2xl w-full max-w-5xl h-[85vh] shadow-2xl overflow-hidden scale-100 animate-in zoom-in-95 duration-200 flex flex-col">
             {/* Header */}
-            <div className="px-6 py-4 border-b border-slate-150 flex justify-between items-center bg-slate-50/50">
+            <div className="px-5 py-4 border-b border-zinc-900 flex justify-between items-center bg-[#141416]/20">
               <div>
-                <h3 className="font-black text-lg text-slate-900">Live Customer Menu Simulator</h3>
-                <p className="text-slate-400 text-xs font-semibold">Real-time mobile visualization of your digital menu.</p>
+                <h3 className="font-black text-base sm:text-lg text-white">Live Customer Menu Simulator</h3>
+                <p className="text-zinc-400 text-xs font-semibold">Real-time mobile visualization of your digital menu.</p>
               </div>
               <button 
                 onClick={() => setPreviewModalOpen(false)} 
-                className="text-slate-400 hover:text-slate-900 p-2 rounded-full hover:bg-slate-100 transition-colors" 
+                className="text-zinc-450 hover:text-white p-2 rounded-full hover:bg-white/5 transition-colors animate-in duration-200" 
                 aria-label="Close preview" 
                 title="Close"
               >
-                <X size={20} strokeWidth={2.5} />
+                <X size={18} strokeWidth={2.5} />
               </button>
             </div>
 
-            <div className="flex-1 overflow-hidden flex flex-col md:flex-row bg-slate-50/30">
+            <div className="flex-1 overflow-hidden flex flex-col md:flex-row bg-zinc-950/10">
               {/* Simulator Info / Category Select Sidebar */}
-              <div className="w-full md:w-80 border-r border-slate-100 bg-white p-6 flex flex-col justify-between flex-shrink-0">
-                <div className="space-y-6">
-                  <div className="bg-amber-50/60 border border-amber-200/50 rounded-2xl p-4">
-                    <h4 className="text-xs font-bold text-amber-800 uppercase tracking-wider mb-1 flex items-center gap-1.5">
-                      <Settings className="w-3.5 h-3.5" /> Simulation Mode
+              <div className="w-full md:w-72 border-r border-zinc-900 bg-[#0c0c0e]/50 p-4 flex flex-col justify-between flex-shrink-0">
+                <div className="space-y-4">
+                  <div className="bg-amber-950/20 border border-amber-900/30 rounded-xl p-3">
+                    <h4 className="text-[10px] font-black text-amber-450 uppercase tracking-wider mb-1 flex items-center gap-1">
+                      <Settings className="w-3 h-3" /> Simulation Mode
                     </h4>
-                    <p className="text-xs text-amber-700 leading-relaxed font-medium">
+                    <p className="text-[11px] text-amber-500/90 leading-normal font-semibold">
                       This shows the exact interface customers see when scanning your table QR codes. Try clicking categories to filter.
                     </p>
                   </div>
 
                   <div>
-                    <h4 className="text-xs font-black text-slate-400 tracking-wider uppercase mb-3">Filter Categories</h4>
-                    <div className="space-y-1.5 max-h-[40vh] overflow-y-auto scrollbar-hide pr-1">
+                    <h4 className="text-[10px] font-black text-zinc-500 tracking-wider uppercase mb-2">Filter Categories</h4>
+                    <div className="space-y-1 max-h-[35vh] overflow-y-auto scrollbar-hide pr-1">
                       {categories.filter(cat => cat.isActive && cat.items.some(item => item.isActive)).map((category, index) => {
                         const isActive = index === currentCategoryIndex;
                         return (
                           <button
                             key={category.id}
                             onClick={() => setCurrentCategoryIndex(index)}
-                            className={`w-full text-left px-4 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center justify-between ${
+                            className={`w-full text-left px-3 py-2 rounded-lg text-xs font-bold transition-all flex items-center justify-between ${
                               isActive
                                 ? 'bg-[#d5b263]/10 text-[#bfa052]'
-                                : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900'
+                                : 'text-zinc-400 hover:bg-white/5 hover:text-white'
                             }`}
                           >
                             <span className="truncate">{category.category}</span>
-                            <span className={`text-[10px] px-2 py-0.5 rounded-full ${
-                              isActive ? 'bg-[#d5b263]/25 text-[#bfa052]' : 'bg-slate-150 text-slate-500'
+                            <span className={`text-[9px] px-1.5 py-0.5 rounded-full ${
+                              isActive ? 'bg-[#d5b263]/20 text-[#bfa052]' : 'bg-zinc-900 border border-zinc-850 text-zinc-450'
                             }`}>
                               {category.items.filter(item => item.isActive).length}
                             </span>
@@ -1744,13 +1744,13 @@ export default function MenuManagementPage() {
                   </div>
                 </div>
 
-                <div className="hidden md:flex justify-between items-center pt-6 border-t border-slate-100 text-xs font-bold text-slate-400">
+                <div className="hidden md:flex justify-between items-center pt-4 border-t border-zinc-900 text-[10px] font-bold text-zinc-550">
                   <span>MyQuro Emulator v1.0</span>
                 </div>
               </div>
 
               {/* Mobile Phone Mock Emulator container */}
-              <div className="flex-1 overflow-y-auto p-6 md:p-8 flex items-center justify-center bg-slate-950/5">
+              <div className="flex-1 overflow-y-auto p-4 md:p-6 flex items-center justify-center bg-zinc-950/60">
                 {(() => {
                   const activeCategories = categories.filter(cat => cat.isActive && cat.items.some(item => item.isActive));
                   const currentCategory = activeCategories[currentCategoryIndex];
@@ -1906,15 +1906,15 @@ export default function MenuManagementPage() {
 
       {/* Mobile Drawer for Categories */}
       {drawerOpen && (
-        <div className="fixed inset-0 bg-gray-900/50 backdrop-blur-sm z-50 flex sm:hidden">
-          <div className="w-80 max-w-[90vw] bg-white h-full shadow-2xl overflow-y-auto">
-            <div className="p-4 border-b border-gray-200 flex justify-between items-center">
-              <h4 className="font-semibold text-gray-800">Categories</h4>
-              <button onClick={() => setDrawerOpen(false)} className="text-gray-400 hover:text-gray-600 p-1" aria-label="Close category menu" title="Close">
-                <X size={20} />
+        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex sm:hidden">
+          <div className="w-72 max-w-[85vw] bg-[#0c0c0e]/95 border-r border-white/5 h-full shadow-2xl overflow-y-auto">
+            <div className="p-4 border-b border-zinc-900 flex justify-between items-center">
+              <h4 className="font-extrabold text-sm text-white">Categories</h4>
+              <button onClick={() => setDrawerOpen(false)} className="text-zinc-400 hover:text-white p-1 hover:bg-white/5 rounded-full" aria-label="Close category menu" title="Close">
+                <X size={18} />
               </button>
             </div>
-            <div className="p-4 space-y-2">
+            <div className="p-3 space-y-1">
               {categories.filter(cat => cat.isActive && cat.items.some(item => item.isActive)).map((category, index) => (
                 <button
                   key={category.id}
@@ -1922,13 +1922,13 @@ export default function MenuManagementPage() {
                     setCurrentCategoryIndex(index);
                     setDrawerOpen(false);
                   }}
-                  className={`w-full text-left px-3 py-3 rounded-lg transition-colors ${index === currentCategoryIndex
-                    ? 'bg-red-100 text-red-700 font-medium'
-                    : 'text-gray-600 hover:bg-gray-100'
+                  className={`w-full text-left px-3 py-2 rounded-xl transition-all ${index === currentCategoryIndex
+                    ? 'bg-[#d5b263]/10 text-[#bfa052] font-extrabold'
+                    : 'text-zinc-400 hover:bg-white/5'
                     }`}
                 >
-                  <span className="block font-medium">{category.category}</span>
-                  <span className="text-xs text-gray-400">
+                  <span className="block text-xs font-bold">{category.category}</span>
+                  <span className="text-[10px] text-zinc-500 font-semibold">
                     ({category.items.filter(item => item.isActive).length} items)
                   </span>
                 </button>
@@ -1942,30 +1942,30 @@ export default function MenuManagementPage() {
 
       {/* --- ASSIGNMENT MODAL --- */}
       {assignmentModalOpen && assignmentTarget && (
-        <div className="fixed inset-0 bg-gray-900/80 backdrop-blur-sm z-50 flex items-center justify-center p-2 sm:p-4 animate-in fade-in duration-200">
-          <div className="bg-white rounded-2xl w-full max-w-2xl h-[80vh] shadow-2xl overflow-hidden scale-100 animate-in zoom-in-95 duration-200 flex flex-col">
-            <div className="px-4 sm:px-6 py-3 sm:py-4 border-b border-gray-100 flex justify-between items-center bg-gray-50">
-              <h3 className="font-bold text-lg sm:text-xl text-gray-900">
+        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-in fade-in duration-200">
+          <div className="bg-[#0c0c0e]/95 border border-white/10 rounded-2xl w-full max-w-2xl max-h-[85vh] shadow-2xl overflow-hidden scale-100 animate-in zoom-in-95 duration-200 flex flex-col">
+            <div className="px-5 py-4 border-b border-zinc-900 flex justify-between items-center bg-[#141416]/20">
+              <h3 className="font-black text-base sm:text-lg text-white">
                 Manage Extras for {assignmentTarget.type === 'category' ? 'Category' : assignmentTarget.type === 'item' ? 'Item' : 'Variant'}
               </h3>
-              <button onClick={() => setAssignmentModalOpen(false)} className="text-gray-400 hover:text-gray-600 p-1" aria-label="Close modal" title="Close">
-                <X size={24} />
+              <button onClick={() => setAssignmentModalOpen(false)} className="text-zinc-450 hover:text-white hover:bg-white/5 p-1 rounded-full" aria-label="Close modal" title="Close">
+                <X size={20} />
               </button>
             </div>
 
-            <div className="flex-1 overflow-y-auto p-4 sm:p-6">
+            <div className="flex-1 overflow-y-auto p-4 sm:p-5">
               <div className="space-y-4">
-                <p className="text-sm text-gray-600">
+                <p className="text-xs sm:text-sm text-zinc-400">
                   Select which extras should be available for this {assignmentTarget.type}.
                 </p>
 
                 {extras.length === 0 ? (
                   <div className="text-center py-8">
-                    <Settings className="w-12 h-12 text-gray-300 mx-auto mb-4" />
-                    <p className="text-gray-500">No extras available. Create some extras first.</p>
+                    <Settings className="w-10 h-10 text-zinc-600 mx-auto mb-3" />
+                    <p className="text-zinc-500 text-sm font-semibold">No extras available. Create some extras first.</p>
                   </div>
                 ) : (
-                  <div className="space-y-3">
+                  <div className="space-y-2">
                     {extras.map(extra => {
                       const isAssigned = selectedAssignmentExtras.includes(extra.id);
 
@@ -1984,7 +1984,7 @@ export default function MenuManagementPage() {
                       const isInherited = isAssigned && !isDirectlyAssigned;
 
                       return (
-                        <div key={extra.id} className={`flex items-center justify-between p-3 rounded-lg ${isInherited ? 'bg-blue-50 border border-blue-100' : 'bg-gray-50'}`}>
+                        <div key={extra.id} className={`flex items-center justify-between p-3 rounded-xl border ${isInherited ? 'bg-blue-950/15 border-blue-900/30' : 'bg-zinc-900/40 border-zinc-850'}`}>
                           <div className="flex items-center gap-3">
                             <input
                               type="checkbox"
@@ -1998,23 +1998,23 @@ export default function MenuManagementPage() {
                                   setSelectedAssignmentExtras(prev => prev.filter(id => id !== extra.id));
                                 }
                               }}
-                              className={`w-4 h-4 text-red-600 bg-gray-100 border-gray-300 rounded focus:ring-red-500 focus:ring-2 ${isInherited ? 'opacity-50 cursor-not-allowed' : ''}`}
+                              className={`w-4 h-4 text-[#d5b263] bg-zinc-950 border-zinc-800 rounded focus:ring-[#d5b263] focus:ring-offset-0 ${isInherited ? 'opacity-40 cursor-not-allowed' : ''}`}
                             />
                             <div>
                               <div className="flex items-center gap-2">
-                                <p className="font-medium text-gray-900">{extra.name}</p>
+                                <p className="font-extrabold text-sm text-white">{extra.name}</p>
                                 {isInherited && (
-                                  <span className="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">
+                                  <span className="text-[9px] bg-blue-950 text-blue-400 border border-blue-900/40 px-2 py-0.5 rounded-full uppercase tracking-wider font-bold">
                                     Inherited
                                   </span>
                                 )}
                               </div>
-                              {extra.description && <p className="text-sm text-gray-500">{extra.description}</p>}
-                              <p className="text-sm text-gray-600">₹{(extra.price / 100).toFixed(2)}</p>
+                              {extra.description && <p className="text-xs text-zinc-450 mt-0.5">{extra.description}</p>}
+                              <p className="text-xs text-zinc-400 font-bold mt-1">{(extra.price / 100).toFixed(2)}</p>
                             </div>
                           </div>
                           <div className="flex items-center gap-2">
-                            <span className={`text-xs px-2 py-1 rounded-full ${extra.isActive ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-500'}`}>
+                            <span className={`text-[10px] font-bold px-2.5 py-0.5 rounded-full border ${extra.isActive ? 'bg-emerald-950/20 text-emerald-400 border-emerald-900/40' : 'bg-zinc-900 text-zinc-500 border-zinc-850'}`}>
                               {extra.isActive ? 'Active' : 'Inactive'}
                             </span>
                           </div>
@@ -2026,21 +2026,21 @@ export default function MenuManagementPage() {
               </div>
             </div>
 
-            <div className="px-4 sm:px-6 py-3 sm:py-4 border-t border-gray-100 bg-gray-50 flex justify-end gap-3">
+            <div className="px-5 py-3.5 border-t border-zinc-900 bg-zinc-950/40 flex justify-end gap-2.5">
               <button
                 onClick={() => setAssignmentModalOpen(false)}
-                className="px-4 py-2 text-gray-600 hover:text-gray-800 hover:bg-gray-100 rounded-lg transition-colors"
+                className="px-4 py-2 text-zinc-300 hover:text-white hover:bg-zinc-900 border border-zinc-800 rounded-xl transition-colors font-bold text-xs"
               >
                 Cancel
               </button>
               <button
                 onClick={handleSaveAssignments}
                 disabled={savingAssignments}
-                className="px-6 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center gap-2"
+                className="px-5 py-2 bg-[#d5b263] text-black font-black uppercase tracking-wider text-xs rounded-xl hover:bg-[#c4a152] disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center gap-1.5"
               >
                 {savingAssignments ? (
                   <>
-                    <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                    <div className="w-3.5 h-3.5 border-2 border-black border-t-transparent rounded-full animate-spin"></div>
                     Saving...
                   </>
                 ) : (
